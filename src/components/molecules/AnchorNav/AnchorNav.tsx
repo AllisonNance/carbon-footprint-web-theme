@@ -2,6 +2,7 @@
 
 import {
   forwardRef,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -24,57 +25,72 @@ export interface AnchorNavProps extends HTMLAttributes<HTMLElement> {
   stickyOffset?: number;
 }
 
-/**
- * AnchorNav — renders a sticky scroll progress bar that only becomes
- * visible once the bar has reached its sticky position (i.e. the content
- * area has scrolled to the top of the viewport).
- */
-export const AnchorNav = forwardRef<HTMLDivElement, AnchorNavProps>(
+export const AnchorNav = forwardRef<HTMLElement, AnchorNavProps>(
   function AnchorNav(
     { items, stickyOffset = 48, className, ...rest },
     ref,
   ) {
-    const [scrollProgress, setScrollProgress] = useState(0);
+    const [activeTarget, setActiveTarget] = useState<string>(
+      items[0]?.target ?? "",
+    );
     const [isStuck, setIsStuck] = useState(false);
     const sentinelRef = useRef<HTMLDivElement>(null);
+    const navHeight = 48;
 
-    /* Detect when the bar reaches its sticky position using an
-       IntersectionObserver on a sentinel element placed just above. */
     useEffect(() => {
       const sentinel = sentinelRef.current;
       if (!sentinel) return;
 
       const observer = new IntersectionObserver(
         ([entry]) => {
-          // When the sentinel scrolls out of view above, the bar is stuck
           setIsStuck(!entry.isIntersecting);
         },
-        { threshold: 0, rootMargin: `-${stickyOffset + 32}px 0px 0px 0px` },
+        { threshold: 0, rootMargin: `-${stickyOffset}px 0px 0px 0px` },
       );
 
       observer.observe(sentinel);
       return () => observer.disconnect();
     }, [stickyOffset]);
 
-    /* Track scroll progress. */
     useEffect(() => {
       let ticking = false;
+      const offset = stickyOffset + navHeight + 16;
 
       const onScroll = () => {
         if (ticking) return;
         ticking = true;
         requestAnimationFrame(() => {
           ticking = false;
-          const scrollTop = window.scrollY;
-          const docHeight =
-            document.documentElement.scrollHeight - window.innerHeight;
-          setScrollProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
+          let current = items[0]?.target ?? "";
+          for (const item of items) {
+            const el = document.getElementById(item.target);
+            if (el && el.getBoundingClientRect().top <= offset) {
+              current = item.target;
+            }
+          }
+          setActiveTarget(current);
         });
       };
 
       window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
       return () => window.removeEventListener("scroll", onScroll);
-    }, []);
+    }, [items, stickyOffset]);
+
+    const handleClick = useCallback(
+      (target: string) => {
+        const el = document.getElementById(target);
+        if (!el) return;
+        const top =
+          el.getBoundingClientRect().top +
+          window.scrollY -
+          stickyOffset -
+          navHeight -
+          8;
+        window.scrollTo({ top, behavior: "smooth" });
+      },
+      [stickyOffset],
+    );
 
     const rootClasses = [
       styles.root,
@@ -86,30 +102,39 @@ export const AnchorNav = forwardRef<HTMLDivElement, AnchorNavProps>(
 
     return (
       <>
-        {/* Sentinel — sits at the bar's natural position in flow.
-            When it scrolls above the viewport, the bar is "stuck". */}
         <div
           ref={sentinelRef}
           style={{ blockSize: 0, pointerEvents: "none" }}
           aria-hidden="true"
         />
-        <div
+        <nav
           ref={ref}
           className={rootClasses}
           style={
             { "--anchor-nav-offset": `${stickyOffset}px` } as React.CSSProperties
           }
+          aria-label="Page sections"
           {...rest}
         >
-          <div
-            className={styles.progressBar}
-            style={{ inlineSize: `${scrollProgress}%` }}
-            role="progressbar"
-            aria-valuenow={Math.round(scrollProgress)}
-            aria-valuemin={0}
-            aria-valuemax={100}
-          />
-        </div>
+          <ul className={styles.list}>
+            {items.map((item) => (
+              <li key={item.target}>
+                <button
+                  type="button"
+                  className={[
+                    styles.link,
+                    activeTarget === item.target ? styles.linkActive : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  onClick={() => handleClick(item.target)}
+                >
+                  {item.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </>
     );
   },

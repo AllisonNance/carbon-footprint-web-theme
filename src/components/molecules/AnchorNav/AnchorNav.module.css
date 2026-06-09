@@ -1,22 +1,65 @@
-/* AnchorNav — sticky scroll progress bar, visible only when "stuck". */
+/* AnchorNav — sticky navigation with anchor links and scroll-spy. */
 
 .root {
   position: fixed;
   inset-block-start: var(--anchor-nav-offset, 48px);
   inset-inline-start: 0;
   z-index: 7000;
-  block-size: 3px;
   inline-size: 100vw;
-  pointer-events: none;
+  background: var(--background);
+  border-block-end: 1px solid var(--border-subtle);
   opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
 }
 
 .rootVisible {
   opacity: 1;
+  pointer-events: auto;
 }
 
-.progressBar {
-  block-size: 3px;
-  background: linear-gradient(to right, var(--taupe-100), var(--taupe-50), var(--taupe-10));
-  transition: inline-size 50ms linear;
+.list {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 0;
+  padding: 0 var(--spacing-05);
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+.link {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-04) var(--spacing-05);
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  cursor: pointer;
+  border-block-end: 2px solid transparent;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.link:hover {
+  color: var(--text-primary);
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.linkActive {
+  color: var(--text-primary);
+  border-block-end-color: var(--taupe-80);
+  font-weight: var(--font-weight-semibold);
 }

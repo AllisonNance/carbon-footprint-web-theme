@@ -104,7 +104,7 @@ export const AllSizes: Story = {
     <div style={{ display: "grid", gap: 32 }}>
       {(["sm", "md", "lg"] as const).map((size) => (
         <div key={size}>
-          <p className="type-label-02" style={{ marginBottom: 8 }}>
+          <p className="type-label-01" style={{ marginBottom: 8 }}>
             size={size}
           </p>
           <Accordion size={size}>

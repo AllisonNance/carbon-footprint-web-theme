@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import styles from "./styleGuide.module.css";
 
 /**
- * Typography style guide — renders Carbon's type-set tokens with a live
- * sample, the utility class name, and the spec (size / line-height / weight).
+ * Typography style guide — renders type-set tokens with a live sample,
+ * the utility class name, and the spec (size / line-height / weight).
  *
  * The spec column is hand-curated to mirror `src/tokens/typography.css`.
  * If you add or change a style there, update it here.
@@ -19,47 +19,25 @@ type TypeRow = {
 };
 
 const HEADINGS: TypeRow[] = [
-  { name: "type-heading-compact-01", spec: "14 / 18 · 600" },
-  { name: "type-heading-compact-02", spec: "16 / 22 · 600" },
-  { name: "type-heading-01", spec: "14 / 20 · 600" },
-  { name: "type-heading-02", spec: "16 / 24 · 600" },
-  { name: "type-heading-03", spec: "20 / 28 · 400" },
-  { name: "type-heading-04", spec: "28 / 36 · 400" },
-  { name: "type-heading-05", spec: "32 / 40 · 400" },
-  { name: "type-heading-06", spec: "42 / 50 · 300" },
-  { name: "type-heading-07", spec: "54 / 64 · 300" },
+  { name: "type-heading-compact-01", spec: "16 / 20 · 600" },
+  { name: "type-heading-03", spec: "22 / 30 · 400" },
+  { name: "type-heading-04", spec: "30 / 38 · 400" },
 ];
 
 const BODY: TypeRow[] = [
-  { name: "type-body-compact-01", spec: "14 / 18 · 400" },
-  { name: "type-body-compact-02", spec: "16 / 22 · 400" },
-  { name: "type-body-01", spec: "14 / 20 · 400" },
-  { name: "type-body-02", spec: "16 / 24 · 400" },
+  { name: "type-body-compact-01", spec: "16 / 20 · 400" },
+  { name: "type-body-compact-02", spec: "18 / 24 · 400" },
+  { name: "type-body-01", spec: "16 / 22 · 400" },
+  { name: "type-body-02", spec: "18 / 26 · 400" },
 ];
 
 const UTILITY: TypeRow[] = [
-  { name: "type-label-01", spec: "12 / 16 · 400" },
-  { name: "type-label-02", spec: "14 / 18 · 400" },
-  { name: "type-helper-text-01", spec: "12 / 16 · 400" },
-  { name: "type-helper-text-02", spec: "14 / 18 · 400" },
-  { name: "type-legal-01", spec: "12 / 16 · 400" },
-  { name: "type-legal-02", spec: "14 / 18 · 400" },
-  { name: "type-code-01", spec: "12 / 16 · 400 · mono" },
-  { name: "type-code-02", spec: "14 / 20 · 400 · mono" },
+  { name: "type-label-01", spec: "14 / 18 · 400 · mono" },
+  { name: "type-code-02", spec: "16 / 22 · 400 · mono" },
 ];
 
 const FLUID: TypeRow[] = [
-  { name: "type-fluid-heading-03", spec: "20 / 28 · 400" },
-  { name: "type-fluid-heading-04", spec: "28 / 36 · 400" },
-  { name: "type-fluid-heading-05", spec: "42 / 50 · 300" },
-  { name: "type-fluid-heading-06", spec: "42 / 50 · 600" },
-  { name: "type-fluid-paragraph-01", spec: "28 / 36 · 300" },
-  { name: "type-fluid-quotation-01", spec: "24 / 30 · 400 · serif" },
-  { name: "type-fluid-quotation-02", spec: "42 / 50 · 300 · serif" },
-  { name: "type-fluid-display-01", spec: "54 / 64 · 300" },
-  { name: "type-fluid-display-02", spec: "54 / 64 · 600" },
-  { name: "type-fluid-display-03", spec: "60 / 70 · 300 · tight" },
-  { name: "type-fluid-display-04", spec: "92 / 102 · 300 · tight" },
+  { name: "type-fluid-heading-05", spec: "44 / 52 · 300" },
 ];
 
 function TypeSection({ title, rows }: { title: string; rows: TypeRow[] }) {
@@ -106,10 +84,10 @@ export const Overview: Story = {
         Typography
       </h1>
       <p className={`${styles.pageLede} type-body-02`}>
-        Carbon&rsquo;s type sets in IBM Plex Sans / Serif / Mono. Apply any
-        style by adding its utility class (e.g.{" "}
+        Type sets in Inter / IBM Plex Mono / Tiempos Text.
+        Apply any style by adding its utility class (e.g.{" "}
         <code className="type-code-02">class=&quot;type-body-01&quot;</code>).
-        Sizes use the 12px-base rem scale defined in{" "}
+        Sizes use the rem scale defined in{" "}
         <code className="type-code-02">tokens/typography.css</code>.
       </p>
       <TypeSection title="Headings" rows={HEADINGS} />

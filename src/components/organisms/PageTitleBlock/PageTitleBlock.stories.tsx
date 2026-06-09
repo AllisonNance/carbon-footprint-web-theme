@@ -21,25 +21,23 @@ const meta: Meta<typeof PageTitleBlock> = {
 export default meta;
 type Story = StoryObj<typeof PageTitleBlock>;
 
-const profileImage = (
-  <img
-    src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80&auto=format&fit=crop"
-    alt="Profile photo"
-  />
-);
-
 export const Default: Story = {
   args: {
-    heading: "Lead Product and UX Designer",
+    heading: (
+      <>
+        I&apos;m Allison,
+        <br /> a UX designer who <em>builds.</em>
+      </>
+    ),
+    tags: ["Systems", "Strategy", "AI Code"],
     description:
-      "This is a description paragraph where I can explain the title and provide additional context about the role and responsibilities.",
-    image: profileImage,
+      "I bring an implementation-minded approach to UX, connecting strategy, interface design, systems thinking, and AI-assisted coding to translate ideas into experiences.",
   },
 };
 
 export const Minimal: Story = {
   name: "Minimal (heading only)",
   args: {
-    heading: "Lead Product and UX Designer",
+    heading: "Product and UX Designer",
   },
 };

@@ -21,13 +21,11 @@ export const Overview: Story = {
   render: () => (
     <article className={styles.page}>
       <h1 className={`${styles.pageTitle} type-fluid-heading-05`}>
-        Carbon Footprint Style Guide
+        Style Guide
       </h1>
       <p className={`${styles.pageLede} type-body-02`}>
         A living reference for the design tokens that power every component
-        in this library. Switch the theme toolbar (top right) to see every
-        token re-evaluate across <strong>White</strong>, <strong>G10</strong>,
-        and <strong>G100</strong>.
+        in this library.
       </p>
 
       <section className={styles.section}>
@@ -38,7 +36,7 @@ export const Overview: Story = {
         </div>
         <ul className="type-body-02">
           <li>
-            <strong>Typography</strong> — every Carbon type style, with its
+            <strong>Typography</strong> — every type style, with its
             utility class, size, line-height, and weight.
           </li>
           <li>

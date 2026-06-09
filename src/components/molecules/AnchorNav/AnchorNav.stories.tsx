@@ -11,8 +11,8 @@ const meta: Meta<typeof AnchorNav> = {
       description: {
         component:
           "Horizontal sticky navigation bar with anchor links and scroll-spy. " +
-          "Active section highlights with a blue bottom border. Chevron buttons " +
-          "appear when items overflow. Matches IBM's Table of Contents pattern.",
+          "Active section highlights with a bottom border. Appears when " +
+          "scrolled past its natural position.",
       },
     },
   },
