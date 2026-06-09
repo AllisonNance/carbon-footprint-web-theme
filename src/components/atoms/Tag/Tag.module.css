@@ -1,0 +1,38 @@
+/**
+ * Carbon Tag — taupe pill chip.
+ * sm: 24px height / 12px text
+ */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  height: 1.5rem;
+  margin: 0;
+  padding: 0 var(--spacing-03);
+  border: 0;
+  border-radius: 999px;
+  background-color: var(--tag-background-taupe);
+  color: var(--tag-color-taupe);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.16px;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+/* Disabled */
+
+.disabled {
+  background-color: var(--layer-01);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}

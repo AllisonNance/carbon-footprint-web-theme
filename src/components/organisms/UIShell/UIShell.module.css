@@ -1,0 +1,414 @@
+/* UI Shell — Header
+ *
+ * Fixed 48px-tall bar pinned to the top of the viewport. The <header>
+ * element scopes itself to data-theme="g100" so the entire chrome uses
+ * dark palette tokens regardless of the host page theme — matching
+ * IBM's standard product shell treatment.
+ *
+ * Layout:
+ *   [skip] [menu-button] [name] [navigation................] [global-bar]
+ */
+
+/* ---------- Header ------------------------------------------------- */
+
+.header {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: var(--size-lg); /* 48px */
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--background);
+  color: var(--text-primary);
+  border-block-end: none;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-14, 0.875rem);
+  z-index: 8000;
+}
+
+/* Same max width + horizontal inset as PageLayout main + SiteFooter */
+.headerInner {
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-inline-size: var(--page-content-max-width);
+  padding-inline: var(--page-padding-inline);
+  min-inline-size: 0;
+}
+
+/* ---------- SkipToContent ----------------------------------------- */
+
+.skipToContent {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  color: var(--text-primary);
+  background-color: var(--background);
+  text-decoration: none;
+}
+
+.skipToContent:focus,
+.skipToContent:active {
+  inline-size: auto;
+  block-size: auto;
+  clip: auto;
+  margin: 0;
+  padding: 0 var(--spacing-05);
+  display: inline-flex;
+  align-items: center;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+  z-index: 1;
+}
+
+/* ---------- HeaderName -------------------------------------------- */
+
+.name {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: 0 var(--spacing-05);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-semibold, 600);
+  letter-spacing: 0.1px;
+}
+
+.name:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.namePrefix {
+  font-weight: var(--font-weight-regular, 400);
+}
+
+.nameLogo {
+  display: inline-flex;
+  align-items: center;
+  block-size: 100%;
+  /* Pad vertically so the artwork has breathing room inside the 48px bar. */
+  padding-block: var(--spacing-02);
+}
+
+.nameLogo > img,
+.nameLogo > svg {
+  display: block;
+  block-size: 100%;
+  inline-size: auto;
+  max-block-size: calc(var(--size-lg) - var(--spacing-04));
+}
+
+/* ---------- HeaderNavigation -------------------------------------- */
+
+.nav {
+  display: none;
+  block-size: 100%;
+  padding-inline-start: var(--spacing-05);
+  position: relative;
+}
+
+.nav::before {
+  content: "";
+  position: absolute;
+  inset-block: calc(var(--spacing-05) - 2px) calc(var(--spacing-05) - 2px);
+  inset-inline-start: 0;
+  inline-size: 1px;
+  background-color: var(--border-subtle-00);
+}
+
+.menuBar {
+  display: flex;
+  align-items: stretch;
+  block-size: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menuLink {
+  display: inline-flex;
+  align-items: center;
+  block-size: 100%;
+  padding-inline: var(--spacing-05);
+  color: var(--text-secondary);
+  text-decoration: none;
+  line-height: 1.4286;
+  border-block-start: 2px solid transparent;
+  border-block-end: 2px solid transparent;
+  transition:
+    background-color var(--motion-duration-base, 110ms) ease,
+    color var(--motion-duration-base, 110ms) ease;
+}
+
+.menuLink:hover {
+  background-color: var(--background-hover);
+  color: var(--text-primary);
+}
+
+.menuLink:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.menuLinkText {
+  display: inline-block;
+  max-inline-size: 20ch;
+  white-space: nowrap;
+}
+
+.menuLinkIcon {
+  display: inline-flex;
+  align-items: center;
+  margin-inline-start: var(--spacing-02);
+  flex: 0 0 auto;
+}
+
+.menuLinkCurrent {
+  color: var(--text-primary);
+  background-color: var(--background-selected);
+  border-block-end-color: var(--interactive);
+}
+
+/* ---------- HeaderMenu (dropdown) --------------------------------- */
+
+.submenu {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.submenuTrigger {
+  display: inline-flex;
+  gap: var(--spacing-03);
+  cursor: pointer;
+}
+
+.submenuArrow {
+  flex: 0 0 auto;
+  align-self: center;
+  transition: transform var(--motion-duration-base, 110ms) ease;
+}
+
+.submenuTrigger[aria-expanded="true"] .submenuArrow {
+  transform: rotate(180deg);
+}
+
+.submenuList {
+  display: none;
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: 0;
+  min-inline-size: 12rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: var(--layer-01);
+  border-block-start: 2px solid var(--interactive);
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 16%);
+  z-index: 10;
+}
+
+.submenuList[data-expanded] {
+  display: block;
+}
+
+.submenuList .menuLink {
+  display: flex;
+  inline-size: 100%;
+  block-size: var(--size-lg);
+  padding-inline: var(--spacing-05);
+  border-block: 0;
+}
+
+/* ---------- Header actions (menu button + global actions) --------- */
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--size-lg);
+  block-size: var(--size-lg);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-color: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color var(--motion-duration-base, 110ms) ease;
+}
+
+.action:hover {
+  background-color: var(--background-hover);
+}
+
+.action:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.actionActive {
+  background-color: var(--layer-01);
+  color: var(--text-primary);
+}
+
+.actionActive:hover {
+  background-color: var(--layer-hover-01);
+}
+
+/* HeaderMenuButton: hidden unless SideNav is collapsible */
+.menuButton {
+  border-inline-end: 1px solid var(--border-subtle-00);
+  margin-inline: calc((var(--size-lg) - 20px) / -2) var(--spacing-03);
+}
+
+.menuButtonHidden {
+  display: none;
+}
+
+/* HeaderGlobalBar / HeaderGlobalAction */
+.globalBar {
+  display: flex;
+  align-items: stretch;
+  margin-inline-start: auto;
+  block-size: 100%;
+}
+
+.globalAction {
+  position: relative;
+}
+
+.globalLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-03);
+  padding-inline: var(--spacing-04);
+  block-size: 100%;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: var(--font-size-14, 0.875rem);
+  white-space: nowrap;
+}
+
+.globalLink:hover {
+  background-color: var(--background-hover);
+}
+
+@media (max-width: 65.999rem) {
+  .globalLink .globalLinkLabel {
+    display: none;
+  }
+}
+
+/* ---------- SideNav ------------------------------------------------ */
+
+.sideNavOverlay {
+  position: fixed;
+  inset: 0;
+  block-size: 0;
+  inline-size: 0;
+  opacity: 0;
+  background-color: var(--overlay, rgba(0, 0, 0, 0.5));
+  z-index: 7999;
+  transition: opacity var(--motion-duration-base, 110ms) ease;
+}
+
+.sideNavOverlayActive {
+  block-size: 100dvh;
+  inline-size: 100vw;
+  opacity: 1;
+}
+
+.sideNav {
+  position: fixed;
+  inset-block-start: var(--size-lg); /* below header */
+  inset-inline-start: 0;
+  block-size: calc(100dvh - var(--size-lg));
+  inline-size: 0;
+  overflow: hidden;
+  background-color: var(--background);
+  z-index: 8000;
+  transition: inline-size var(--motion-duration-base, 110ms) cubic-bezier(0.2, 0, 1, 0.9);
+  will-change: inline-size;
+}
+
+.sideNavExpanded {
+  inline-size: 16rem;
+}
+
+.sideNavItems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sideNavItem {
+  display: flex;
+  min-block-size: 0;
+}
+
+.sideNavLink {
+  display: flex;
+  align-items: center;
+  inline-size: 16rem;
+  min-block-size: var(--size-lg);
+  padding-inline: var(--spacing-05);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-14, 0.875rem);
+  border-inline-start: 3px solid transparent;
+  transition:
+    background-color var(--motion-duration-base, 110ms) ease,
+    color var(--motion-duration-base, 110ms) ease;
+}
+
+.sideNavLink:hover {
+  background-color: var(--background-hover);
+  color: var(--text-primary);
+}
+
+.sideNavLink:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.sideNavLinkActive {
+  color: var(--text-primary);
+  background-color: var(--background-selected);
+  border-inline-start-color: var(--interactive);
+}
+
+.sideNavLinkText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- Desktop layout ---------------------------------------- */
+
+@media (min-width: 66rem) {
+  .nav {
+    display: block;
+  }
+
+  .menuButton {
+    display: none;
+  }
+
+  .sideNav,
+  .sideNavOverlay {
+    display: none;
+  }
+}

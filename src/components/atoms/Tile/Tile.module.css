@@ -1,0 +1,216 @@
+/* Tile family
+ *
+ * Shared visual shell plus variant-specific states:
+ *   - Tile (static)
+ *   - ClickableTile (<a> with trailing arrow)
+ *   - SelectableTile (<button role=checkbox> with indicator)
+ *   - ExpandableTile (reveals below-the-fold content via chevron)
+ *
+ * All variants share the same background, padding, and border-radius
+ * from the base `.tile` class.
+ */
+
+/* ---------- Base ---------------------------------------------------- */
+
+.tile {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: var(--size-sm);
+  padding: var(--spacing-05);
+  background-color: var(--layer-01);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: var(--font-size-14, 0.875rem);
+  line-height: var(--line-height-body, 1.28572);
+  text-decoration: none;
+}
+
+.transparent {
+  background-color: transparent;
+  padding: 0;
+  min-block-size: 0;
+}
+
+/* ---------- ClickableTile ----------------------------------------- */
+
+.clickable {
+  cursor: pointer;
+  transition:
+    background-color var(--motion-duration-base, 110ms) ease,
+    box-shadow var(--motion-duration-base, 110ms) ease,
+    outline var(--motion-duration-base, 110ms) ease;
+}
+
+.clickable:hover {
+  background-color: var(--layer-hover-01);
+}
+
+.clickable:active,
+.clicked {
+  background-color: var(--layer-active-01);
+}
+
+.clickable:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.trailingIcon {
+  position: absolute;
+  inset-block-end: var(--spacing-05);
+  inset-inline-end: var(--spacing-05);
+  color: var(--icon-primary);
+  pointer-events: none;
+}
+
+.clickable.disabled {
+  background-color: var(--layer-01);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+.clickable.disabled .trailingIcon {
+  color: var(--icon-disabled);
+}
+
+/* ---------- SelectableTile ---------------------------------------- */
+
+.selectable {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-05);
+  cursor: pointer;
+  text-align: start;
+  font-family: inherit;
+  /* Strip browser button chrome — .tile already paints the surface. */
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    background-color var(--motion-duration-base, 110ms) ease,
+    outline-color var(--motion-duration-base, 110ms) ease;
+}
+
+.selectable:hover {
+  background-color: var(--layer-hover-01);
+}
+
+.selectable:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.selectableIcon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--icon-size-02);
+  block-size: var(--icon-size-02);
+  color: var(--icon-primary);
+  margin-block-start: 2px; /* optical alignment with first line of body */
+}
+
+.selected .selectableIcon {
+  color: var(--interactive);
+}
+
+.selectableBody {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.selected {
+  /* Subtle inset border to signal selection without shifting layout. */
+  box-shadow: inset 0 0 0 1px var(--interactive);
+}
+
+.selectable.disabled {
+  background-color: var(--layer-01);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.selectable.disabled .selectableIcon {
+  color: var(--icon-disabled);
+}
+
+/* ---------- ExpandableTile --------------------------------------- */
+
+.expandable {
+  padding: 0;
+  overflow: hidden;
+  transition: max-height var(--motion-duration-base, 240ms) ease;
+}
+
+.expandableBody {
+  position: relative;
+  padding: var(--spacing-05);
+}
+
+.expandableAbove {
+  /* Give the chevron breathing room in the top-right corner. */
+  padding-inline-end: calc(var(--spacing-05) + var(--size-sm));
+}
+
+.expandableBelow {
+  padding-block-start: var(--spacing-05);
+}
+
+.chevronButton {
+  all: unset;
+  position: absolute;
+  inset-block-start: var(--spacing-03);
+  inset-inline-end: var(--spacing-03);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-03);
+  padding: var(--spacing-02) var(--spacing-03);
+  color: var(--icon-primary);
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 0;
+  font-size: var(--font-size-14, 0.875rem);
+  transition:
+    background-color var(--motion-duration-base, 110ms) ease,
+    color var(--motion-duration-base, 110ms) ease;
+}
+
+.chevronButton:hover {
+  background-color: var(--layer-hover-01);
+}
+
+.chevronButton:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.chevronIcon {
+  transition: transform var(--motion-duration-base, 240ms) ease;
+}
+
+.expanded .chevronIcon {
+  transform: rotate(180deg);
+}
+
+.chevronLabel {
+  color: var(--text-primary);
+}
+
+/* ---------- A11y helper ----------------------------------------- */
+
+.visuallyHidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

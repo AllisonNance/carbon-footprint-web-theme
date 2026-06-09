@@ -1,0 +1,122 @@
+/**
+ * Carbon Link — anchor styling in two variants (standalone, inline) across
+ * three sizes. Uses the --link-* tokens so every theme (White, G10, G100)
+ * gets the correct hue automatically.
+ */
+
+.link {
+  color: var(--link-primary);
+  text-decoration: none;
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-regular);
+  cursor: pointer;
+  outline: 2px solid transparent;
+  outline-offset: 1px;
+  transition:
+    color var(--motion-duration-fast) var(--motion-ease-standard),
+    text-decoration-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+/* Underline on hover/focus for the standalone variant. */
+.standalone:hover,
+.standalone:focus-visible {
+  color: var(--link-primary-hover);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+/* Inline links are always underlined so they're distinguishable in paragraphs. */
+.inline {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: currentColor;
+}
+.inline:hover {
+  color: var(--link-primary-hover);
+  text-decoration-thickness: 2px;
+}
+
+/* Keyboard focus ring. */
+.link:focus-visible {
+  outline-color: var(--focus);
+}
+
+/* Visited — opt-in via `visited` prop. Matches Carbon's link-visited token. */
+.visited:visited {
+  color: var(--link-visited);
+}
+.visited:visited:hover {
+  color: var(--link-primary-hover);
+}
+
+/* ------------------------------------------------------------------ */
+/* Sizes                                                               */
+/* ------------------------------------------------------------------ */
+
+/* sm → helper-text-01 (12px / 16px) */
+.size-sm {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.32px;
+}
+
+/* md → body-compact-01 (14px / 18px) — default */
+.size-md {
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  letter-spacing: 0.16px;
+}
+
+/* lg → body-compact-02 (16px / 22px) */
+.size-lg {
+  font-size: 1rem;
+  line-height: 1.375rem;
+  letter-spacing: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Trailing icon slot — standalone only                                */
+/* ------------------------------------------------------------------ */
+
+.standalone {
+  /* Let the icon sit on the baseline of the text. */
+  display: inline-flex;
+  align-items: center;
+  column-gap: var(--spacing-03); /* 8px */
+}
+
+.iconSlot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+}
+
+.iconSlot svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+.size-lg .iconSlot,
+.size-lg .iconSlot svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Disabled                                                             */
+/* ------------------------------------------------------------------ */
+
+.disabled,
+.disabled:hover,
+.disabled:focus-visible {
+  color: var(--text-disabled);
+  text-decoration: none;
+  cursor: not-allowed;
+  pointer-events: none;
+}

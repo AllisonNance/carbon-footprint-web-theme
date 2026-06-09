@@ -1,0 +1,167 @@
+/* Inter — body text */
+@import "@fontsource/inter/300.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/400-italic.css";
+@import "@fontsource/inter/600.css";
+
+/* IBM Plex — mono for labels, serif kept as fallback */
+@import "@fontsource/ibm-plex-mono/300.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/600.css";
+@import "@fontsource/ibm-plex-serif/400.css";
+
+/* Design tokens & reset */
+@import "../tokens/index.css";
+@import "./reset.css";
+
+/* Tiempos Text — self-hosted WOFF2 for headings & titles */
+@font-face {
+  font-family: "Tiempos Text";
+  src: url("/fonts/tiempos-text/test-tiempos-text-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiempos Text";
+  src: url("/fonts/tiempos-text/test-tiempos-text-regular-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiempos Text";
+  src: url("/fonts/tiempos-text/test-tiempos-text-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiempos Text";
+  src: url("/fonts/tiempos-text/test-tiempos-text-medium-italic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiempos Text";
+  src: url("/fonts/tiempos-text/test-tiempos-text-semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiempos Text";
+  src: url("/fonts/tiempos-text/test-tiempos-text-semibold-italic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiempos Text";
+  src: url("/fonts/tiempos-text/test-tiempos-text-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tiempos Text";
+  src: url("/fonts/tiempos-text/test-tiempos-text-bold-italic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+html {
+  color-scheme: light dark;
+  background-color: var(--background);
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-md);
+  color: var(--gray-70);
+  background-color: var(--background);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--gray-80);
+}
+
+h2 {
+  font-size: 1.6rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+/* Storybook preview iframe — its story wrapper otherwise paints white
+   over the themed body, making theme switches invisible. Covers both
+   the Canvas (`#storybook-root`, `.sb-*`) and the Docs view (`.sbdocs`). */
+#storybook-root,
+.sb-show-main,
+.sb-main-padded,
+.sb-main-centered,
+.sb-main-fullscreen,
+.sbdocs,
+.sbdocs-wrapper,
+.sbdocs-content,
+.docs-story,
+.innerZoomElementWrapper {
+  background-color: var(--background) !important;
+  color: var(--text-primary);
+}
+
+#storybook-root,
+.sb-show-main {
+  min-height: 100vh;
+}
+
+/* ---------- Gradient underline utility ----------------------------- */
+/*
+ * Taupe gradient underline — apply `.gradient-underline` plus one of
+ * the modifier classes to get the standard link hover treatment.
+ *
+ *   .gradient-underline              — base (hidden by default)
+ *   .gradient-underline-visible      — underline visible at rest
+ *   .gradient-underline-hover        — underline appears on hover
+ *   .gradient-underline-hover-reflow — shrink-then-regrow on hover
+ */
+
+.gradient-underline {
+  background-image: linear-gradient(
+    to right,
+    var(--taupe-100),
+    var(--taupe-50),
+    var(--taupe-10)
+  );
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition: background-size var(--motion-duration-base, 110ms) ease;
+}
+
+.gradient-underline-visible {
+  background-size: 100% 1px;
+}
+
+.gradient-underline-hover:hover {
+  background-size: 100% 1px;
+}
+
+.gradient-underline-hover-reflow:hover {
+  background-size: 0 1px;
+  animation: gradient-reunderline var(--motion-duration-base, 110ms) ease forwards;
+  animation-delay: var(--motion-duration-base, 110ms);
+}
+
+@keyframes gradient-reunderline {
+  from {
+    background-size: 0 1px;
+  }
+  to {
+    background-size: 100% 1px;
+  }
+}

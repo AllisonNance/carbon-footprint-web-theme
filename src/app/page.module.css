@@ -1,0 +1,22 @@
+/* Home: Bytes (⅓) + Current focus (⅔) */
+.focusRow {
+  display: grid;
+  gap: var(--spacing-07);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+@media (min-width: 42rem) {
+  .focusRow {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+.focusColBytes,
+.focusColCurrent {
+  min-width: 0;
+}
+
+.ctaPreFooter {
+  margin-block-start: var(--spacing-09);
+}

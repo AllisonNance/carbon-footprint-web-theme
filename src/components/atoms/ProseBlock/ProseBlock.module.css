@@ -1,0 +1,213 @@
+/**
+ * ProseBlock — typographic container for WYSIWYG / Portable Text content.
+ *
+ * Styles nested HTML elements (h2, h3, p, ul, ol, blockquote, img, video,
+ * figure, hr, a, code, pre) using the project's type tokens and spacing.
+ * No opinions about structure — just makes rich content look right.
+ */
+
+.prose {
+  color: var(--text-primary);
+  max-inline-size: 65ch;
+  margin-inline: auto;
+}
+
+/* ------------------------------------------------------------------ */
+/* Headings                                                            */
+/* ------------------------------------------------------------------ */
+
+.prose h2 {
+  font-family: var(--font-family-display);
+  font-size: 1.875rem;
+  line-height: 2.375rem;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0;
+  margin-block: var(--spacing-09) var(--spacing-05);
+  color: var(--gray-80);
+}
+
+.prose h3 {
+  font-family: var(--font-family-display);
+  font-size: 1.375rem;
+  line-height: 1.875rem;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0;
+  margin-block: var(--spacing-07) var(--spacing-05);
+  color: var(--gray-80);
+}
+
+.prose h4 {
+  font-family: var(--font-family-display);
+  font-size: 1.125rem;
+  line-height: 1.625rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0;
+  margin-block: var(--spacing-07) var(--spacing-05);
+  color: var(--gray-80);
+}
+
+/* Remove top margin from first child heading. */
+.prose > :first-child {
+  margin-block-start: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Body text                                                           */
+/* ------------------------------------------------------------------ */
+
+.prose p {
+  font-family: var(--font-family-sans);
+  font-size: 1.125rem;
+  line-height: 1.625rem;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0;
+  margin-block: 0 var(--spacing-05);
+  color: var(--text-secondary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Links                                                               */
+/* ------------------------------------------------------------------ */
+
+.prose a {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--taupe-50);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 150ms ease;
+}
+
+.prose a:hover {
+  text-decoration-color: var(--taupe-100);
+}
+
+/* ------------------------------------------------------------------ */
+/* Lists                                                               */
+/* ------------------------------------------------------------------ */
+
+.prose ul,
+.prose ol {
+  font-family: var(--font-family-sans);
+  font-size: 1.125rem;
+  line-height: 1.625rem;
+  color: var(--text-secondary);
+  margin-block: 0 var(--spacing-05);
+  padding-inline-start: var(--spacing-07);
+}
+
+.prose li + li {
+  margin-block-start: var(--spacing-03);
+}
+
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
+/* ------------------------------------------------------------------ */
+/* Blockquote                                                          */
+/* ------------------------------------------------------------------ */
+
+.prose blockquote {
+  margin-block: var(--spacing-07);
+  margin-inline: 0;
+  padding-inline-start: var(--spacing-05);
+  border-inline-start: 3px solid var(--taupe-30);
+  font-family: var(--font-family-serif);
+  font-size: 1.625rem;
+  line-height: 2rem;
+  font-weight: var(--font-weight-regular);
+  color: var(--text-primary);
+}
+
+.prose blockquote p {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+/* ------------------------------------------------------------------ */
+/* Images & video                                                      */
+/* ------------------------------------------------------------------ */
+
+.prose img,
+.prose video {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+  margin-block: var(--spacing-07);
+  border-radius: 2px;
+}
+
+.prose figure {
+  margin-block: var(--spacing-07);
+  margin-inline: 0;
+}
+
+.prose figure img,
+.prose figure video {
+  margin-block: 0;
+}
+
+.prose figcaption {
+  font-family: var(--font-family-mono);
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  letter-spacing: 0.32px;
+  color: var(--text-secondary);
+  margin-block-start: var(--spacing-03);
+}
+
+/* ------------------------------------------------------------------ */
+/* Code                                                                */
+/* ------------------------------------------------------------------ */
+
+.prose code {
+  font-family: var(--font-family-mono);
+  font-size: 0.875em;
+  background-color: var(--taupe-05);
+  padding: 0.125em 0.375em;
+  border-radius: 2px;
+}
+
+.prose pre {
+  margin-block: var(--spacing-07);
+  padding: var(--spacing-05);
+  background-color: var(--taupe-05);
+  border-radius: 2px;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------------ */
+/* Horizontal rule                                                     */
+/* ------------------------------------------------------------------ */
+
+.prose hr {
+  border: none;
+  border-block-start: 1px solid var(--border-subtle-01);
+  margin-block: var(--spacing-09);
+}
+
+/* ------------------------------------------------------------------ */
+/* Strong & emphasis                                                   */
+/* ------------------------------------------------------------------ */
+
+.prose strong {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.prose em {
+  font-style: italic;
+}

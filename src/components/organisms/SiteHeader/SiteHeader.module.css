@@ -1,0 +1,18 @@
+.emailLink {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  padding-inline: 1rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.emailLabel {
+  text-decoration: none;
+}
+
+.emailLink:hover .emailLabel {
+  background-size: 100% 1px;
+}

@@ -1,0 +1,122 @@
+/* CurrentFocusBlock — static “what I’m up to” section. */
+
+.block {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  min-inline-size: 0;
+  color: var(--text-primary);
+  padding-block-start: var(--spacing-05); /* 16px mobile */
+}
+
+@media (min-width: 42rem) {
+  .block {
+    padding-block-start: var(--spacing-06); /* 24px desktop */
+  }
+}
+
+/* Heading → list gap matches BytesBlock `.heading` bottom margin. */
+.heading {
+  margin: 0 0 var(--spacing-06) 0;
+  color: var(--gray-80);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  border-block-end: 1px solid var(--border-subtle-01);
+  padding-block: var(--spacing-07);
+}
+
+/* Match BytesBlock: heading already has spacing-07 below; skip top inset on row 1. */
+.item:first-child {
+  padding-block-start: 0;
+}
+
+.item:last-child {
+  border-block-end: none;
+}
+
+/* ~⅔ / ⅓ split on wide viewports; stacked on small. */
+.row {
+  display: grid;
+  gap: var(--spacing-07);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 42rem) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: var(--spacing-07);
+    align-items: start;
+  }
+}
+
+.primary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-05);
+  min-inline-size: 0;
+}
+
+.iconSlot {
+  display: flex;
+  color: var(--icon-primary);
+}
+
+.primaryCopy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-05);
+}
+
+.itemTitle {
+  margin: 0;
+  color: var(--gray-80);
+  max-inline-size: 100%;
+}
+
+.description {
+  margin: 0;
+  color: var(--text-secondary);
+  max-inline-size: 65ch;
+}
+
+.sidebar {
+  min-inline-size: 0;
+}
+
+@media (min-width: 42rem) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.contributionsLabel {
+  margin: 0 0 var(--spacing-05) 0;
+  color: var(--text-primary);
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+}
+
+.contributionsList {
+  margin: 0;
+  padding-inline-start: var(--spacing-05);
+  padding-block: 0;
+  color: var(--text-secondary);
+  list-style-type: disc;
+  font-size: 0.875rem;
+}
+
+.contributionsItem {
+  margin-block: 0;
+}
+
+.contributionsItem + .contributionsItem {
+  margin-block-start: var(--spacing-03);
+}

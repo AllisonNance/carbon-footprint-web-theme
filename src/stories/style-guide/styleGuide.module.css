@@ -1,0 +1,167 @@
+/**
+ * Shared layout styles for the "Style Guide" Storybook pages.
+ * Kept minimal — these pages are documentation, not product surfaces.
+ */
+
+.page {
+  padding: var(--spacing-07); /* 32px */
+  max-width: 80rem;
+  margin: 0 auto;
+  font-family: var(--font-family-sans);
+  color: var(--text-primary);
+}
+
+.pageTitle {
+  margin: 0 0 var(--spacing-03) 0;
+}
+
+.pageLede {
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-07) 0;
+  max-width: 52rem;
+}
+
+.section {
+  margin-bottom: var(--spacing-09); /* 48px */
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-05);
+  padding-bottom: var(--spacing-04);
+  border-bottom: 1px solid var(--border-subtle-01);
+  margin-bottom: var(--spacing-06);
+}
+
+.sectionTitle {
+  margin: 0;
+}
+
+.sectionSub {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ----- Typography rows --------------------------------------------- */
+
+.typeRow {
+  display: grid;
+  grid-template-columns: 18rem 1fr;
+  gap: var(--spacing-05);
+  align-items: baseline;
+  padding: var(--spacing-05) 0;
+  border-top: 1px solid var(--border-subtle-01);
+}
+
+.typeRow:last-child {
+  border-bottom: 1px solid var(--border-subtle-01);
+}
+
+.typeMeta {
+  color: var(--text-secondary);
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  display: grid;
+  gap: 2px;
+}
+
+.typeMetaName {
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+.typeMetaSpec {
+  color: var(--text-secondary);
+}
+
+.typeSample {
+  min-width: 0;
+  color: var(--text-primary);
+}
+
+/* ----- Color swatch grid ------------------------------------------- */
+
+.swatchGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: var(--spacing-04);
+}
+
+.swatch {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: var(--spacing-04);
+  align-items: center;
+  padding: var(--spacing-03);
+  border: 1px solid var(--border-subtle-01);
+  border-radius: 4px;
+  background-color: var(--layer-02);
+}
+
+.swatchChip {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px var(--border-subtle-01);
+}
+
+.swatchBody {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.swatchName {
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.swatchValue {
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--text-secondary);
+}
+
+/* ----- Palette strip (primitives) ---------------------------------- */
+
+.paletteRow {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: var(--spacing-05);
+  align-items: center;
+}
+
+.paletteLabel {
+  font-family: var(--font-family-mono);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.paletteStrip {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--border-subtle-01);
+}
+
+.paletteStep {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 4rem;
+  padding: 6px;
+  font-family: var(--font-family-mono);
+  font-size: 0.625rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}

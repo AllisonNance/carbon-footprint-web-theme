@@ -1,0 +1,210 @@
+/* PortfolioItemCard
+ *
+ * Editorial card pattern for portfolio items. Composes the Tag atom,
+ * Carbon icons, and the type-* utility classes from
+ * src/tokens/typography.css.
+ *
+ * Border strategy for the grid: instead of painting borders on each
+ * card (which can clip when sibling cards are different heights), we
+ * tint the grid container with the border color and use a 1px gap
+ * between cells. Each card paints its own background opaquely on top,
+ * so the gap shows through as a perfectly uniform 1px rule that always
+ * spans the full row height. This naturally produces no rule on the
+ * outermost left/right edges (those edges are the grid box, not gaps).
+ */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: var(--spacing-05);
+  background-color: var(--background);
+  color: var(--text-primary);
+  min-inline-size: 0;
+  min-block-size: 0;
+}
+
+/* ---------- Eyebrow ------------------------------------------------ */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-03);
+  color: var(--text-secondary);
+  margin-block-end: var(--spacing-05);
+}
+
+.eyebrowIcon {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+/* ---------- Media -------------------------------------------------- */
+
+.media {
+  inline-size: 100%;
+  min-inline-size: 0;
+  /* Flex default min-block-size:auto uses child min-content; replaced
+   * media intrinsic sizes inflate the slot and overpower aspect-ratio. */
+  min-block-size: 0;
+  aspect-ratio: 3 / 4;
+  margin-block-end: var(--spacing-05);
+  overflow: hidden;
+  background-color: var(--layer-01);
+}
+
+.media > img,
+.media > video {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  min-inline-size: 0;
+  min-block-size: 0;
+  object-fit: cover;
+}
+
+/* ---------- Title -------------------------------------------------- */
+
+.title {
+  margin: 0 0 var(--spacing-03) 0;
+  color: var(--gray-80);
+  overflow-wrap: anywhere;
+}
+
+.titleLink {
+  color: inherit;
+  text-decoration: none;
+  background-image: linear-gradient(to right, var(--taupe-100), var(--taupe-50), var(--taupe-10));
+  background-size: 0 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--motion-duration-base, 110ms) ease;
+}
+
+.titleLink:hover,
+.titleLink:focus-visible {
+  background-size: 100% 1px;
+  outline: none;
+}
+
+/* ---------- Meta (year + client) ----------------------------------- */
+
+.meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-02);
+  margin-block-start: auto;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.year {
+  font-family: var(--font-family-mono);
+  font-size: 0.875rem;
+  color: var(--taupe-80);
+}
+
+.dot {
+  color: var(--text-secondary);
+}
+
+.client {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium, 500);
+}
+
+/* ============================================================= */
+/* PortfolioItemGrid                                               */
+/* ============================================================= */
+
+.grid {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr;
+  inline-size: 100%;
+  min-inline-size: 0;
+  border-block: 1px solid var(--border-subtle-01);
+}
+
+.grid > * {
+  min-inline-size: 0;
+  min-block-size: 0;
+}
+
+/* ----- Mobile (single column): explicit horizontal rules ------ */
+
+/* Explicit borders on cards are reliable for the stacked layout —
+   a single-pixel rule between every card except the last. */
+.grid > *:not(:last-child) {
+  border-block-end: 1px solid var(--border-subtle-01);
+}
+
+/* ----- Tablet+ (multi-column): gap-bleed technique ------------ */
+
+/* In multi-column layouts we tint the grid container with the rule
+   color and use a 1px gap. Cards paint opaquely on top, so the gap
+   shows through as a uniform full-height rule between every cell —
+   in both directions, and the outer left/right edges naturally have
+   no rule because those edges are the grid box, not gaps. */
+@media (min-width: 42rem) {
+  .grid.cols-2,
+  .grid.cols-3,
+  .grid.cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    background-color: var(--border-subtle-01);
+    gap: 1px;
+  }
+  .grid.cols-2 > *,
+  .grid.cols-3 > *,
+  .grid.cols-4 > * {
+    background-color: var(--background);
+    /* The gap handles row separators; suppress the mobile border. */
+    border-block-end: none;
+  }
+}
+
+/* ----- Desktop: 3-up / 4-up (asymmetric 2×2 for cols-4) ---------- */
+
+@media (min-width: 66rem) {
+  .grid.cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /*
+   * Four cards in two rows: row 1 = ⅔ + ⅓, row 2 = ⅓ + ⅔
+   * Implemented as a 6-column grid: spans 4+2, then 2+4.
+   * minmax(0, 1fr) keeps long titles from exploding grid min-content width.
+   */
+  .grid.cols-4 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    container-type: inline-size;
+  }
+
+  .grid.cols-4 > *:nth-child(1) {
+    grid-column: span 4;
+  }
+
+  .grid.cols-4 > *:nth-child(2) {
+    grid-column: span 2;
+  }
+
+  .grid.cols-4 > *:nth-child(3) {
+    grid-column: span 2;
+  }
+
+  .grid.cols-4 > *:nth-child(4) {
+    grid-column: span 4;
+  }
+
+  /* Pixel-perfect height match: compute the exact media height of the
+     ⅓ column (2 of 6 grid cols, 3:4 aspect ratio, minus card padding)
+     and apply it as a fixed height on the ⅔ column media instead. */
+  .grid.cols-4 > *:nth-child(1) .media,
+  .grid.cols-4 > *:nth-child(4) .media {
+    aspect-ratio: auto;
+    block-size: calc(
+      ((100cqi - 5px) / 3 + 1px - 2 * var(--spacing-05)) * 4 / 3
+    );
+  }
+}

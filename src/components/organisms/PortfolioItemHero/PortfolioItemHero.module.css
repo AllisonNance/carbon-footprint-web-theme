@@ -1,0 +1,110 @@
+.root {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  margin-block-start: var(--spacing-09);
+  background-color: var(--taupe-05);
+  color: var(--text-primary);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-block-size: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-05);
+  padding: var(--spacing-09);
+}
+
+.heading {
+  margin: 0;
+  color: var(--gray-80);
+}
+
+.description {
+  margin: 0;
+  color: var(--text-secondary);
+  max-inline-size: 50ch;
+}
+
+/* ---------- Metadata tiles ---------------------------------------- */
+
+.tiles {
+  position: relative;
+  display: flex;
+  margin-block-start: var(--spacing-07);
+  border-block: 1px solid var(--border-subtle-01);
+  padding-block: var(--spacing-05);
+}
+
+.tile {
+  position: relative;
+  flex: 1;
+}
+
+.tile + .tile {
+  padding-inline-start: calc(var(--spacing-05) + 1px + var(--spacing-05));
+}
+
+.tile:not(:last-child) {
+  padding-inline-end: var(--spacing-05);
+}
+
+/* Center divider that spans full height including padding. */
+.tile + .tile::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: var(--spacing-05);
+  inset-block-start: calc(-1 * var(--spacing-05));
+  block-size: calc(100% + 2 * var(--spacing-05));
+  inline-size: 1px;
+  background-color: var(--border-subtle-01);
+}
+
+.tileIcon {
+  display: flex;
+  color: var(--icon-secondary);
+}
+
+.tileLabel {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.tileValue {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* ---------- Media ------------------------------------------------- */
+
+.media {
+  min-block-size: 20rem;
+  overflow: hidden;
+  background-color: var(--layer-02, var(--layer-01));
+}
+
+.media > img,
+.media > video {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Desktop: 50/50 split ---------------------------------- */
+
+@media (min-width: 42rem) {
+  .inner {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .media {
+    min-block-size: 0;
+  }
+}

@@ -1,0 +1,169 @@
+/**
+ * Carbon Accordion — semantic-token-driven styles for the list + item.
+ * Heights follow Carbon's size scale (sm 40 / md 48 / lg 64). The chevron
+ * rotates from pointing right (closed) to pointing down (open).
+ */
+
+.accordion {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.item {
+  position: relative;
+  border-top: 1px solid var(--border-subtle-01);
+}
+.item:last-child {
+  border-bottom: 1px solid var(--border-subtle-01);
+}
+
+/* ------------------------------------------------------------------ */
+/* Heading button                                                       */
+/* ------------------------------------------------------------------ */
+
+.heading {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-05); /* 16px */
+  width: 100%;
+  padding: var(--spacing-04) var(--spacing-05); /* 12 16 */
+  margin: 0;
+  background: transparent;
+  border: 0;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-ease-standard),
+    color var(--motion-duration-fast) var(--motion-ease-standard),
+    outline-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+
+.heading:hover:not(:disabled) {
+  background-color: var(--layer-hover-01);
+}
+
+.heading:focus-visible {
+  outline-color: var(--focus);
+}
+
+.title {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: inherit;
+}
+
+/* ------------------------------------------------------------------ */
+/* Chevron                                                              */
+/* ------------------------------------------------------------------ */
+
+.chevron {
+  flex-shrink: 0;
+  color: var(--icon-primary);
+  transition: transform var(--motion-duration-base) var(--motion-ease-standard);
+}
+.chevron svg,
+.chevron {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+.itemActive .chevron {
+  transform: rotate(90deg);
+}
+
+/* ------------------------------------------------------------------ */
+/* Alignment                                                            */
+/* ------------------------------------------------------------------ */
+
+/* Default: chevron at the END of the row (right side). We reverse the
+   flex order so the title sits before the chevron visually. */
+.align-end .heading {
+  flex-direction: row-reverse;
+}
+
+/* align="start": chevron leads the title. Default flex order is fine.
+   Tighten the gap since the chevron sits closer to the text. */
+.align-start .heading {
+  gap: var(--spacing-04);
+}
+
+/* ------------------------------------------------------------------ */
+/* Flush — removes horizontal padding (align="end" only)               */
+/* ------------------------------------------------------------------ */
+
+.flush .heading {
+  padding-left: 0;
+  padding-right: 0;
+}
+.flush .contentInner {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sizes — Carbon row heights                                           */
+/* ------------------------------------------------------------------ */
+
+.size-sm .heading {
+  min-height: 2.5rem; /* 40px */
+  padding-top: var(--spacing-03);
+  padding-bottom: var(--spacing-03);
+}
+
+.size-md .heading {
+  min-height: 3rem; /* 48px */
+  padding-top: var(--spacing-04);
+  padding-bottom: var(--spacing-04);
+}
+
+.size-lg .heading {
+  min-height: 4rem; /* 64px */
+  padding-top: var(--spacing-05);
+  padding-bottom: var(--spacing-05);
+}
+
+/* ------------------------------------------------------------------ */
+/* Content panel                                                        */
+/* ------------------------------------------------------------------ */
+
+.content {
+  overflow: hidden;
+}
+
+.content[hidden] {
+  display: none;
+}
+
+.contentInner {
+  padding: 0 var(--spacing-05) var(--spacing-06) var(--spacing-05); /* 0 16 24 16 */
+  color: var(--text-primary);
+}
+
+/* align="start" indents content to line up with the title (chevron width
+   + gap = 16 + 16 = 32). */
+.align-start .contentInner {
+  padding-left: calc(1rem + var(--spacing-04));
+}
+
+/* ------------------------------------------------------------------ */
+/* Disabled                                                             */
+/* ------------------------------------------------------------------ */
+
+.itemDisabled .heading {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+.itemDisabled .chevron {
+  color: var(--icon-disabled);
+}
+
+.itemDisabled .heading:hover {
+  background-color: transparent;
+}

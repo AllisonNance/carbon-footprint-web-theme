@@ -1,0 +1,67 @@
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-04);
+}
+
+.introHeading {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.introDescription {
+  margin: 0;
+  color: var(--text-secondary);
+  max-inline-size: 35rem;
+}
+
+/* ---------- Feed layout ------------------------------------------- */
+
+.feedLayout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-07);
+}
+
+@media (min-width: 42rem) {
+  .feedLayout {
+    flex-direction: row;
+    gap: var(--spacing-07);
+  }
+}
+
+/* ---------- Feed column (3/4) ------------------------------------- */
+
+.feedCol {
+  flex: 3;
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Sidebar column (1/4) ---------------------------------- */
+
+.sidebarCol {
+  flex: 1;
+  min-inline-size: 0;
+  order: -1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-07);
+}
+
+/* ---------- Empty state ------------------------------------------- */
+
+.emptyState {
+  color: var(--text-secondary);
+  padding-block: var(--spacing-07);
+}
+
+/* ---------- Pagination -------------------------------------------- */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding-block-start: var(--spacing-07);
+  padding-block-end: var(--spacing-09);
+}

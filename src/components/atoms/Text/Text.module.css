@@ -1,0 +1,7 @@
+.tone-primary { color: var(--text-primary); }
+.tone-secondary { color: var(--text-secondary); }
+.tone-helper { color: var(--text-helper); }
+.tone-placeholder { color: var(--text-placeholder); }
+.tone-error { color: var(--text-error); }
+.tone-on-color { color: var(--text-on-color); }
+.tone-inverse { color: var(--text-inverse); }

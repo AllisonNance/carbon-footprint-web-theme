@@ -1,0 +1,165 @@
+/* PaginationNav
+ *
+ * A horizontal row of equally-sized cells:
+ *   [prev] [1] [2 …] [3] [4] [5] [… 9] [10] [next]
+ *
+ * Cells are square so they line up on a consistent row height controlled
+ * by `size`. The active page gets a bottom accent underline (Carbon's
+ * signature treatment). The overflow cell uses a native <select> that's
+ * invisibly stacked on top of the "…" so clicking opens the browser
+ * picker — simple, accessible, and no custom popover plumbing needed.
+ */
+
+.nav {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* ---------- Sizes --------------------------------------------------- */
+
+.size-sm .cell,
+.size-sm .pageButton {
+  block-size: var(--size-sm);
+  inline-size: var(--size-sm);
+}
+
+.size-md .cell,
+.size-md .pageButton {
+  block-size: var(--size-md);
+  inline-size: var(--size-md);
+}
+
+.size-lg .cell,
+.size-lg .pageButton {
+  block-size: var(--size-lg);
+  inline-size: var(--size-lg);
+}
+
+/* Prev/Next IconButtons are rendered at the nav's size already — let the
+ * IconButton's own width win so tooltips and padding sit correctly. */
+.cell:first-child,
+.cell:last-child {
+  inline-size: auto;
+}
+
+/* ---------- Page button -------------------------------------------- */
+
+.pageButton {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: var(--font-size-14, 0.875rem);
+  line-height: 1;
+  color: var(--text-secondary);
+  background-color: transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--motion-duration-base, 110ms) ease,
+    color var(--motion-duration-base, 110ms) ease;
+  /* Space for the active-page underline without shifting text. */
+  border-block-end: 2px solid transparent;
+  padding-block-start: 2px;
+}
+
+.pageButton:hover {
+  background-color: var(--background-hover);
+  color: var(--text-primary);
+}
+
+.pageButton:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.pageActive {
+  color: var(--text-primary);
+  border-block-end-color: var(--taupe-60);
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.pageActive:hover {
+  background-color: transparent;
+}
+
+/* ---------- Overflow (…) ------------------------------------------- */
+
+.overflow {
+  position: relative;
+  color: var(--text-secondary);
+}
+
+.overflowDots {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+  font-size: var(--font-size-14, 0.875rem);
+  line-height: 1;
+  pointer-events: none;
+  /* Nudge the ellipsis up to the same baseline as the page numbers. */
+  padding-block-end: 2px;
+}
+
+/* Native <select> stacked invisibly over the "…" so the browser picker
+ * opens when the cell is clicked. Keyboard users tab to it and get the
+ * usual up/down behavior. */
+.overflowSelect {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  opacity: 0; /* keep focusable */
+}
+
+.overflowSelect:hover + .overflowDots,
+.overflow:has(.overflowSelect:hover) .overflowDots {
+  color: var(--text-primary);
+}
+
+.overflow:has(.overflowSelect:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+/* ---------- A11y helper -------------------------------------------- */
+
+.visuallyHidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

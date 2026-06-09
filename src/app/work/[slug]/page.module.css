@@ -1,0 +1,32 @@
+/* Portfolio item page — section layout with sidebar TOC. */
+
+.sectionLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-block-start: calc(-1 * var(--spacing-09) + var(--spacing-07)); /* cancel one gap, add back 32px */
+}
+
+@media (min-width: 42rem) {
+  .sectionLayout {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    gap: var(--spacing-09);
+    align-items: start;
+    padding-inline-start: 44px;
+  }
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.sections > section {
+  padding-block: var(--spacing-09);
+}
+
+.sections > section:first-child {
+  padding-block-start: 0;
+}

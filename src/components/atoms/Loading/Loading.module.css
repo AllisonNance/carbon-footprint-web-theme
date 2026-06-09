@@ -1,0 +1,127 @@
+/**
+ * Carbon Loading — circular spinner.
+ *
+ * Uses the standard two-keyframe spinner pattern:
+ *   1. `loading-rotate` spins the whole wrapper continuously
+ *   2. `loading-dash`   grows and shrinks the visible arc length via
+ *      stroke-dasharray / stroke-dashoffset
+ *
+ * No transform is applied to the <circle> itself — that avoids the
+ * browser-specific quirks around `transform-origin` on SVG shapes
+ * (which caused the arc to appear to orbit instead of spin in place).
+ *
+ * Geometry
+ *   viewBox -75 → 75 · circle r=37.5 · stroke-width=10
+ *   Circumference = 2π × 37.5 ≈ 235.6
+ */
+
+.loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.5rem;   /* 88px — Carbon default */
+  height: 5.5rem;
+  animation: loading-rotate 1.2s linear infinite;
+  transform-origin: center;
+}
+
+.small {
+  width: 2.75rem;   /* 44px */
+  height: 2.75rem;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  /* Nudge the arc so dash=0 starts at the 12-o'clock position. */
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.track {
+  stroke: var(--border-subtle-01);
+  stroke-width: 10;
+  fill: none;
+}
+
+.stroke {
+  stroke: var(--interactive);
+  stroke-width: 10;
+  stroke-linecap: butt;
+  fill: none;
+  animation: loading-dash 1.5s ease-in-out infinite;
+}
+
+.small .stroke,
+.small .track {
+  stroke-width: 12;
+}
+
+/* ------------------------------------------------------------------ */
+/* Stopped state — full static ring, no animation.                      */
+/* ------------------------------------------------------------------ */
+
+.stopped {
+  animation: none;
+}
+
+.stopped .stroke {
+  animation: none;
+  stroke-dasharray: none;
+  stroke-dashoffset: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Overlay                                                              */
+/* ------------------------------------------------------------------ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--overlay);
+  z-index: 1000;
+  transition: opacity var(--motion-duration-base) var(--motion-ease-exit);
+}
+
+.overlay.stopped {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Keyframes                                                            */
+/* ------------------------------------------------------------------ */
+
+@keyframes loading-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading-dash {
+  0% {
+    stroke-dasharray: 1 236;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 150 236;
+    stroke-dashoffset: -40;
+  }
+  100% {
+    stroke-dasharray: 150 236;
+    stroke-dashoffset: -235;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading {
+    animation-duration: 3s;
+  }
+  .stroke {
+    animation-duration: 4s;
+  }
+}

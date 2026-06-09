@@ -1,0 +1,22 @@
+/* AnchorNav — sticky scroll progress bar, visible only when "stuck". */
+
+.root {
+  position: fixed;
+  inset-block-start: var(--anchor-nav-offset, 48px);
+  inset-inline-start: 0;
+  z-index: 7000;
+  block-size: 3px;
+  inline-size: 100vw;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.rootVisible {
+  opacity: 1;
+}
+
+.progressBar {
+  block-size: 3px;
+  background: linear-gradient(to right, var(--taupe-100), var(--taupe-50), var(--taupe-10));
+  transition: inline-size 50ms linear;
+}

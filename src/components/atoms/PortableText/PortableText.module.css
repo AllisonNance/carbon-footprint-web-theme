@@ -1,0 +1,32 @@
+.figure {
+  margin-block: var(--spacing-07);
+  margin-inline: 0;
+}
+
+.image {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  border-radius: 2px;
+}
+
+.caption {
+  margin-block-start: var(--spacing-03);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.videoWrap {
+  position: relative;
+  padding-block-end: 56.25%; /* 16:9 */
+  block-size: 0;
+  overflow: hidden;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+}

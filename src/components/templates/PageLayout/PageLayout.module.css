@@ -1,0 +1,46 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-x: clip;
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+/* UIShell Header is position:fixed — reserve its block size for scroll alignment */
+.pageWithFixedHeader {
+  padding-block-start: var(--size-lg);
+}
+
+.main {
+  flex: 1;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: var(--page-content-max-width);
+  margin-inline: auto;
+  padding-block-start: var(--spacing-12);
+  padding-block-end: 0;
+  padding-inline: var(--page-padding-inline);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-07);
+}
+
+.flush {
+  padding-block-start: 0;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-03);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-09);
+  min-width: 0;
+}

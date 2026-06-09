@@ -1,0 +1,63 @@
+/**
+ * Spacing — Carbon Design System v11 (@carbon/layout).
+ * Use these tokens for padding, margin, and gap. Do not hand-pick pixel values.
+ */
+
+:root {
+  /* Spacing scale (rem, 16px root) */
+  --spacing-01: 0.125rem; /* 2px  */
+  --spacing-02: 0.25rem;  /* 4px  */
+  --spacing-03: 0.5rem;   /* 8px  */
+  --spacing-04: 0.75rem;  /* 12px */
+  --spacing-05: 1rem;     /* 16px */
+  --spacing-06: 1.5rem;   /* 24px */
+  --spacing-07: 2rem;     /* 32px */
+  --spacing-08: 2.5rem;   /* 40px */
+  --spacing-09: 3rem;     /* 48px */
+  --spacing-10: 4rem;     /* 64px */
+  --spacing-11: 5rem;     /* 80px */
+  --spacing-12: 6rem;     /* 96px */
+  --spacing-13: 10rem;    /* 160px */
+
+  /* Fluid spacing (for page layout / section rhythm) */
+  --fluid-spacing-01: 0;
+  --fluid-spacing-02: 2vw;
+  --fluid-spacing-03: 5vw;
+  --fluid-spacing-04: 10vw;
+
+  /* Sizing scale — heights/widths for controls, rows, cells */
+  --size-xs: 1.5rem;  /* 24px  — compact rows    */
+  --size-sm: 2rem;    /* 32px  — small controls  */
+  --size-md: 2.5rem;  /* 40px  — default controls */
+  --size-lg: 3rem;    /* 48px  — large controls  */
+  --size-xl: 4rem;    /* 64px  — 2x large        */
+  --size-2xl: 5rem;   /* 80px                    */
+
+  /* Icon sizes */
+  --icon-size-01: 1rem;    /* 16px */
+  --icon-size-02: 1.25rem; /* 20px */
+
+  /* Container widths — 2x (16-col) Carbon grid breakpoints */
+  --container-sm: 20rem;  /* 320px  — sm   */
+  --container-md: 42rem;  /* 672px  — md   */
+  --container-lg: 66rem;  /* 1056px — lg   */
+  --container-xl: 82rem;  /* 1312px — xlg  */
+  --container-max: 99rem; /* 1584px — max  */
+
+  /* Breakpoint values (for use via JS container queries / matchMedia) */
+  --breakpoint-sm: 20rem;
+  --breakpoint-md: 42rem;
+  --breakpoint-lg: 66rem;
+  --breakpoint-xl: 82rem;
+  --breakpoint-max: 99rem;
+
+  /* Align main bands, footer, CTA inset with UIShell inner + SiteFooter */
+  --page-content-max-width: var(--container-max);
+  --page-padding-inline: var(--spacing-05);
+}
+
+@media (min-width: 42rem) {
+  :root {
+    --page-padding-inline: var(--spacing-07);
+  }
+}

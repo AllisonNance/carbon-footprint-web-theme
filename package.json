@@ -1,0 +1,49 @@
+{
+  "name": "carbon-footprint-web-theme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Carbon Footprint — a componentized React design system built with Next.js, TypeScript, and CSS Modules.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@carbon/icons-react": "^11.78.0",
+    "@fontsource/ibm-plex-mono": "^5.2.7",
+    "@fontsource/ibm-plex-sans": "^5.2.8",
+    "@fontsource/ibm-plex-serif": "^5.2.7",
+    "@fontsource/inter": "^5.2.8",
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/vision": "^5.28.0",
+    "next": "^16.2.6",
+    "next-sanity": "^13.0.7",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "sanity": "^5.28.0",
+    "styled-components": "^6.4.2"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.6.18",
+    "@storybook/addon-interactions": "^8.6.18",
+    "@storybook/addon-links": "^8.6.18",
+    "@storybook/blocks": "^8.6.18",
+    "@storybook/react": "^8.6.18",
+    "@storybook/react-vite": "^8.6.18",
+    "@storybook/test": "^8.6.18",
+    "@types/node": "^20.14.0",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.5",
+    "storybook": "^8.6.18",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.2",
+    "vite-tsconfig-paths": "^5.0.1"
+  }
+}
