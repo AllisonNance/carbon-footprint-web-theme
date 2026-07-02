@@ -7,9 +7,14 @@ import {
   useRef,
   useState,
   type HTMLAttributes,
-  type ReactNode,
 } from "react";
-import { ChevronDown, ChevronUp } from "@carbon/icons-react";
+import {
+  PortableText as PortableTextReact,
+  toPlainText,
+  type PortableTextComponents,
+} from "@portabletext/react";
+import { ChevronDown, ChevronUp, Link as LinkIcon } from "@carbon/icons-react";
+import { Tooltip } from "@components/atoms/Tooltip";
 import styles from "./ByteCard.module.css";
 
 export interface ByteCardProps extends HTMLAttributes<HTMLElement> {
@@ -19,10 +24,14 @@ export interface ByteCardProps extends HTMLAttributes<HTMLElement> {
   dateISO?: string;
   /** Category labels shown inline with the date. */
   categories?: string[];
+  /** Callback when a category label is clicked. */
+  onCategoryClick?: (category: string) => void;
   /** Card heading. */
   title: string;
-  /** Description text. Supports multiple paragraphs as an array. */
-  description?: string | string[];
+  /** Byte slug for the permalink. */
+  slug?: string;
+  /** Rich body content as Portable Text blocks. */
+  body?: any[];
   /** Character limit before collapsing with Read More. Defaults to 300. */
   descriptionLimit?: number;
 }
@@ -35,8 +44,10 @@ export const ByteCard = forwardRef<HTMLElement, ByteCardProps>(
       date,
       dateISO,
       categories,
+      onCategoryClick,
       title,
-      description,
+      slug,
+      body,
       descriptionLimit = DEFAULT_LIMIT,
       className,
       ...rest
@@ -44,14 +55,17 @@ export const ByteCard = forwardRef<HTMLElement, ByteCardProps>(
     ref,
   ) {
     const [expanded, setExpanded] = useState(false);
-    /* showExpanded tracks which content is in flow — it lags behind
-       `expanded` on collapse so the tall content stays in flow while
-       the height animates down. */
     const [showExpanded, setShowExpanded] = useState(false);
-    /* Explicit pixel height for the collapsible wrapper. Starts as
-       `undefined` (no constraint) and gets set to a measured value
-       after the first layout so CSS transitions always have a
-       concrete start/end value. */
+    const [copied, setCopied] = useState(false);
+
+    const copyLink = useCallback(() => {
+      if (!slug) return;
+      const url = `${window.location.origin}/bytes/${slug}`;
+      navigator.clipboard.writeText(url).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
+    }, [slug]);
     const [height, setHeight] = useState<number | undefined>(undefined);
     const collapsibleRef = useRef<HTMLDivElement>(null);
     const collapsedRef = useRef<HTMLDivElement>(null);
@@ -59,16 +73,60 @@ export const ByteCard = forwardRef<HTMLElement, ByteCardProps>(
     const didMountRef = useRef(false);
     const classes = [styles.root, className].filter(Boolean).join(" ");
 
-    const paragraphs = Array.isArray(description)
-      ? description
-      : description
-        ? [description]
-        : [];
-    const fullText = paragraphs.join(" ");
-    const isCollapsible = fullText.length > descriptionLimit;
+    const hasBody = body && body.length > 0;
+    const plainText = hasBody ? toPlainText(body) : "";
+    const isCollapsible = plainText.length > descriptionLimit;
 
-    /* Measure the collapsed content after first paint and lock in an
-       explicit pixel height so future transitions have a starting value. */
+    /* Build PortableText components that append the toggle button
+       inline at the end of the last block. */
+    const makeComponents = (
+      toggleBtn: React.ReactNode,
+    ): PortableTextComponents => {
+      // Find the _key of the last renderable block
+      const lastBlockKey = hasBody
+        ? [...body].reverse().find((b: any) => b._type === "block")?._key
+        : undefined;
+
+      return {
+        block: {
+          normal: ({ children, value }) => {
+            const isLast = value?._key === lastBlockKey;
+            return (
+              <p>
+                {children}
+                {isLast && toggleBtn}
+              </p>
+            );
+          },
+        },
+        marks: {
+          strong: ({ children }) => <strong>{children}</strong>,
+          em: ({ children }) => <em>{children}</em>,
+          underline: ({ children }) => <u>{children}</u>,
+          "strike-through": ({ children }) => <s>{children}</s>,
+          code: ({ children }) => <code>{children}</code>,
+          link: ({ value: v, children }) => {
+            const { href, blank } = v ?? {};
+            return blank ? (
+              <a href={href} target="_blank" rel="noopener noreferrer">
+                {children}
+              </a>
+            ) : (
+              <a href={href}>{children}</a>
+            );
+          },
+        },
+        list: {
+          bullet: ({ children }) => <ul>{children}</ul>,
+          number: ({ children }) => <ol>{children}</ol>,
+        },
+        listItem: {
+          bullet: ({ children }) => <li>{children}</li>,
+          number: ({ children }) => <li>{children}</li>,
+        },
+      };
+    };
+
     useEffect(() => {
       if (!isCollapsible) return;
       if (!didMountRef.current) {
@@ -80,15 +138,12 @@ export const ByteCard = forwardRef<HTMLElement, ByteCardProps>(
 
     const toggle = useCallback(() => {
       if (!expanded) {
-        // Expanding — swap content to full, then animate height up
         setShowExpanded(true);
-        // Wait a frame so the full content is in the DOM and measurable
         requestAnimationFrame(() => {
           const h = expandedRef.current?.scrollHeight;
           if (h != null) setHeight(h);
         });
       } else {
-        // Collapsing — animate height down first (content swaps on transitionEnd)
         const h = collapsedRef.current?.scrollHeight;
         if (h != null) setHeight(h);
       }
@@ -97,7 +152,6 @@ export const ByteCard = forwardRef<HTMLElement, ByteCardProps>(
 
     const handleTransitionEnd = () => {
       if (!expanded) {
-        // Collapse animation finished — now swap to truncated content
         setShowExpanded(false);
       }
     };
@@ -111,14 +165,32 @@ export const ByteCard = forwardRef<HTMLElement, ByteCardProps>(
                 {categories.slice(0, 3).map((cat, i) => (
                   <span key={i} className={styles.categoryWrap}>
                     {i > 0 && <span className={styles.dot} aria-hidden>·</span>}
-                    <span className={styles.category}>{cat}</span>
+                    <button
+                      className={styles.category}
+                      onClick={() => onCategoryClick?.(cat)}
+                    >
+                      {cat}
+                    </button>
                   </span>
                 ))}
               </span>
             </div>
           )}
 
-          <h3 className={`${styles.title} type-heading-04`}>{title}</h3>
+          <h3 className={`${styles.title} type-heading-04`}>
+            {title}
+            {slug && (
+              <Tooltip label={copied ? "Copied!" : "Copy Link"} align="top">
+                <button
+                  className={styles.copyLink}
+                  onClick={copyLink}
+                  aria-label="Copy link to this byte"
+                >
+                  <LinkIcon size={16} />
+                </button>
+              </Tooltip>
+            )}
+          </h3>
 
           {date && (
             <time className={styles.date} dateTime={dateISO}>
@@ -126,14 +198,13 @@ export const ByteCard = forwardRef<HTMLElement, ByteCardProps>(
             </time>
           )}
 
-          {paragraphs.length > 0 && (
+          {hasBody && (
             <div className={styles.descriptionWrap}>
-              {!isCollapsible &&
-                paragraphs.map((p, i) => (
-                  <p key={i} className={`${styles.description} type-body-01`}>
-                    {p}
-                  </p>
-                ))}
+              {!isCollapsible && (
+                <div className={`${styles.richBody} type-body-01`}>
+                  <PortableTextReact value={body} components={makeComponents(null)} />
+                </div>
+              )}
 
               {isCollapsible && (
                 <>
@@ -148,16 +219,19 @@ export const ByteCard = forwardRef<HTMLElement, ByteCardProps>(
                       ref={collapsedRef}
                       className={showExpanded ? styles.contentHidden : undefined}
                     >
-                      <p className={`${styles.description} type-body-01`}>
-                        {fullText.slice(0, descriptionLimit).trimEnd()}&hellip;{" "}
-                        <button
-                          className={styles.toggleInline}
-                          onClick={toggle}
-                        >
-                          <span>Read More</span>
-                          <ChevronDown size={16} aria-hidden />
-                        </button>
-                      </p>
+                      <div className={`${styles.richBody} ${styles.richBodyClamped} type-body-01`}>
+                        <PortableTextReact
+                          value={body}
+                          components={makeComponents(null)}
+                        />
+                      </div>
+                      <button
+                        className={styles.toggleBlock}
+                        onClick={toggle}
+                      >
+                        <span>Read All</span>
+                        <ChevronDown size={16} aria-hidden />
+                      </button>
                     </div>
 
                     {/* Expanded (full) content */}
@@ -165,22 +239,19 @@ export const ByteCard = forwardRef<HTMLElement, ByteCardProps>(
                       ref={expandedRef}
                       className={!showExpanded ? styles.contentHidden : undefined}
                     >
-                      {paragraphs.map((p, i) => (
-                        <p key={i} className={`${styles.description} type-body-01`}>
-                          {p}
-                          {i === paragraphs.length - 1 && (
-                            <>
-                              <button
-                                className={`${styles.toggleInline} ${styles.toggleReadLess}`}
-                                onClick={toggle}
-                              >
-                                <span>Read Less</span>
-                                <ChevronUp size={16} aria-hidden />
-                              </button>
-                            </>
-                          )}
-                        </p>
-                      ))}
+                      <div className={`${styles.richBody} type-body-01`}>
+                        <PortableTextReact
+                          value={body}
+                          components={makeComponents(null)}
+                        />
+                      </div>
+                      <button
+                        className={styles.toggleBlock}
+                        onClick={toggle}
+                      >
+                        <span>Read Less</span>
+                        <ChevronUp size={16} aria-hidden />
+                      </button>
                     </div>
                   </div>
                 </>

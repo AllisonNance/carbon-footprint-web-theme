@@ -13,6 +13,12 @@
   text-decoration: none;
 }
 
+@media (max-width: 41.9375rem) {
+  .emailLabel {
+    display: none;
+  }
+}
+
 .emailLink:hover .emailLabel {
   background-size: 100% 1px;
 }

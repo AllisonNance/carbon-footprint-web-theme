@@ -1,0 +1,183 @@
+/* ---------- Bottom "View all Bytes" link (mobile only) ------------- */
+
+.bottomLink {
+  display: none;
+}
+
+/* ---------- Mobile layout overrides -------------------------------- */
+
+@media (max-width: 41.9375rem) {
+  .detailLayout {
+    margin-block-start: calc(var(--spacing-09) - var(--spacing-12));
+    gap: var(--spacing-09);
+  }
+
+  .article {
+    border-block-start: 1px solid var(--border-subtle-01);
+    padding-block-start: var(--spacing-07);
+  }
+
+  .bottomLink {
+    display: block;
+    padding-block-start: var(--spacing-07);
+    padding-block-end: var(--spacing-07);
+  }
+}
+
+/* ---------- Article ------------------------------------------------ */
+
+.article {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-04);
+  max-inline-size: 48rem;
+}
+
+/* ---------- Meta row (categories) ---------------------------------- */
+
+.metaRow {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--spacing-07);
+  font-family: var(--font-family-mono);
+  font-size: 0.875rem;
+}
+
+.categories {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-03);
+}
+
+.categoryWrap {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-03);
+}
+
+.dot {
+  color: var(--text-secondary);
+}
+
+.category {
+  color: var(--taupe-90);
+  text-decoration: none;
+  cursor: pointer;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--motion-duration-base, 110ms) ease,
+              color var(--motion-duration-base, 110ms) ease;
+}
+
+.category:hover {
+  color: var(--black);
+  background-size: 0 1px;
+  animation: reunderline-category var(--motion-duration-base, 110ms) ease forwards;
+  animation-delay: var(--motion-duration-base, 110ms);
+}
+
+@keyframes reunderline-category {
+  from { background-size: 0 1px; }
+  to { background-size: 100% 1px; }
+}
+
+/* ---------- Title -------------------------------------------------- */
+
+.title {
+  margin: 0;
+  color: var(--gray-80);
+}
+
+/* ---------- Date --------------------------------------------------- */
+
+.date {
+  font-family: var(--font-family-mono);
+  font-size: 1rem;
+  color: var(--taupe-100);
+}
+
+/* ---------- Body (rich text) --------------------------------------- */
+
+.body {
+  color: var(--text-secondary);
+  margin-block-start: var(--spacing-05);
+}
+
+.body p {
+  margin: 0;
+  line-height: 160%;
+}
+
+.body p + p {
+  margin-block-start: var(--spacing-05);
+}
+
+.body em {
+  font-style: italic;
+}
+
+.body strong {
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.body a {
+  color: var(--link-primary);
+  text-decoration: underline;
+}
+
+.body ul,
+.body ol {
+  margin: var(--spacing-04) 0;
+  padding-inline-start: var(--spacing-06);
+}
+
+.body blockquote {
+  margin: var(--spacing-05) 0;
+  padding-inline-start: var(--spacing-05);
+  border-inline-start: 3px solid var(--border-subtle-01);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* ---------- View all Bytes link ------------------------------------ */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-04);
+}
+
+.sidebar .viewAllLink {
+  margin-block-start: calc(var(--spacing-06) - var(--spacing-04));
+}
+
+.viewAllLink {
+  display: inline-flex !important;
+  width: fit-content;
+  color: var(--taupe-90) !important;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--motion-duration-base, 110ms) ease;
+}
+
+.viewAllLink:hover {
+  text-decoration: none !important;
+  background-size: 0 1px;
+  animation: reunderline var(--motion-duration-base, 110ms) ease forwards;
+  animation-delay: var(--motion-duration-base, 110ms);
+}
+
+@keyframes reunderline {
+  from {
+    background-size: 0 1px;
+  }
+  to {
+    background-size: 100% 1px;
+  }
+}

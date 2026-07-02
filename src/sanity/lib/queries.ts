@@ -83,6 +83,31 @@ export const bytesQuery = groq`
   }
 `;
 
+/** Single byte by slug (full detail). */
+export const byteBySlugQuery = groq`
+  *[_type == "byte" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    "categories": categories[]->title,
+    body[] {
+      ...,
+      _type == "image" => {
+        ...,
+        asset->
+      }
+    }
+  }
+`;
+
+/** All byte slugs (for generateStaticParams). */
+export const byteSlugsQuery = groq`
+  *[_type == "byte" && defined(slug.current)]{
+    "slug": slug.current
+  }
+`;
+
 /** Recent bytes for the home page BytesBlock. */
 export const recentBytesQuery = groq`
   *[_type == "byte"] | order(publishedAt desc) [0...5] {

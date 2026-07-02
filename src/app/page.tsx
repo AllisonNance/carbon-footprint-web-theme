@@ -95,7 +95,7 @@ export default async function HomePage() {
     id: b._id,
     category: b.category ?? "",
     byteTitle: b.title,
-    href: `/bytes#${b.slug}`,
+    href: `/bytes/${b.slug}`,
   }));
 
   const focusBlockItems = focusItems.map((f) => ({

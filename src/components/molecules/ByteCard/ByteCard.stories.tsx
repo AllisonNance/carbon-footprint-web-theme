@@ -1,6 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ByteCard } from "./ByteCard";
 
+const toBlock = (text: string, key: string) => ({
+  _type: "block",
+  _key: key,
+  style: "normal",
+  children: [{ _type: "span", _key: `${key}-span`, text }],
+});
+
 const meta: Meta<typeof ByteCard> = {
   title: "Molecules/Byte Card",
   component: ByteCard,
@@ -27,11 +34,15 @@ export const Default: Story = {
     date: "Jan 5, 2026",
     dateISO: "2026-01-05",
     title: "Here is a title for this byte that will show on the feed",
-    description:
-      "This is a description paragraph where I can explain the title lskdn slndv " +
-      "slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn lksd kvns l,ksdc " +
-      "lsnvld lskdn slndv slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn " +
-      "lksd kvns l,ksdc lsnvld",
+    body: [
+      toBlock(
+        "This is a description paragraph where I can explain the title lskdn slndv " +
+          "slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn lksd kvns l,ksdc " +
+          "lsnvld lskdn slndv slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn " +
+          "lksd kvns l,ksdc lsnvld",
+        "default-1",
+      ),
+    ],
   },
 };
 
@@ -41,19 +52,28 @@ export const Expandable: Story = {
     date: "Jan 5, 2026",
     dateISO: "2026-01-05",
     title: "Here is a title for this byte that will show on the feed",
-    description: [
-      "This is a description paragraph where I can explain the title lskdn slndv " +
-        "slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn lksd kvns l,ksdc " +
-        "lsnvld lskdn slndv slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn " +
-        "lksd kvns l,ksdc lsnvld",
-      "This is a description paragraph where I can explain the title lskdn slndv " +
-        "slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn lksd kvns l,ksdc " +
-        "lsnvld lskdn slndv slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn " +
-        "lksd kvns l,ksdc lsnvld kjzxnc kjn cskjndc skljdn skdn slkn vlsnv slnv slndv",
-      "This is a description paragraph where I can explain the title lskdn slndv " +
-        "slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn lksd kvns l,ksdc " +
-        "lsnvld lskdn slndv slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn " +
-        "lksd kvns l,ksdc lsnvld kjzxnc kjn cskjndc skljdn skdn slkn vlsnv slnv slndv",
+    body: [
+      toBlock(
+        "This is a description paragraph where I can explain the title lskdn slndv " +
+          "slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn lksd kvns l,ksdc " +
+          "lsnvld lskdn slndv slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn " +
+          "lksd kvns l,ksdc lsnvld",
+        "expandable-1",
+      ),
+      toBlock(
+        "This is a description paragraph where I can explain the title lskdn slndv " +
+          "slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn lksd kvns l,ksdc " +
+          "lsnvld lskdn slndv slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn " +
+          "lksd kvns l,ksdc lsnvld kjzxnc kjn cskjndc skljdn skdn slkn vlsnv slnv slndv",
+        "expandable-2",
+      ),
+      toBlock(
+        "This is a description paragraph where I can explain the title lskdn slndv " +
+          "slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn lksd kvns l,ksdc " +
+          "lsnvld lskdn slndv slkdnv soldnv slkdnv slnv lsvdn slnc slknc lsnc lksdnc ldsn " +
+          "lksd kvns l,ksdc lsnvld kjzxnc kjn cskjndc skljdn skdn slkn vlsnv slnv slndv",
+        "expandable-3",
+      ),
     ],
   },
 };
@@ -64,6 +84,11 @@ export const TextOnly: Story = {
     date: "Mar 12, 2026",
     dateISO: "2026-03-12",
     title: "A byte without a long description",
-    description: "Sometimes a byte is just text with no accompanying media.",
+    body: [
+      toBlock(
+        "Sometimes a byte is just text with no accompanying media.",
+        "textonly-1",
+      ),
+    ],
   },
 };

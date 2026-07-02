@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { client } from "@/sanity/lib/client";
 import { bytesQuery, categoriesQuery } from "@/sanity/lib/queries";
@@ -42,7 +43,9 @@ export default async function BytesPage() {
 
   return (
     <PageLayout hideDefaultHeader header={header} footer={footer}>
-      <BytesFeed bytes={bytes} categories={categories} />
+      <Suspense fallback={null}>
+        <BytesFeed bytes={bytes} categories={categories} />
+      </Suspense>
     </PageLayout>
   );
 }

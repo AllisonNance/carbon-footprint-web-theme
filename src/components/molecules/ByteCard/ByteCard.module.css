@@ -3,7 +3,8 @@
   flex-direction: column;
   gap: var(--spacing-06);
   padding: var(--spacing-06);
-  max-inline-size: 56rem;
+  padding-inline: 0;
+  max-inline-size: 48rem;
   background-color: var(--background);
   border-block-end: 1px solid var(--border-subtle-01);
 }
@@ -61,8 +62,10 @@
 }
 
 .category {
+  all: unset;
+  font: inherit;
   color: var(--taupe-90);
-  cursor: default;
+  cursor: pointer;
   text-decoration: none;
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 100% 1px;
@@ -72,11 +75,17 @@
               color var(--motion-duration-base, 110ms) ease;
 }
 
-.category:hover {
+.category:hover,
+.category:focus-visible {
   color: var(--black);
   background-size: 0 1px;
   animation: reunderline-category var(--motion-duration-base, 110ms) ease forwards;
   animation-delay: var(--motion-duration-base, 110ms);
+}
+
+.category:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
 
 @keyframes reunderline-category {
@@ -96,6 +105,27 @@
 }
 
 
+/* ---------- Copy link icon ---------------------------------------- */
+
+.copyLink {
+  all: unset;
+  cursor: pointer;
+  color: var(--taupe-90);
+  vertical-align: super;
+  margin-inline-start: var(--spacing-02);
+  line-height: 1;
+  transition: color var(--motion-duration-base, 110ms) ease;
+}
+
+.copyLink:hover {
+  color: var(--black);
+}
+
+.copyLink:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
 /* ---------- Description ------------------------------------------- */
 
 .descriptionWrap {
@@ -110,9 +140,50 @@
   color: var(--text-secondary);
 }
 
+.richBody {
+  color: var(--text-secondary);
+}
+
+.richBody p {
+  margin: 0;
+  line-height: 160%;
+}
+
+.richBody p + p {
+  margin-block-start: var(--spacing-05);
+}
+
+.richBody em {
+  font-style: italic;
+}
+
+.richBody strong {
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.richBody a {
+  color: var(--link-primary);
+  text-decoration: underline;
+}
+
+.richBody ul,
+.richBody ol {
+  margin: var(--spacing-04) 0;
+  padding-inline-start: var(--spacing-06);
+}
+
+.richBody blockquote {
+  margin: var(--spacing-05) 0;
+  padding-inline-start: var(--spacing-05);
+  border-inline-start: 3px solid var(--border-subtle-01);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
 /* ---------- Collapsible container --------------------------------- */
 
 .collapsible {
+  position: relative;
   overflow: hidden;
   transition: max-block-size var(--motion-duration-moderate, 240ms) ease;
 }
@@ -121,6 +192,16 @@
   position: absolute;
   visibility: hidden;
   pointer-events: none;
+}
+
+
+/* ---------- Clamped rich body (collapsed state) -------------------- */
+
+.richBodyClamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* ---------- Read More / Read Less (inline) ------------------------ */
@@ -157,6 +238,41 @@
 
 .toggleReadLess {
   margin-inline-start: var(--spacing-05);
+}
+
+.toggleBlock {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-02);
+  cursor: pointer;
+  color: var(--gray-80);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: 1rem;
+  line-height: 1.375rem;
+  margin-block-start: var(--spacing-03);
+}
+
+.toggleBlock > span {
+  background-image: linear-gradient(to right, var(--taupe-100), var(--taupe-50), var(--taupe-10));
+  background-size: 0 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--motion-duration-base, 110ms) ease;
+}
+
+.toggleBlock:hover > span {
+  background-size: 100% 1px;
+}
+
+.toggleBlock > svg {
+  flex: 0 0 auto;
+}
+
+.toggleBlock:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
 
 .toggleInline:focus-visible {
