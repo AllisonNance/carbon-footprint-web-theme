@@ -63,6 +63,15 @@
   object-fit: cover;
 }
 
+/* ---------- Contribution tags --------------------------------------- */
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-02);
+  margin-block-end: var(--spacing-05);
+}
+
 /* ---------- Title -------------------------------------------------- */
 
 .title {

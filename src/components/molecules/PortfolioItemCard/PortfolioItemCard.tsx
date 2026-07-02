@@ -1,5 +1,6 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { Catalog } from "@carbon/icons-react";
+import { Tag } from "@components/atoms/Tag";
 import styles from "./PortfolioItemCard.module.css";
 
 export interface PortfolioItemCardProps extends HTMLAttributes<HTMLElement> {
@@ -20,6 +21,9 @@ export interface PortfolioItemCardProps extends HTMLAttributes<HTMLElement> {
   client?: string;
   /** Year (e.g. "2026"). */
   year?: string;
+  /** Non-interactive taupe chips shown below the media (e.g. project
+   *  contributions for a placeholder card without a live case study yet). */
+  contributionTags?: string[];
 }
 
 /**
@@ -40,6 +44,7 @@ export const PortfolioItemCard = forwardRef<
     media,
     client,
     year,
+    contributionTags,
     className,
     ...rest
   },
@@ -57,6 +62,14 @@ export const PortfolioItemCard = forwardRef<
       </div>
 
       <div className={styles.media}>{media}</div>
+
+      {contributionTags && contributionTags.length > 0 && (
+        <div className={styles.tags}>
+          {contributionTags.map((tag) => (
+            <Tag key={tag}>{tag}</Tag>
+          ))}
+        </div>
+      )}
 
       <h3 className={`${styles.title} type-heading-03`}>
         {href ? (

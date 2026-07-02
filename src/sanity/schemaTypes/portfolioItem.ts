@@ -44,6 +44,26 @@ export const portfolioItem = defineType({
       description: "Your role on this project (e.g. Lead Product Designer).",
     }),
     defineField({
+      name: "isPlaceholder",
+      title: "Placeholder card",
+      type: "boolean",
+      description:
+        "Show this as a placeholder card with no link and contribution " +
+        "tags instead of a live case study. Turn off once the case study " +
+        "is published.",
+      initialValue: false,
+    }),
+    defineField({
+      name: "contributionTags",
+      title: "Contribution tags",
+      type: "array",
+      of: [{ type: "string" }],
+      description:
+        "Skills or contributions shown as taupe chips below the card " +
+        "media on placeholder cards (e.g. \"UX Strategy\", \"User Flows\").",
+      hidden: ({ document }) => !document?.isPlaceholder,
+    }),
+    defineField({
       name: "client",
       title: "Client",
       type: "string",

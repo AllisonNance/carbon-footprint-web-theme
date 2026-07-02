@@ -40,6 +40,8 @@ interface FeaturedWorkItem {
   portfolioItemType?: string;
   client?: string;
   year?: string;
+  isPlaceholder?: boolean;
+  contributionTags?: string[];
   cardMedia?: CardMedia[];
   categories?: string[];
   excerpt?: string;
@@ -167,11 +169,14 @@ export default async function HomePage() {
               <PortfolioItemCard
                 key={item._id}
                 title={item.title}
-                href={`/work/${item.slug}`}
+                href={item.isPlaceholder ? undefined : `/work/${item.slug}`}
                 portfolioItemType={typeLabel}
                 media={mediaElement}
                 year={item.year}
                 client={item.client}
+                contributionTags={
+                  item.isPlaceholder ? item.contributionTags : undefined
+                }
               />
             );
           })}

@@ -20,7 +20,6 @@ interface SiteSettings {
   }[];
   location?: string;
   timezone?: string;
-  workingHours?: string;
 }
 
 /**
@@ -57,7 +56,6 @@ export async function getSiteChrome() {
       links={footerLinks}
       location={settings?.location}
       timezone={settings?.timezone}
-      workingHours={settings?.workingHours}
     />
   );
 

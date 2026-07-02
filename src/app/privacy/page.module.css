@@ -1,0 +1,12 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-05);
+  max-width: 700px;
+}
+
+.body p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 160%;
+}

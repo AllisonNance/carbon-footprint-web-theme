@@ -39,7 +39,6 @@ export function SiteHeader({
   linkedinUrl,
 }: SiteHeaderProps) {
   const links: NavItem[] = navItems ?? [
-    { label: "Work", href: "#" },
     { label: "Bytes", href: "/bytes" },
     { label: "GitHub", href: "#", external: true },
   ];

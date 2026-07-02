@@ -171,6 +171,8 @@ export const siteSettingsQuery = groq`
       portfolioItemType,
       client,
       year,
+      isPlaceholder,
+      contributionTags,
       cardMedia[] {
         _type,
         _type == "image" => {
