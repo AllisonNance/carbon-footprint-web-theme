@@ -99,11 +99,13 @@ export function BytesFeed({ bytes, categories }: BytesFeedProps) {
                 count: bytes.length,
                 isActive: activeCategory === null,
               },
-              ...categories.map((c) => ({
-                label: c.title,
-                count: c.count,
-                isActive: c.title === activeCategory,
-              })),
+              ...categories
+                .filter((c) => c.count > 0)
+                .map((c) => ({
+                  label: c.title,
+                  count: c.count,
+                  isActive: c.title === activeCategory,
+                })),
             ]}
             onSelect={(label) =>
               setActiveCategory(label === "All" ? null : label)

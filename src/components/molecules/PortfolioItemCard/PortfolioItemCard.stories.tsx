@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { TrafficCone } from "@carbon/icons-react";
 import { PortfolioItemCard } from "./PortfolioItemCard";
 import { PortfolioItemGrid } from "./PortfolioItemGrid";
 
@@ -107,7 +108,8 @@ export const GridOfFour: Story = {
 
 export const Placeholder: Story = {
   args: {
-    portfolioItemType: "Project",
+    portfolioItemType: "Coming Soon",
+    portfolioItemTypeIcon: <TrafficCone size={16} />,
     title: "A future case study, not yet published",
     media: <img src={img2} alt="" />,
     client: "Acme Corp",
@@ -127,7 +129,7 @@ export const Placeholder: Story = {
         story:
           "No `href` is passed, so the title renders as plain text " +
           "instead of a link. `contributionTags` render as non-interactive " +
-          "taupe chips below the media, showing what was contributed " +
+          "taupe chips below the title, showing what was contributed " +
           "while the full case study isn't live yet.",
       },
     },

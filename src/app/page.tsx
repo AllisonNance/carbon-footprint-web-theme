@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { TrafficCone } from "@carbon/icons-react";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import {
@@ -163,7 +164,9 @@ export default async function HomePage() {
                 ? "Case Study"
                 : item.portfolioItemType === "overview"
                   ? "Overview"
-                  : undefined;
+                  : item.portfolioItemType === "coming-soon"
+                    ? "Coming Soon"
+                    : undefined;
 
             return (
               <PortfolioItemCard
@@ -171,6 +174,11 @@ export default async function HomePage() {
                 title={item.title}
                 href={item.isPlaceholder ? undefined : `/work/${item.slug}`}
                 portfolioItemType={typeLabel}
+                portfolioItemTypeIcon={
+                  item.portfolioItemType === "coming-soon" ? (
+                    <TrafficCone size={16} />
+                  ) : undefined
+                }
                 media={mediaElement}
                 year={item.year}
                 client={item.client}

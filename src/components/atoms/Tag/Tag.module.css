@@ -11,7 +11,7 @@
   margin: 0;
   padding: 0 var(--spacing-03);
   border: 0;
-  border-radius: 999px;
+  border-radius: 3px;
   background-color: var(--tag-background-taupe);
   color: var(--tag-color-taupe);
   font-family: var(--font-family-sans);

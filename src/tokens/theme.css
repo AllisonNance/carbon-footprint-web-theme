@@ -61,7 +61,7 @@
   --overlay: #00000099;
 
   /* Tag — taupe */
-  --tag-background-taupe: var(--taupe-10);
+  --tag-background-taupe: var(--taupe-tag-bg);
   --tag-color-taupe: var(--taupe-100);
 }
 

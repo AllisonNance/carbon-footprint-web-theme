@@ -33,6 +33,7 @@ export const portfolioItem = defineType({
         list: [
           { title: "Case Study", value: "case-study" },
           { title: "Overview", value: "overview" },
+          { title: "Coming Soon", value: "coming-soon" },
         ],
       },
       initialValue: "case-study",

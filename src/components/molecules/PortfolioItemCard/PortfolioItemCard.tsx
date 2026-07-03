@@ -63,14 +63,6 @@ export const PortfolioItemCard = forwardRef<
 
       <div className={styles.media}>{media}</div>
 
-      {contributionTags && contributionTags.length > 0 && (
-        <div className={styles.tags}>
-          {contributionTags.map((tag) => (
-            <Tag key={tag}>{tag}</Tag>
-          ))}
-        </div>
-      )}
-
       <h3 className={`${styles.title} type-heading-03`}>
         {href ? (
           <a href={href} className={styles.titleLink}>
@@ -80,6 +72,14 @@ export const PortfolioItemCard = forwardRef<
           title
         )}
       </h3>
+
+      {contributionTags && contributionTags.length > 0 && (
+        <div className={styles.tags}>
+          {contributionTags.map((tag) => (
+            <Tag key={tag}>{tag}</Tag>
+          ))}
+        </div>
+      )}
 
       {(year || client) && (
         <div className={styles.meta}>
