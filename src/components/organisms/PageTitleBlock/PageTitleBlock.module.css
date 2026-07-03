@@ -66,7 +66,7 @@
   margin: var(--spacing-04) 0 0;
   color: var(--text-secondary);
   line-height: 1.5rem;
-  max-inline-size: 35rem;
+  max-inline-size: 42rem;
 }
 
 @media (max-width: 41.9375rem) {

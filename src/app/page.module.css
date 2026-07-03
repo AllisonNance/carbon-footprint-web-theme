@@ -1,4 +1,7 @@
-/* Hero: heading (⅔) + update notice (⅓) */
+/* Hero: heading (⅔) + update notice (⅓)
+ * Mirrors PortfolioItemGrid's cols-4 column template (same breakpoints,
+ * same gap) so the notice card's left edge and width line up exactly
+ * with the ⅓-width portfolio card in the row below. */
 .heroRow {
   display: grid;
   gap: var(--spacing-07);
@@ -8,7 +11,22 @@
 
 @media (min-width: 42rem) {
   .heroRow {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+  }
+}
+
+@media (min-width: 66rem) {
+  .heroRow {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .heroRow > *:nth-child(1) {
+    grid-column: span 4;
+  }
+
+  .heroRow > *:nth-child(2) {
+    grid-column: span 2;
   }
 }
 
