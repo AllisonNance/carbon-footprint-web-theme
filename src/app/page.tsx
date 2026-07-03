@@ -75,7 +75,7 @@ interface FocusItem {
 
 function buildCardMediaElement(media: CardMedia | undefined): React.ReactNode {
   if (media?._type === "image") {
-    const src = urlFor(media).width(800).quality(80).auto("format").url();
+    const src = urlFor(media).width(2000).quality(80).auto("format").url();
     return <img src={src} alt={media.alt || ""} />;
   }
 
