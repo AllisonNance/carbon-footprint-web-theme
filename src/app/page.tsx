@@ -124,11 +124,11 @@ export default async function HomePage() {
           heading={
             <>
               I&apos;m Allison,
-              <br /> a UX designer who <em>builds.</em>
+              <br /> a UX designer and <em>systems</em> thinker.
             </>
           }
-          tags={["Systems", "Strategy", "AI Code"]}
-          description="I bring an implementation-minded approach to UX, connecting strategy, interface design, systems thinking, and AI-assisted coding to translate ideas into experiences."
+          tags={["Systems", "Strategy", "Scale"]}
+          description="I connect strategy, interface design, and product structure to clarify workflows, reduce friction, and create scalable experiences that help people make confident decisions."
         />
 
         <NoticeCard
