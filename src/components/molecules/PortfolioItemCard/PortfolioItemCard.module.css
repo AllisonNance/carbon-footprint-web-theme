@@ -63,6 +63,13 @@
   object-fit: cover;
 }
 
+/* ---------- Description ---------------------------------------------- */
+
+.description {
+  margin: 0 0 var(--spacing-05) 0;
+  color: var(--text-secondary);
+}
+
 /* ---------- Contribution tags --------------------------------------- */
 
 .tags {

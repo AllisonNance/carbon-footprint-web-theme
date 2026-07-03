@@ -21,7 +21,10 @@ export interface PortfolioItemCardProps extends HTMLAttributes<HTMLElement> {
   client?: string;
   /** Year (e.g. "2026"). */
   year?: string;
-  /** Non-interactive taupe chips shown below the media (e.g. project
+  /** Short summary shown below the title (e.g. for a placeholder card
+   *  without a live case study yet). */
+  description?: string;
+  /** Non-interactive taupe chips shown below the title (e.g. project
    *  contributions for a placeholder card without a live case study yet). */
   contributionTags?: string[];
 }
@@ -44,6 +47,7 @@ export const PortfolioItemCard = forwardRef<
     media,
     client,
     year,
+    description,
     contributionTags,
     className,
     ...rest
@@ -72,6 +76,10 @@ export const PortfolioItemCard = forwardRef<
           title
         )}
       </h3>
+
+      {description && (
+        <p className={`${styles.description} type-body-01`}>{description}</p>
+      )}
 
       {contributionTags && contributionTags.length > 0 && (
         <div className={styles.tags}>

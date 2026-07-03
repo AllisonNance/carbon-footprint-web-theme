@@ -1,3 +1,21 @@
+/* Hero: heading (⅔) + update notice (⅓) */
+.heroRow {
+  display: grid;
+  gap: var(--spacing-07);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+@media (min-width: 42rem) {
+  .heroRow {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.heroNotice {
+  margin-block-start: var(--spacing-12);
+}
+
 /* Home: Bytes (⅓) + Current focus (⅔) */
 .focusRow {
   display: grid;

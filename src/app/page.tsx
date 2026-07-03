@@ -8,6 +8,8 @@ import {
   currentFocusQuery,
 } from "@/sanity/lib/queries";
 import { PortfolioItemCard, PortfolioItemGrid } from "@components/molecules/PortfolioItemCard";
+import { NoticeCard } from "@components/molecules/NoticeCard";
+import { SparklesIcon } from "@components/atoms/SparklesIcon";
 import {
   BytesBlock,
   type ByteItem,
@@ -117,16 +119,25 @@ export default async function HomePage() {
       header={header}
       footer={footer}
     >
-      <PageTitleBlock
-        heading={
-          <>
-            I&apos;m Allison,
-            <br /> a UX designer who <em>builds.</em>
-          </>
-        }
-        tags={["Systems", "Strategy", "AI Code"]}
-        description="I bring an implementation-minded approach to UX, connecting strategy, interface design, systems thinking, and AI-assisted coding to translate ideas into experiences."
-      />
+      <div className={styles.heroRow}>
+        <PageTitleBlock
+          heading={
+            <>
+              I&apos;m Allison,
+              <br /> a UX designer who <em>builds.</em>
+            </>
+          }
+          tags={["Systems", "Strategy", "AI Code"]}
+          description="I bring an implementation-minded approach to UX, connecting strategy, interface design, systems thinking, and AI-assisted coding to translate ideas into experiences."
+        />
+
+        <NoticeCard
+          className={styles.heroNotice}
+          icon={<SparklesIcon size={28} />}
+          heading="My portfolio is getting an update!"
+          description="I'm currently refreshing my case studies to better reflect the way I think, design, collaborate, and build. Until they're ready, here's a snapshot of my work and contributions."
+        />
+      </div>
 
       {featuredWork.length > 0 && (
         <PortfolioItemGrid
@@ -182,9 +193,7 @@ export default async function HomePage() {
                 media={mediaElement}
                 year={item.year}
                 client={item.client}
-                contributionTags={
-                  item.isPlaceholder ? item.contributionTags : undefined
-                }
+                description={item.isPlaceholder ? item.excerpt : undefined}
               />
             );
           })}

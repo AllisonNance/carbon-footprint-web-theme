@@ -114,23 +114,17 @@ export const Placeholder: Story = {
     media: <img src={img2} alt="" />,
     client: "Acme Corp",
     year: "2026",
-    contributionTags: [
-      "UX Strategy",
-      "User Flows",
-      "Wireframes",
-      "UI Design",
-      "Ecommerce UX",
-      "Design System Alignment",
-    ],
+    description:
+      "A short summary of this project will live here until the full " +
+      "case study is ready to publish.",
   },
   parameters: {
     docs: {
       description: {
         story:
           "No `href` is passed, so the title renders as plain text " +
-          "instead of a link. `contributionTags` render as non-interactive " +
-          "taupe chips below the title, showing what was contributed " +
-          "while the full case study isn't live yet.",
+          "instead of a link. `description` shows a short summary below " +
+          "the title while the full case study isn't live yet.",
       },
     },
   },
