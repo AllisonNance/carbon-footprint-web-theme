@@ -186,6 +186,19 @@ export const siteSettingsQuery = groq`
           loop
         }
       },
+      cardMediaMobile[] {
+        _type,
+        _type == "image" => {
+          asset->,
+          alt
+        },
+        _type == "cardVideo" => {
+          "videoUrl": videoFile.asset->url,
+          alt,
+          autoplay,
+          loop
+        }
+      },
       "categories": categories[]->title,
       excerpt
     },

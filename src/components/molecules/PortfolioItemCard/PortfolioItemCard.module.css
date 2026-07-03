@@ -53,14 +53,40 @@
   background-color: var(--layer-01);
 }
 
-.media > img,
-.media > video {
+.media img,
+.media video {
   display: block;
   inline-size: 100%;
   block-size: 100%;
   min-inline-size: 0;
   min-block-size: 0;
   object-fit: cover;
+}
+
+/* ---------- Mobile media override ----------------------------------- */
+
+.mediaDesktop,
+.mediaMobile {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.mediaMobile {
+  display: block;
+}
+
+.mediaDesktop {
+  display: none;
+}
+
+@media (min-width: 42rem) {
+  .mediaDesktop {
+    display: block;
+  }
+
+  .mediaMobile {
+    display: none;
+  }
 }
 
 /* ---------- Description ---------------------------------------------- */

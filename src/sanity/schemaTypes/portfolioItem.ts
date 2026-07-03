@@ -1,6 +1,63 @@
 import { defineField, defineType } from "sanity";
 import { CaseIcon, BlockContentIcon, ImageIcon, PlayIcon } from "@sanity/icons";
 
+/** Shared image-or-video options for the home page card media fields. */
+const cardMediaOf = [
+  {
+    type: "image",
+    icon: ImageIcon,
+    options: { hotspot: true },
+    fields: [
+      {
+        name: "alt",
+        type: "string",
+        title: "Alt text",
+        validation: (rule: any) => rule.required(),
+      },
+    ],
+  },
+  {
+    type: "object",
+    name: "cardVideo",
+    title: "Video",
+    icon: PlayIcon,
+    fields: [
+      {
+        name: "videoFile",
+        title: "Video file",
+        type: "file",
+        options: { accept: "video/*" },
+        validation: (rule: any) => rule.required(),
+      },
+      {
+        name: "alt",
+        title: "Alt text",
+        type: "string",
+      },
+      {
+        name: "autoplay",
+        title: "Autoplay",
+        type: "boolean",
+        description: "Automatically play the video (muted).",
+        initialValue: true,
+      },
+      {
+        name: "loop",
+        title: "Loop",
+        type: "boolean",
+        description: "Loop the video continuously.",
+        initialValue: true,
+      },
+    ],
+    preview: {
+      select: { alt: "alt" },
+      prepare({ alt }: { alt?: string }) {
+        return { title: alt || "Video" };
+      },
+    },
+  },
+];
+
 /**
  * Portfolio Item — a case study or project page.
  * Drives the PortfolioItemCard grid on the home page and
@@ -98,61 +155,18 @@ export const portfolioItem = defineType({
       type: "array",
       description: "Image or video shown on the home page portfolio card.",
       validation: (rule) => rule.max(1),
-      of: [
-        {
-          type: "image",
-          icon: ImageIcon,
-          options: { hotspot: true },
-          fields: [
-            {
-              name: "alt",
-              type: "string",
-              title: "Alt text",
-              validation: (rule) => rule.required(),
-            },
-          ],
-        },
-        {
-          type: "object",
-          name: "cardVideo",
-          title: "Video",
-          icon: PlayIcon,
-          fields: [
-            {
-              name: "videoFile",
-              title: "Video file",
-              type: "file",
-              options: { accept: "video/*" },
-              validation: (rule) => rule.required(),
-            },
-            {
-              name: "alt",
-              title: "Alt text",
-              type: "string",
-            },
-            {
-              name: "autoplay",
-              title: "Autoplay",
-              type: "boolean",
-              description: "Automatically play the video (muted).",
-              initialValue: true,
-            },
-            {
-              name: "loop",
-              title: "Loop",
-              type: "boolean",
-              description: "Loop the video continuously.",
-              initialValue: true,
-            },
-          ],
-          preview: {
-            select: { alt: "alt" },
-            prepare({ alt }) {
-              return { title: alt || "Video" };
-            },
-          },
-        },
-      ],
+      of: cardMediaOf,
+    }),
+    defineField({
+      name: "cardMediaMobile",
+      title: "Card media — mobile (optional)",
+      type: "array",
+      description:
+        "Optional image or video shown on the home page portfolio card " +
+        "only on mobile screens, replacing the card media above. Falls " +
+        "back to the card media above when left empty.",
+      validation: (rule) => rule.max(1),
+      of: cardMediaOf,
     }),
     defineField({
       name: "categories",

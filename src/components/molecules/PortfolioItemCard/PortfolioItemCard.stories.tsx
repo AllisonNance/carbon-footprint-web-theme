@@ -50,6 +50,30 @@ export const Default: Story = {
   },
 };
 
+/* ---------- Optional mobile media override ---------- */
+
+export const MobileMediaOverride: Story = {
+  args: {
+    portfolioItemType: "Project",
+    title: "Cleveland Clinic and IBM debut new quantum workflow for simulating molecules",
+    href: "#",
+    media: <img src={img1} alt="Desktop crop" />,
+    mobileMedia: <img src={img3} alt="Mobile crop" />,
+    client: "Cleveland Clinic",
+    year: "2026",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "When `mobileMedia` is set, it replaces `media` below the 42rem " +
+          "breakpoint (e.g. a tighter crop for small screens). Resize the " +
+          "viewport to see the swap.",
+      },
+    },
+  },
+};
+
 /* ---------- The 4-up grid (matches the reference) ---------- */
 
 export const GridOfFour: Story = {

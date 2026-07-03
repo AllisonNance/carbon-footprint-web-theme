@@ -46,6 +46,7 @@ interface FeaturedWorkItem {
   isPlaceholder?: boolean;
   contributionTags?: string[];
   cardMedia?: CardMedia[];
+  cardMediaMobile?: CardMedia[];
   categories?: string[];
   excerpt?: string;
 }
@@ -70,6 +71,28 @@ interface FocusItem {
   description: string;
   contributions?: string[];
   contributionsHeading?: string;
+}
+
+function buildCardMediaElement(media: CardMedia | undefined): React.ReactNode {
+  if (media?._type === "image") {
+    const src = urlFor(media).width(800).quality(80).auto("format").url();
+    return <img src={src} alt={media.alt || ""} />;
+  }
+
+  if (media?._type === "cardVideo" && media.videoUrl) {
+    return (
+      <video
+        src={media.videoUrl}
+        autoPlay={media.autoplay ?? true}
+        loop={media.loop ?? true}
+        muted
+        playsInline
+        aria-label={media.alt || undefined}
+      />
+    );
+  }
+
+  return undefined;
 }
 
 /** Revalidate every 60 seconds so Sanity edits appear quickly. */
@@ -145,30 +168,10 @@ export default async function HomePage() {
           aria-label="Selected work"
         >
           {featuredWork.map((item) => {
-            const media = item.cardMedia?.[0];
-            let mediaElement: React.ReactNode = undefined;
-
-            if (media?._type === "image") {
-              const src = urlFor(media)
-                .width(800)
-                .quality(80)
-                .auto("format")
-                .url();
-              mediaElement = (
-                <img src={src} alt={media.alt || ""} />
-              );
-            } else if (media?._type === "cardVideo" && media.videoUrl) {
-              mediaElement = (
-                <video
-                  src={media.videoUrl}
-                  autoPlay={media.autoplay ?? true}
-                  loop={media.loop ?? true}
-                  muted
-                  playsInline
-                  aria-label={media.alt || undefined}
-                />
-              );
-            }
+            const mediaElement = buildCardMediaElement(item.cardMedia?.[0]);
+            const mobileMediaElement = buildCardMediaElement(
+              item.cardMediaMobile?.[0],
+            );
 
             const typeLabel =
               item.portfolioItemType === "case-study"
@@ -191,6 +194,7 @@ export default async function HomePage() {
                   ) : undefined
                 }
                 media={mediaElement}
+                mobileMedia={mobileMediaElement}
                 year={item.year}
                 client={item.client}
                 description={item.isPlaceholder ? item.excerpt : undefined}

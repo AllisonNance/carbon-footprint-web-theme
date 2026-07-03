@@ -17,6 +17,9 @@ export interface PortfolioItemCardProps extends HTMLAttributes<HTMLElement> {
    *  works (illustration block, video frame, etc.). The component
    *  renders it inside a 3:4 portrait frame with `object-fit: cover`. */
   media: ReactNode;
+  /** Optional alternate media shown only on mobile (below 42rem),
+   *  replacing `media`. Falls back to `media` when omitted. */
+  mobileMedia?: ReactNode;
   /** Client name. */
   client?: string;
   /** Year (e.g. "2026"). */
@@ -45,6 +48,7 @@ export const PortfolioItemCard = forwardRef<
     title,
     href,
     media,
+    mobileMedia,
     client,
     year,
     description,
@@ -65,7 +69,16 @@ export const PortfolioItemCard = forwardRef<
         <span>{portfolioItemType}</span>
       </div>
 
-      <div className={styles.media}>{media}</div>
+      <div className={styles.media}>
+        {mobileMedia ? (
+          <>
+            <div className={styles.mediaDesktop}>{media}</div>
+            <div className={styles.mediaMobile}>{mobileMedia}</div>
+          </>
+        ) : (
+          media
+        )}
+      </div>
 
       <h3 className={`${styles.title} type-heading-03`}>
         {href ? (
