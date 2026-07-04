@@ -150,6 +150,15 @@ export const categoriesQuery = groq`
 /*  Site Settings                                                       */
 /* ------------------------------------------------------------------ */
 
+/** Lightweight query for the root layout — just the favicon. */
+export const faviconQuery = groq`
+  *[_type == "siteSettings" && _id == "siteSettings"][0] {
+    favicon {
+      asset->
+    }
+  }
+`;
+
 export const siteSettingsQuery = groq`
   *[_type == "siteSettings" && _id == "siteSettings"][0] {
     brandName,

@@ -113,6 +113,12 @@ export const siteSettings = defineType({
       description: "Legal line in the footer strip.",
     }),
     defineField({
+      name: "favicon",
+      title: "Favicon",
+      type: "image",
+      description: "Browser tab icon. Use a square image (e.g. 512×512).",
+    }),
+    defineField({
       name: "profileImage",
       title: "Profile image",
       type: "image",
