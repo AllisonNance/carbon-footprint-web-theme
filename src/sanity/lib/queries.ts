@@ -150,11 +150,16 @@ export const categoriesQuery = groq`
 /*  Site Settings                                                       */
 /* ------------------------------------------------------------------ */
 
-/** Lightweight query for the root layout — just the favicon. */
-export const faviconQuery = groq`
+/** Lightweight query for the root layout — favicon + brand font files. */
+export const layoutAssetsQuery = groq`
   *[_type == "siteSettings" && _id == "siteSettings"][0] {
     favicon {
       asset->
+    },
+    brandFont {
+      "regularUrl": regular.asset->url,
+      "regularItalicUrl": regularItalic.asset->url,
+      "semiboldUrl": semibold.asset->url
     }
   }
 `;

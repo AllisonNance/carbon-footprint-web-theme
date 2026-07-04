@@ -119,6 +119,34 @@ export const siteSettings = defineType({
       description: "Browser tab icon. Use a square image (e.g. 512×512).",
     }),
     defineField({
+      name: "brandFont",
+      title: "Brand display font (Tiempos Text)",
+      type: "object",
+      description:
+        "Licensed WOFF2 files for headings. Hosted here (not in the " +
+        "public GitHub repo) so the licensed font files stay private.",
+      fields: [
+        {
+          name: "regular",
+          title: "Regular (400)",
+          type: "file",
+          options: { accept: ".woff2" },
+        },
+        {
+          name: "regularItalic",
+          title: "Regular Italic (400)",
+          type: "file",
+          options: { accept: ".woff2" },
+        },
+        {
+          name: "semibold",
+          title: "Semibold (600)",
+          type: "file",
+          options: { accept: ".woff2" },
+        },
+      ],
+    }),
+    defineField({
       name: "profileImage",
       title: "Profile image",
       type: "image",

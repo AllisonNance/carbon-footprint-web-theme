@@ -14,28 +14,9 @@
 @import "../tokens/index.css";
 @import "./reset.css";
 
-/* Tiempos Text — self-hosted WOFF2 for headings & titles (licensed) */
-@font-face {
-  font-family: "Tiempos Text";
-  src: url("/fonts/tiempos-text/tiempos-text-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Tiempos Text";
-  src: url("/fonts/tiempos-text/tiempos-text-regular-italic.woff2") format("woff2");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Tiempos Text";
-  src: url("/fonts/tiempos-text/tiempos-text-semibold.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
+/* Tiempos Text (licensed) is loaded dynamically from Sanity — see
+ * buildBrandFontCss() in src/app/layout.tsx. Not declared here so the
+ * licensed WOFF2 files never need to exist in this (public) repo. */
 
 html {
   color-scheme: light dark;
