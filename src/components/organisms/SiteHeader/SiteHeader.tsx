@@ -40,7 +40,7 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const links: NavItem[] = navItems ?? [
     { label: "Bytes", href: "/bytes" },
-    { label: "GitHub", href: "#", external: true },
+    { label: "GitHub", href: "https://github.com/AllisonNance", external: true },
   ];
 
   const contactEmail = email ?? "allison@availta.com";
