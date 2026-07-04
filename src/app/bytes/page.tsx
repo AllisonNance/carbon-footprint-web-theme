@@ -27,7 +27,7 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Bytes — Allison Nance",
   description:
-    "A brief piece of insight, observation, or practical learning.",
+    "Brief pieces of insight, observation, or practical learning.",
 };
 
 export default async function BytesPage() {

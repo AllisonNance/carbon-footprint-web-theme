@@ -86,7 +86,7 @@ export function BytesFeed({ bytes, categories }: BytesFeedProps) {
             )}
           </h1>
           <p className={`${styles.introDescription} type-body-01`}>
-            A brief piece of insight, observation, or practical learning.
+            Brief pieces of insight, observation, or practical learning.
           </p>
         </div>
 

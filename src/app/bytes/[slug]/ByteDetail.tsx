@@ -33,7 +33,7 @@ export function ByteDetail({ byte }: { byte: SanityByte }) {
             Bytes
           </h1>
           <p className={`${feedStyles.introDescription} type-body-01`}>
-            A brief piece of insight, observation, or practical learning.
+            Brief pieces of insight, observation, or practical learning.
           </p>
           <Link
             href="/bytes"
