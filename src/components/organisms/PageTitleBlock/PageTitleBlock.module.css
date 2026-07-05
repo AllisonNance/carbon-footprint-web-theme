@@ -16,8 +16,8 @@
 
 .image {
   flex: 0 0 auto;
-  inline-size: 4rem;
-  block-size: 4rem;
+  inline-size: 3rem;
+  block-size: 3rem;
   border-radius: 50%;
   overflow: hidden;
   margin-block-end: var(--spacing-05);
