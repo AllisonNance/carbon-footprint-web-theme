@@ -4,7 +4,7 @@
   min-inline-size: 0;
   background-color: var(--background);
   color: var(--text-primary);
-  padding-block-start: var(--spacing-12);
+  padding-block-start: var(--spacing-10);
 }
 
 .inner {

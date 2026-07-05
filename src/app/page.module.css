@@ -30,8 +30,10 @@
   }
 }
 
-.heroNotice {
-  margin-block-start: var(--spacing-12);
+@media (min-width: 42rem) {
+  .heroNotice {
+    align-self: end;
+  }
 }
 
 /* Home: Bytes (⅓) + Current focus (⅔) */
