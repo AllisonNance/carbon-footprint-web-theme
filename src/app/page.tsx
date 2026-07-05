@@ -54,6 +54,10 @@ interface FeaturedWorkItem {
 interface SiteSettings {
   pageHeading?: string;
   pageDescription?: string;
+  profileImage?: {
+    asset?: { _ref: string; url: string };
+    alt?: string;
+  };
   featuredWork?: FeaturedWorkItem[];
 }
 
@@ -152,6 +156,19 @@ export default async function HomePage() {
           }
           tags={["Systems", "Strategy", "Scale"]}
           description="I connect strategy, interface design, and product structure to clarify workflows, reduce friction, and create scalable experiences that help people make confident decisions."
+          image={
+            settings?.profileImage?.asset ? (
+              <img
+                src={urlFor(settings.profileImage)
+                  .width(128)
+                  .height(128)
+                  .quality(80)
+                  .auto("format")
+                  .url()}
+                alt={settings.profileImage.alt || ""}
+              />
+            ) : undefined
+          }
         />
 
         <NoticeCard
