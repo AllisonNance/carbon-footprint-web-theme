@@ -151,11 +151,12 @@ export default async function HomePage() {
           heading={
             <>
               I&apos;m Allison,
-              <br /> a UX designer and <em>systems</em> thinker.
+              <br /> a UX <em>designer</em> and <em>systems</em>{" "}
+              <em>thinker</em>.
             </>
           }
           tags={["Systems", "Strategy", "Scale"]}
-          description="I connect strategy, interface design, and product structure to clarify workflows, reduce friction, and create scalable experiences that help people make confident decisions."
+          description="I connect strategy, interface design, and product structure to clarify workflows and create scalable experiences."
           image={
             settings?.profileImage?.asset ? (
               <img
