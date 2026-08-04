@@ -151,7 +151,7 @@ export default async function HomePage() {
           heading={
             <>
               I&apos;m Allison,
-              <br /> a UX <em>designer</em> and <em>systems</em>{" "}
+              <br /> a <em>product designer</em> and <em>systems</em>{" "}
               <em>thinker</em>.
             </>
           }

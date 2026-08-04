@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: {
-      default: "Allison Nance — UX Designer",
+      default: "Allison Nance — Product Designer",
       template: "%s",
     },
     description:
