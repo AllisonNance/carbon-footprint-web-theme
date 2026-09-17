@@ -40,7 +40,7 @@
   padding: var(--spacing-03) var(--spacing-05);
   margin-inline-start: -2px; /* overlap the list border */
   border-inline-start: 2px solid transparent;
-  color: var(--text-secondary);
+  color: var(--taupe-90);
   text-decoration: none;
   font-family: var(--font-family-mono);
   font-size: 0.875rem;
@@ -104,7 +104,7 @@
   align-items: center;
   flex: 0 0 auto;
   padding: var(--spacing-05) var(--spacing-05);
-  color: var(--text-secondary);
+  color: var(--taupe-90);
   text-decoration: none;
   font-family: var(--font-family-mono);
   font-size: 0.875rem;

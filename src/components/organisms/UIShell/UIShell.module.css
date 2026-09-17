@@ -141,7 +141,7 @@
   align-items: center;
   block-size: 100%;
   padding-inline: var(--spacing-05);
-  color: var(--text-secondary);
+  color: var(--taupe-90);
   text-decoration: none;
   line-height: 1.4286;
   border-block-start: 2px solid transparent;
@@ -365,7 +365,7 @@
   inline-size: 16rem;
   min-block-size: var(--size-lg);
   padding-inline: var(--spacing-05);
-  color: var(--text-secondary);
+  color: var(--taupe-90);
   text-decoration: none;
   font-size: var(--font-size-14, 0.875rem);
   border-inline-start: 3px solid transparent;

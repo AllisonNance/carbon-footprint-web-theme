@@ -18,11 +18,12 @@ interface SectionItem {
 }
 
 interface WorkSectionsProps {
+  hero: ReactNode;
   sections: SectionItem[];
   children: ReactNode;
 }
 
-export function WorkSections({ sections, children }: WorkSectionsProps) {
+export function WorkSections({ hero, sections, children }: WorkSectionsProps) {
   const navItems = sections.map((s) => ({
     label: s.navLabel,
     target: s.target,
@@ -67,17 +68,19 @@ export function WorkSections({ sections, children }: WorkSectionsProps) {
   }, []);
 
   return (
-    <>
-      <div className={styles.sectionLayout}>
+    <div className={styles.sectionLayout}>
+      <div className={styles.heroSlot}>{hero}</div>
+
+      <div className={styles.navSlot}>
         <SectionNav
           items={navItems}
           activeTarget={activeTarget}
           stickyOffset={stickyOffset}
           onNavigate={handleNavigate}
         />
-
-        <div className={styles.sections}>{children}</div>
       </div>
-    </>
+
+      <div className={styles.sections}>{children}</div>
+    </div>
   );
 }

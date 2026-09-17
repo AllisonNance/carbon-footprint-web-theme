@@ -33,7 +33,7 @@
 
   /* Text */
   --text-primary: #161616;
-  --text-secondary: #525252;
+  --text-secondary: var(--taupe-90);
   --text-placeholder: #a8a8a8;
   --text-helper: #6f6f6f;
   --text-error: #da1e28;

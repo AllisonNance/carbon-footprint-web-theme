@@ -105,6 +105,19 @@ export default async function PortfolioItemPage({
     body: s.body,
   }));
 
+  const hero = (
+    <PortfolioItemHero
+      heading={item.title}
+      description={item.excerpt}
+      tiles={tiles}
+      media={
+        heroImage ? (
+          <img src={heroImage} alt={item.featuredImage?.alt || ""} />
+        ) : undefined
+      }
+    />
+  );
+
   return (
     <PageLayout
       hideDefaultHeader
@@ -112,19 +125,8 @@ export default async function PortfolioItemPage({
       header={header}
       footer={footer}
     >
-      <PortfolioItemHero
-        heading={item.title}
-        description={item.excerpt}
-        tiles={tiles}
-        media={
-          heroImage ? (
-            <img src={heroImage} alt={item.featuredImage?.alt || ""} />
-          ) : undefined
-        }
-      />
-
-      {sections.length > 0 && (
-        <WorkSections sections={sections}>
+      {sections.length > 0 ? (
+        <WorkSections hero={hero} sections={sections}>
           {sections.map((section) => (
             <section key={section.key} id={section.target}>
               <ProseBlock>
@@ -133,6 +135,8 @@ export default async function PortfolioItemPage({
             </section>
           ))}
         </WorkSections>
+      ) : (
+        <div className={styles.heroOnly}>{hero}</div>
       )}
     </PageLayout>
   );

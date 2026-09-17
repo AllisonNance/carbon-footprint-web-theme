@@ -2,15 +2,16 @@
   box-sizing: border-box;
   inline-size: 100%;
   min-inline-size: 0;
-  margin-block-start: var(--spacing-09);
-  background-color: var(--taupe-05);
   color: var(--text-primary);
 }
 
 .inner {
   display: grid;
   grid-template-columns: 1fr;
+  row-gap: var(--spacing-08);
   min-block-size: 0;
+  max-inline-size: 65ch;
+  margin-inline: auto;
 }
 
 .content {
@@ -19,7 +20,6 @@
   justify-content: center;
   gap: var(--spacing-05);
   min-inline-size: 0;
-  padding: var(--spacing-09);
 }
 
 .heading {
@@ -30,7 +30,6 @@
 .description {
   margin: 0;
   color: var(--text-secondary);
-  max-inline-size: 50ch;
 }
 
 /* ---------- Metadata tiles ---------------------------------------- */
@@ -126,16 +125,4 @@
   inline-size: 100%;
   block-size: 100%;
   object-fit: cover;
-}
-
-/* ---------- Desktop: 50/50 split ---------------------------------- */
-
-@media (min-width: 66rem) {
-  .inner {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .media {
-    min-block-size: 0;
-  }
 }
