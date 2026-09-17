@@ -129,6 +129,9 @@ export default async function PortfolioItemPage({
         <WorkSections hero={hero} sections={sections}>
           {sections.map((section) => (
             <section key={section.key} id={section.target}>
+              {section.navLabel && (
+                <p className={styles.sectionLabel}>{section.navLabel}</p>
+              )}
               <ProseBlock>
                 {section.body && <PortableText value={section.body} />}
               </ProseBlock>
