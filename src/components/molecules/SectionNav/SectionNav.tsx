@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, type HTMLAttributes } from "react";
+import { forwardRef, useEffect, useRef, type HTMLAttributes } from "react";
 import styles from "./SectionNav.module.css";
 
 export interface SectionNavItem {
@@ -32,16 +32,30 @@ export const SectionNav = forwardRef<HTMLElement, SectionNavProps>(
     ref,
   ) {
     const classes = [styles.root, className].filter(Boolean).join(" ");
+    const mobileBarRef = useRef<HTMLDivElement>(null);
 
     const handleClick = (e: React.MouseEvent, target: string) => {
       e.preventDefault();
       onNavigate?.(target);
     };
 
+    useEffect(() => {
+      const bar = mobileBarRef.current;
+      if (!bar) return;
+      const activeLink = bar.querySelector<HTMLAnchorElement>(
+        `a[href="#${activeTarget}"]`,
+      );
+      activeLink?.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }, [activeTarget]);
+
     return (
       <>
         {/* Mobile: horizontal strip */}
-        <div className={styles.mobileBar}>
+        <div ref={mobileBarRef} className={styles.mobileBar}>
           {items.map((item) => (
             <a
               key={item.target}

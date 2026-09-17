@@ -18,6 +18,12 @@
   pointer-events: auto;
 }
 
+@media (min-width: 42rem) {
+  .root {
+    display: none;
+  }
+}
+
 .list {
   display: flex;
   align-items: stretch;

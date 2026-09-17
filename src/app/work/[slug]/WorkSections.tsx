@@ -6,7 +6,6 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { AnchorNav } from "@components/molecules/AnchorNav/AnchorNav";
 import { SectionNav } from "@components/molecules/SectionNav";
 import styles from "./page.module.css";
 
@@ -69,8 +68,6 @@ export function WorkSections({ sections, children }: WorkSectionsProps) {
 
   return (
     <>
-      <AnchorNav items={navItems} stickyOffset={stickyOffset} />
-
       <div className={styles.sectionLayout}>
         <SectionNav
           items={navItems}
