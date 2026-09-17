@@ -18,6 +18,7 @@
   flex-direction: column;
   justify-content: center;
   gap: var(--spacing-05);
+  min-inline-size: 0;
   padding: var(--spacing-09);
 }
 
@@ -37,6 +38,7 @@
 .tiles {
   position: relative;
   display: flex;
+  flex-direction: column;
   margin-block-start: var(--spacing-07);
   border-block: 1px solid var(--border-subtle-01);
   padding-block: var(--spacing-05);
@@ -45,25 +47,54 @@
 .tile {
   position: relative;
   flex: 1;
+  min-inline-size: 0;
 }
+
+/* ---------- Mobile: stacked rows ----------------------------------- */
 
 .tile + .tile {
-  padding-inline-start: calc(var(--spacing-05) + 1px + var(--spacing-05));
+  margin-block-start: var(--spacing-05);
+  padding-block-start: var(--spacing-05);
+  border-block-start: 1px solid var(--border-subtle-01);
 }
 
-.tile:not(:last-child) {
-  padding-inline-end: var(--spacing-05);
-}
+/* ---------- Tablet and up: 2x2 grid --------------------------------- */
 
-/* Center divider that spans full height including padding. */
-.tile + .tile::before {
-  content: "";
-  position: absolute;
-  inset-inline-start: var(--spacing-05);
-  inset-block-start: calc(-1 * var(--spacing-05));
-  block-size: calc(100% + 2 * var(--spacing-05));
-  inline-size: 1px;
-  background-color: var(--border-subtle-01);
+@media (min-width: 42rem) {
+  .tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--spacing-05);
+    row-gap: var(--spacing-07);
+  }
+
+  .tile + .tile {
+    margin-block-start: 0;
+    padding-block-start: 0;
+    border-block-start: none;
+  }
+
+  /* Vertical divider, centered in the column gap, full height. */
+  .tiles::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block: 0;
+    inline-size: 1px;
+    background-color: var(--border-subtle-01);
+    transform: translateX(-50%);
+  }
+
+  /* Horizontal divider, centered in the row gap, full width. */
+  .tiles::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline: 0;
+    block-size: 1px;
+    background-color: var(--border-subtle-01);
+    transform: translateY(-50%);
+  }
 }
 
 .tileIcon {
@@ -99,7 +130,7 @@
 
 /* ---------- Desktop: 50/50 split ---------------------------------- */
 
-@media (min-width: 42rem) {
+@media (min-width: 66rem) {
   .inner {
     grid-template-columns: 1fr 1fr;
   }
