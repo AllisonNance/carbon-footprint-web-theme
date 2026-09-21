@@ -45,10 +45,11 @@ export const SectionNav = forwardRef<HTMLElement, SectionNavProps>(
       const activeLink = bar.querySelector<HTMLAnchorElement>(
         `a[href="#${activeTarget}"]`,
       );
-      activeLink?.scrollIntoView({
+      if (!activeLink) return;
+      bar.scrollTo({
+        left:
+          activeLink.offsetLeft - (bar.clientWidth - activeLink.offsetWidth) / 2,
         behavior: "smooth",
-        inline: "center",
-        block: "nearest",
       });
     }, [activeTarget]);
 

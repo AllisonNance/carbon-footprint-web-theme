@@ -1,18 +1,15 @@
 /* Portfolio item page — hero, sidebar TOC, and sections share one grid. */
 
 .sectionLayout {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-areas:
-    "hero"
-    "nav"
-    "content";
+  display: flex;
+  flex-direction: column;
   row-gap: var(--spacing-09);
   margin-block-start: var(--spacing-09);
 }
 
 @media (min-width: 42rem) {
   .sectionLayout {
+    display: grid;
     grid-template-columns: minmax(0, 800px) 14rem;
     grid-template-areas:
       "hero nav"
@@ -31,9 +28,17 @@
   min-inline-size: 0;
 }
 
+/* Mobile: flatten so the sticky strip's containing block is the whole layout. */
 .navSlot {
-  grid-area: nav;
-  align-self: stretch;
+  display: contents;
+}
+
+@media (min-width: 42rem) {
+  .navSlot {
+    display: block;
+    grid-area: nav;
+    align-self: stretch;
+  }
 }
 
 .heroOnly {
