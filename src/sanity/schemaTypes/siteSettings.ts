@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { CogIcon, LinkIcon } from "@sanity/icons";
+import { RemovableArrayItem } from "../components/RemovableArrayItem";
 
 /**
  * Site Settings — singleton document for global site configuration.
@@ -177,8 +178,17 @@ export const siteSettings = defineType({
       name: "featuredWork",
       title: "Featured work",
       type: "array",
-      description: "Portfolio items shown on the home page, in the order you set here.",
-      of: [{ type: "reference", to: [{ type: "portfolioItem" }] }],
+      description:
+        "Portfolio items shown on the home page, in the order you set " +
+        "here. Use the Remove button on an item to take it off this list " +
+        "(this does not delete the Portfolio Item itself).",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "portfolioItem" }],
+          components: { item: RemovableArrayItem },
+        },
+      ],
     }),
     defineField({
       name: "location",
