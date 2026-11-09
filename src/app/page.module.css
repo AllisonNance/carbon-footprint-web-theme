@@ -1,58 +1,16 @@
-/* Hero: heading (⅔) + update notice (⅓)
- * Mirrors PortfolioItemGrid's cols-4 column template (same breakpoints,
- * same gap) so the notice card's left edge and width line up exactly
- * with the ⅓-width portfolio card in the row below. */
+/* Hero: title block, then the update notice stacked below it */
 .heroRow {
-  display: grid;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   gap: var(--spacing-07);
-  grid-template-columns: 1fr;
-  align-items: start;
+  max-width: 75rem; /* 1200px */
+  margin-inline: auto;
+  width: 100%;
 }
 
-@media (min-width: 42rem) {
-  .heroRow {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1px;
-  }
-}
-
-@media (min-width: 66rem) {
-  .heroRow {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
-  .heroRow > *:nth-child(1) {
-    grid-column: span 4;
-  }
-
-  .heroRow > *:nth-child(2) {
-    grid-column: span 2;
-  }
-}
-
-@media (min-width: 42rem) {
-  .heroNotice {
-    align-self: end;
-  }
-}
-
-/* Home: Bytes (⅓) + Current focus (⅔) */
-.focusRow {
-  display: grid;
-  gap: var(--spacing-07);
-  grid-template-columns: 1fr;
-  align-items: start;
-}
-
-@media (min-width: 42rem) {
-  .focusRow {
-    grid-template-columns: 1fr 2fr;
-  }
-}
-
-.focusColBytes,
-.focusColCurrent {
-  min-width: 0;
+.heroNotice {
+  max-width: 50rem;
 }
 
 .ctaPreFooter {

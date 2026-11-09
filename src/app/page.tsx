@@ -2,19 +2,10 @@ import type { Metadata } from "next";
 import { TrafficCone } from "@carbon/icons-react";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
-import {
-  siteSettingsQuery,
-  recentBytesQuery,
-  currentFocusQuery,
-} from "@/sanity/lib/queries";
+import { siteSettingsQuery } from "@/sanity/lib/queries";
 import { PortfolioItemCard, PortfolioItemGrid } from "@components/molecules/PortfolioItemCard";
 import { NoticeCard } from "@components/molecules/NoticeCard";
 import { SparklesIcon } from "@components/atoms/SparklesIcon";
-import {
-  BytesBlock,
-  type ByteItem,
-} from "@components/organisms/BytesBlock";
-import { CurrentFocusBlock } from "@components/organisms/CurrentFocusBlock";
 import { PageTitleBlock } from "@components/organisms/PageTitleBlock";
 import { getSiteChrome } from "@/lib/getSiteChrome";
 import { PageLayout } from "@components/templates/PageLayout";
@@ -45,6 +36,7 @@ interface FeaturedWorkItem {
   year?: string;
   isPlaceholder?: boolean;
   contributionTags?: string[];
+  hoverLabel?: string;
   cardMedia?: CardMedia[];
   cardMediaMobile?: CardMedia[];
   categories?: string[];
@@ -59,22 +51,6 @@ interface SiteSettings {
     alt?: string;
   };
   featuredWork?: FeaturedWorkItem[];
-}
-
-interface RecentByte {
-  _id: string;
-  title: string;
-  slug: string;
-  publishedAt: string;
-  category?: string;
-}
-
-interface FocusItem {
-  _id: string;
-  title: string;
-  description: string;
-  contributions?: string[];
-  contributionsHeading?: string;
 }
 
 function buildCardMediaElement(media: CardMedia | undefined): React.ReactNode {
@@ -109,36 +85,15 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [settings, recentBytes, focusItems, { header, footer }]: [
+  const [settings, { header, footer }]: [
     SiteSettings | null,
-    RecentByte[],
-    FocusItem[],
     Awaited<ReturnType<typeof getSiteChrome>>,
   ] = await Promise.all([
     client.fetch(siteSettingsQuery),
-    client.fetch(recentBytesQuery),
-    client.fetch(currentFocusQuery),
     getSiteChrome(),
   ]);
 
   const featuredWork = settings?.featuredWork ?? [];
-
-  const byteItems: ByteItem[] = recentBytes.map((b) => ({
-    id: b._id,
-    category: b.category ?? "",
-    byteTitle: b.title,
-    href: `/bytes/${b.slug}`,
-  }));
-
-  const focusBlockItems = focusItems.map((f) => ({
-    id: f._id,
-    title: f.title,
-    description: f.description,
-    contributions: f.contributions ?? [],
-    contributionsHeading: f.contributionsHeading,
-  }));
-
-  const gridColumns = featuredWork.length <= 3 ? 3 : 4;
 
   return (
     <PageLayout
@@ -181,10 +136,7 @@ export default async function HomePage() {
       </div>
 
       {featuredWork.length > 0 && (
-        <PortfolioItemGrid
-          columns={gridColumns as 3 | 4}
-          aria-label="Selected work"
-        >
+        <PortfolioItemGrid aria-label="Selected work">
           {featuredWork.map((item) => {
             const mediaElement = buildCardMediaElement(item.cardMedia?.[0]);
             const mobileMediaElement = buildCardMediaElement(
@@ -216,24 +168,12 @@ export default async function HomePage() {
                 year={item.year}
                 client={item.client}
                 description={item.isPlaceholder ? item.excerpt : undefined}
+                hoverLabel={item.hoverLabel}
               />
             );
           })}
         </PortfolioItemGrid>
       )}
-
-      <div className={styles.focusRow}>
-        {byteItems.length > 0 && (
-          <div className={styles.focusColBytes}>
-            <BytesBlock items={byteItems} maxItems={4} moreHref="/bytes" />
-          </div>
-        )}
-        {focusBlockItems.length > 0 && (
-          <div className={styles.focusColCurrent}>
-            <CurrentFocusBlock items={focusBlockItems} />
-          </div>
-        )}
-      </div>
     </PageLayout>
   );
 }
