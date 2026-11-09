@@ -24,21 +24,6 @@
   cursor: none;
 }
 
-/* ---------- Eyebrow ------------------------------------------------ */
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-03);
-  color: var(--text-secondary);
-  margin-block-end: var(--spacing-05);
-}
-
-.eyebrowIcon {
-  display: inline-flex;
-  flex: 0 0 auto;
-}
-
 /* ---------- Media -------------------------------------------------- */
 
 .media {
@@ -140,6 +125,10 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-03);
+  padding: var(--spacing-02) var(--spacing-04);
+  background-color: var(--white);
+  border: 1px solid var(--taupe-90);
+  border-radius: 999px;
   pointer-events: none;
   transform: translate(calc(-1 * var(--spacing-02)), calc(-1 * var(--spacing-02)));
   animation: cursorLabelIn var(--motion-duration-fast, 120ms) ease-out;

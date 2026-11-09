@@ -9,15 +9,10 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
-import { Catalog } from "@carbon/icons-react";
 import { Tag } from "@components/atoms/Tag";
 import styles from "./PortfolioItemCard.module.css";
 
 export interface PortfolioItemCardProps extends HTMLAttributes<HTMLElement> {
-  /** Portfolio item type label above the media (e.g. "Project", "Case Study"). */
-  portfolioItemType?: string;
-  /** Portfolio item type icon. Defaults to a small catalog glyph. */
-  portfolioItemTypeIcon?: ReactNode;
   /** Portfolio item title. */
   title: string;
   /** Optional href — when set, the whole card becomes a link. */
@@ -57,8 +52,6 @@ export const PortfolioItemCard = forwardRef<
   PortfolioItemCardProps
 >(function PortfolioItemCard(
   {
-    portfolioItemType = "Project",
-    portfolioItemTypeIcon,
     title,
     href,
     media,
@@ -102,13 +95,6 @@ export const PortfolioItemCard = forwardRef<
 
   const content = (
     <>
-      <div className={`${styles.eyebrow} type-label-01`}>
-        <span className={styles.eyebrowIcon} aria-hidden>
-          {portfolioItemTypeIcon ?? <Catalog size={16} />}
-        </span>
-        <span>{portfolioItemType}</span>
-      </div>
-
       <div className={styles.media}>
         {mobileMedia ? (
           <>
