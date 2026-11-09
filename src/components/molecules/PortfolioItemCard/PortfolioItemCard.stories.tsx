@@ -13,11 +13,9 @@ const meta: Meta<typeof PortfolioItemCard> = {
         component:
           "Editorial card for a single portfolio item, composed from " +
           "existing atoms (type-* utility classes, Carbon icons). " +
-          "The image renders inside a 3:4 portrait frame with " +
+          "The image renders inside a 16:10 frame with " +
           "`object-fit: cover`.\n\nPair with `PortfolioItemGrid` for the " +
-          "gallery layout: on desktop, `columns={4}` uses two rows of two " +
-          "cards (⅔+⅓, then ⅓+⅔). Rules between cards use a 1px " +
-          "grid-gap over a tinted container.",
+          "single-column list layout, capped at a 1200px max-width.",
       },
     },
   },
@@ -47,6 +45,18 @@ export const Default: Story = {
     media: <img src={img1} alt="Quantum molecule visualization" />,
     client: "Cleveland Clinic",
     year: "2026",
+    hoverLabel: "View case study",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "With `href` and `hoverLabel` both set, the whole card becomes " +
+          "a link and a small message follows the cursor on hover " +
+          "(desktop mouse only) — the message is authored per item in " +
+          "Sanity.",
+      },
+    },
   },
 };
 
@@ -74,24 +84,23 @@ export const MobileMediaOverride: Story = {
   },
 };
 
-/* ---------- The 4-up grid (matches the reference) ---------- */
+/* ---------- The single-column list (matches the reference) ---------- */
 
-export const GridOfFour: Story = {
-  name: "Grid · 2 rows (⅔–⅓ + ⅓–⅔)",
+export const List: Story = {
+  name: "List · single column",
   parameters: {
     layout: "padded",
     docs: {
       description: {
         story:
-          "With `columns={4}`, desktop lays out four cards as two rows: " +
-          "first row is two-thirds + one-third width; second row mirrors " +
-          "that (one-third + two-thirds). Tablet uses a 2×2 equal grid; " +
-          "mobile stacks a single column.",
+          "`PortfolioItemGrid` stacks cards in a single column at every " +
+          "breakpoint, capped at a 1200px max-width and centered on the " +
+          "page.",
       },
     },
   },
   render: () => (
-    <PortfolioItemGrid columns={4}>
+    <PortfolioItemGrid>
       <PortfolioItemCard
         portfolioItemType="Project"
         title="Cleveland Clinic and IBM debut new quantum workflow for simulating molecules"
@@ -141,6 +150,7 @@ export const Placeholder: Story = {
     description:
       "A short summary of this project will live here until the full " +
       "case study is ready to publish.",
+    hoverLabel: "Coming Soon",
   },
   parameters: {
     docs: {
@@ -148,40 +158,10 @@ export const Placeholder: Story = {
         story:
           "No `href` is passed, so the title renders as plain text " +
           "instead of a link. `description` shows a short summary below " +
-          "the title while the full case study isn't live yet.",
+          "the title while the full case study isn't live yet. " +
+          "`hoverLabel` still works without a link — hover the card to " +
+          "see \"Coming Soon\" follow the cursor.",
       },
     },
   },
-};
-
-/* ---------- 3-up variant ---------- */
-
-export const GridOfThree: Story = {
-  name: "Grid · 3 across",
-  parameters: { layout: "padded" },
-  render: () => (
-    <PortfolioItemGrid columns={3}>
-      <PortfolioItemCard
-        title="First story title that wraps onto multiple lines"
-        href="#"
-        media={<img src={img1} alt="" />}
-        client="Client One"
-        year="2026"
-      />
-      <PortfolioItemCard
-        title="Second story title"
-        href="#"
-        media={<img src={img2} alt="" />}
-        client="Client Two"
-        year="2026"
-      />
-      <PortfolioItemCard
-        title="Third story title"
-        href="#"
-        media={<img src={img3} alt="" />}
-        client="Client Three"
-        year="2026"
-      />
-    </PortfolioItemGrid>
-  ),
 };

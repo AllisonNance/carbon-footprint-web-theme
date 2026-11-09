@@ -187,6 +187,7 @@ export const siteSettingsQuery = groq`
       year,
       isPlaceholder,
       contributionTags,
+      hoverLabel,
       cardMedia[] {
         _type,
         _type == "image" => {

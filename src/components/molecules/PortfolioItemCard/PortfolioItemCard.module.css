@@ -3,25 +3,25 @@
  * Editorial card pattern for portfolio items. Composes the Tag atom,
  * Carbon icons, and the type-* utility classes from
  * src/tokens/typography.css.
- *
- * Border strategy for the grid: instead of painting borders on each
- * card (which can clip when sibling cards are different heights), we
- * tint the grid container with the border color and use a 1px gap
- * between cells. Each card paints its own background opaquely on top,
- * so the gap shows through as a perfectly uniform 1px rule that always
- * spans the full row height. This naturally produces no rule on the
- * outermost left/right edges (those edges are the grid box, not gaps).
  */
 
 .card {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding: var(--spacing-05);
-  background-color: var(--background);
   color: var(--text-primary);
+  text-decoration: none;
   min-inline-size: 0;
   min-block-size: 0;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: var(--spacing-02);
+}
+
+.cursorTarget {
+  cursor: none;
 }
 
 /* ---------- Eyebrow ------------------------------------------------ */
@@ -47,7 +47,7 @@
   /* Flex default min-block-size:auto uses child min-content; replaced
    * media intrinsic sizes inflate the slot and overpower aspect-ratio. */
   min-block-size: 0;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 16 / 10;
   margin-block-end: var(--spacing-05);
   overflow: hidden;
   background-color: var(--layer-01);
@@ -93,6 +93,7 @@
 
 .description {
   margin: 0 0 var(--spacing-05) 0;
+  max-width: 700px;
   color: var(--text-secondary);
 }
 
@@ -123,10 +124,54 @@
   transition: background-size var(--motion-duration-base, 110ms) ease;
 }
 
-.titleLink:hover,
-.titleLink:focus-visible {
+.card:hover .titleLink,
+.card:focus-visible .titleLink {
   background-size: 100% 1px;
-  outline: none;
+}
+
+/* ---------- Cursor hover label --------------------------------------- */
+
+/* Follows the pointer while hovering a linked card, showing the
+ * per-item message set in Sanity (`hoverLabel`). The card's native
+ * cursor is hidden (see .cursorTarget) so this fully replaces it. */
+.cursorLabel {
+  position: fixed;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-03);
+  pointer-events: none;
+  transform: translate(calc(-1 * var(--spacing-02)), calc(-1 * var(--spacing-02)));
+  animation: cursorLabelIn var(--motion-duration-fast, 120ms) ease-out;
+}
+
+.cursorDot {
+  flex: 0 0 auto;
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  background-color: var(--taupe-90);
+}
+
+.cursorText {
+  white-space: nowrap;
+  color: var(--taupe-90);
+}
+
+@keyframes cursorLabelIn {
+  from {
+    opacity: 0;
+    scale: 0.8;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursorLabel {
+    animation: none;
+  }
 }
 
 /* ---------- Meta (year + client) ----------------------------------- */
@@ -157,96 +202,21 @@
 }
 
 /* ============================================================= */
-/* PortfolioItemGrid                                               */
+/* PortfolioItemGrid — single-column editorial list               */
 /* ============================================================= */
 
 .grid {
   box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-11);
   inline-size: 100%;
+  max-width: 75rem; /* 1200px */
+  margin-inline: auto;
   min-inline-size: 0;
-  border-block: 1px solid var(--border-subtle-01);
 }
 
 .grid > * {
   min-inline-size: 0;
   min-block-size: 0;
-}
-
-/* ----- Mobile (single column): explicit horizontal rules ------ */
-
-/* Explicit borders on cards are reliable for the stacked layout —
-   a single-pixel rule between every card except the last. */
-.grid > *:not(:last-child) {
-  border-block-end: 1px solid var(--border-subtle-01);
-}
-
-/* ----- Tablet+ (multi-column): gap-bleed technique ------------ */
-
-/* In multi-column layouts we tint the grid container with the rule
-   color and use a 1px gap. Cards paint opaquely on top, so the gap
-   shows through as a uniform full-height rule between every cell —
-   in both directions, and the outer left/right edges naturally have
-   no rule because those edges are the grid box, not gaps. */
-@media (min-width: 42rem) {
-  .grid.cols-2,
-  .grid.cols-3,
-  .grid.cols-4 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    background-color: var(--border-subtle-01);
-    gap: 1px;
-  }
-  .grid.cols-2 > *,
-  .grid.cols-3 > *,
-  .grid.cols-4 > * {
-    background-color: var(--background);
-    /* The gap handles row separators; suppress the mobile border. */
-    border-block-end: none;
-  }
-}
-
-/* ----- Desktop: 3-up / 4-up (asymmetric 2×2 for cols-4) ---------- */
-
-@media (min-width: 66rem) {
-  .grid.cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  /*
-   * Four cards in two rows: row 1 = ⅔ + ⅓, row 2 = ⅓ + ⅔
-   * Implemented as a 6-column grid: spans 4+2, then 2+4.
-   * minmax(0, 1fr) keeps long titles from exploding grid min-content width.
-   */
-  .grid.cols-4 {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    container-type: inline-size;
-  }
-
-  .grid.cols-4 > *:nth-child(1) {
-    grid-column: span 4;
-  }
-
-  .grid.cols-4 > *:nth-child(2) {
-    grid-column: span 2;
-  }
-
-  .grid.cols-4 > *:nth-child(3) {
-    grid-column: span 2;
-  }
-
-  .grid.cols-4 > *:nth-child(4) {
-    grid-column: span 4;
-  }
-
-  /* Pixel-perfect height match: compute the exact media height of the
-     ⅓ column (2 of 6 grid cols, 3:4 aspect ratio, minus card padding)
-     and apply it as a fixed height on the ⅔ column media instead. */
-  .grid.cols-4 > *:nth-child(1) .media,
-  .grid.cols-4 > *:nth-child(4) .media {
-    aspect-ratio: auto;
-    block-size: calc(
-      ((100cqi - 5px) / 3 + 1px - 2 * var(--spacing-05)) * 4 / 3
-    );
-  }
 }

@@ -169,6 +169,16 @@ export const portfolioItem = defineType({
       of: cardMediaOf,
     }),
     defineField({
+      name: "hoverLabel",
+      title: "Cursor hover message",
+      type: "string",
+      description:
+        "Short message that follows the cursor when hovering this card " +
+        "on the home page (e.g. \"View case study\", or \"Coming Soon\" " +
+        "for a placeholder card with no link yet). Leave blank for no " +
+        "message.",
+    }),
+    defineField({
       name: "categories",
       title: "Categories",
       type: "array",
