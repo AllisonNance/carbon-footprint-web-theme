@@ -182,6 +182,7 @@ export const siteSettingsQuery = groq`
       _id,
       title,
       "slug": slug.current,
+      portfolioItemType,
       client,
       year,
       isPlaceholder,

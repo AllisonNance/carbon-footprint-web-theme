@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { TrafficCone } from "@carbon/icons-react";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { siteSettingsQuery } from "@/sanity/lib/queries";
@@ -30,6 +31,7 @@ interface FeaturedWorkItem {
   _id: string;
   title: string;
   slug: string;
+  portfolioItemType?: string;
   client?: string;
   year?: string;
   isPlaceholder?: boolean;
@@ -141,11 +143,26 @@ export default async function HomePage() {
               item.cardMediaMobile?.[0],
             );
 
+            const typeLabel =
+              item.portfolioItemType === "case-study"
+                ? "Case Study"
+                : item.portfolioItemType === "overview"
+                  ? "Overview"
+                  : item.portfolioItemType === "coming-soon"
+                    ? "Coming Soon"
+                    : undefined;
+
             return (
               <PortfolioItemCard
                 key={item._id}
                 title={item.title}
                 href={item.isPlaceholder ? undefined : `/work/${item.slug}`}
+                portfolioItemType={typeLabel}
+                portfolioItemTypeIcon={
+                  item.portfolioItemType === "coming-soon" ? (
+                    <TrafficCone size={16} />
+                  ) : undefined
+                }
                 media={mediaElement}
                 mobileMedia={mobileMediaElement}
                 year={item.year}

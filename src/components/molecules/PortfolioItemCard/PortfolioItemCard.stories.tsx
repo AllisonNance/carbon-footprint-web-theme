@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { TrafficCone } from "@carbon/icons-react";
 import { PortfolioItemCard } from "./PortfolioItemCard";
 import { PortfolioItemGrid } from "./PortfolioItemGrid";
 
@@ -11,10 +12,10 @@ const meta: Meta<typeof PortfolioItemCard> = {
       description: {
         component:
           "Editorial card for a single portfolio item, composed from " +
-          "existing atoms (type-* utility classes). The image renders " +
-          "inside a 16:10 frame with `object-fit: cover`.\n\nPair with " +
-          "`PortfolioItemGrid` for the single-column list layout, " +
-          "capped at a 1200px max-width.",
+          "existing atoms (type-* utility classes, Carbon icons). " +
+          "The image renders inside a 16:10 frame with " +
+          "`object-fit: cover`.\n\nPair with `PortfolioItemGrid` for the " +
+          "single-column list layout, capped at a 1200px max-width.",
       },
     },
   },
@@ -38,6 +39,7 @@ const img4 =
 
 export const Default: Story = {
   args: {
+    portfolioItemType: "Project",
     title: "Cleveland Clinic and IBM debut new quantum workflow for simulating molecules",
     href: "#",
     media: <img src={img1} alt="Quantum molecule visualization" />,
@@ -62,6 +64,7 @@ export const Default: Story = {
 
 export const MobileMediaOverride: Story = {
   args: {
+    portfolioItemType: "Project",
     title: "Cleveland Clinic and IBM debut new quantum workflow for simulating molecules",
     href: "#",
     media: <img src={img1} alt="Desktop crop" />,
@@ -99,6 +102,7 @@ export const List: Story = {
   render: () => (
     <PortfolioItemGrid>
       <PortfolioItemCard
+        portfolioItemType="Project"
         title="Cleveland Clinic and IBM debut new quantum workflow for simulating molecules"
         href="#"
         media={<img src={img1} alt="Quantum molecule visualization" />}
@@ -106,6 +110,7 @@ export const List: Story = {
         year="2026"
       />
       <PortfolioItemCard
+        portfolioItemType="Case Study"
         title="Turning turbulence into transcripts"
         href="#"
         media={<img src={img2} alt="Translating turbulence" />}
@@ -113,6 +118,7 @@ export const List: Story = {
         year="2026"
       />
       <PortfolioItemCard
+        portfolioItemType="Project"
         title="Like the information in a dream: a quantum computing milestone"
         href="#"
         media={<img src={img3} alt="Portrait" />}
@@ -120,6 +126,7 @@ export const List: Story = {
         year="2026"
       />
       <PortfolioItemCard
+        portfolioItemType="Case Study"
         title="Doubling down on open-access quantum computing"
         href="#"
         media={<img src={img4} alt="Open Plan project" />}
@@ -134,6 +141,8 @@ export const List: Story = {
 
 export const Placeholder: Story = {
   args: {
+    portfolioItemType: "Coming Soon",
+    portfolioItemTypeIcon: <TrafficCone size={16} />,
     title: "A future case study, not yet published",
     media: <img src={img2} alt="" />,
     client: "Acme Corp",
