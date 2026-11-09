@@ -36,6 +36,10 @@
   font-size: 2.75rem;
   font-weight: var(--font-weight-regular);
   line-height: 1.2;
+  color: var(--gray-60);
+}
+
+.heading em {
   color: var(--gray-80);
 }
 
