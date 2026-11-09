@@ -79,7 +79,7 @@ function buildCardMediaElement(media: CardMedia | undefined): React.ReactNode {
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Allison Nance — UX Designer",
+  title: "Allison Nance",
   description:
     "I bring an implementation-minded approach to UX, connecting strategy, interface design, systems thinking, and AI-assisted coding to translate ideas into experiences.",
 };
