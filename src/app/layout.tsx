@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { layoutAssetsQuery } from "@/sanity/lib/queries";
+import { SiteCursor } from "@components/atoms/SiteCursor";
 import "@styles/globals.css";
 
 interface LayoutAssets {
@@ -85,7 +86,10 @@ export default async function RootLayout({
           <style dangerouslySetInnerHTML={{ __html: brandFontCss }} />
         ) : null}
       </head>
-      <body>{children}</body>
+      <body>
+        <SiteCursor />
+        {children}
+      </body>
     </html>
   );
 }

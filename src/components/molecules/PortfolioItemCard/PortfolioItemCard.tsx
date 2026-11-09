@@ -1,11 +1,6 @@
-"use client";
-
 import {
   forwardRef,
-  useEffect,
-  useState,
   type HTMLAttributes,
-  type MouseEvent as ReactMouseEvent,
   type ReactNode,
   type Ref,
 } from "react";
@@ -41,8 +36,8 @@ export interface PortfolioItemCardProps extends HTMLAttributes<HTMLElement> {
   contributionTags?: string[];
   /** Short message that follows the cursor while hovering this card
    *  (e.g. "View case study", or "Coming Soon" for a card without a
-   *  link yet). Shown whenever set, regardless of `href`, on pointing
-   *  devices that support hover (desktop mouse). Set in Sanity. */
+   *  link yet). Rendered by the site-wide `SiteCursor`, which reads it
+   *  off a `data-cursor-label` attribute. Set in Sanity. */
   hoverLabel?: string;
 }
 
@@ -73,32 +68,7 @@ export const PortfolioItemCard = forwardRef<
   },
   ref,
 ) {
-  const [canHover, setCanHover] = useState(false);
-  const [cursorPos, setCursorPos] = useState<{ x: number; y: number } | null>(
-    null,
-  );
-
-  useEffect(() => {
-    setCanHover(
-      window.matchMedia("(hover: hover) and (pointer: fine)").matches,
-    );
-  }, []);
-
-  const showCursorLabel = Boolean(hoverLabel && canHover);
-
-  const trackCursor = (event: ReactMouseEvent<HTMLElement>) => {
-    setCursorPos({ x: event.clientX, y: event.clientY });
-  };
-
-  const hideCursor = () => setCursorPos(null);
-
-  const classes = [
-    styles.card,
-    showCursorLabel && styles.cursorTarget,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const classes = [styles.card, className].filter(Boolean).join(" ");
 
   const content = (
     <>
@@ -147,19 +117,6 @@ export const PortfolioItemCard = forwardRef<
           {client && <span className={styles.client}>{client}</span>}
         </div>
       )}
-
-      {showCursorLabel && cursorPos && (
-        <span
-          className={styles.cursorLabel}
-          style={{ left: cursorPos.x, top: cursorPos.y }}
-          aria-hidden
-        >
-          <span className={styles.cursorDot} />
-          <span className={`${styles.cursorText} type-label-01`}>
-            {hoverLabel}
-          </span>
-        </span>
-      )}
     </>
   );
 
@@ -169,9 +126,7 @@ export const PortfolioItemCard = forwardRef<
         ref={ref as Ref<HTMLAnchorElement>}
         href={href}
         className={classes}
-        onMouseEnter={showCursorLabel ? trackCursor : undefined}
-        onMouseMove={showCursorLabel ? trackCursor : undefined}
-        onMouseLeave={showCursorLabel ? hideCursor : undefined}
+        data-cursor-label={hoverLabel}
         {...(rest as HTMLAttributes<HTMLAnchorElement>)}
       >
         {content}
@@ -183,9 +138,7 @@ export const PortfolioItemCard = forwardRef<
     <article
       ref={ref}
       className={classes}
-      onMouseEnter={showCursorLabel ? trackCursor : undefined}
-      onMouseMove={showCursorLabel ? trackCursor : undefined}
-      onMouseLeave={showCursorLabel ? hideCursor : undefined}
+      data-cursor-label={hoverLabel}
       {...rest}
     >
       {content}

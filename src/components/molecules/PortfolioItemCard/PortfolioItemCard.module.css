@@ -20,10 +20,6 @@
   outline-offset: var(--spacing-02);
 }
 
-.cursorTarget {
-  cursor: none;
-}
-
 /* ---------- Eyebrow ------------------------------------------------ */
 
 .eyebrow {
@@ -127,55 +123,6 @@
 .card:hover .titleLink,
 .card:focus-visible .titleLink {
   background-size: 100% 1px;
-}
-
-/* ---------- Cursor hover label --------------------------------------- */
-
-/* Follows the pointer while hovering a linked card, showing the
- * per-item message set in Sanity (`hoverLabel`). The card's native
- * cursor is hidden (see .cursorTarget) so this fully replaces it. */
-.cursorLabel {
-  position: fixed;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-03);
-  padding: var(--spacing-02) var(--spacing-04);
-  background-color: var(--white);
-  border: 1px solid var(--taupe-90);
-  border-radius: 999px;
-  pointer-events: none;
-  transform: translate(calc(-1 * var(--spacing-02)), calc(-1 * var(--spacing-02)));
-  animation: cursorLabelIn var(--motion-duration-fast, 120ms) ease-out;
-}
-
-.cursorDot {
-  flex: 0 0 auto;
-  inline-size: 0.5rem;
-  block-size: 0.5rem;
-  background-color: var(--taupe-90);
-}
-
-.cursorText {
-  white-space: nowrap;
-  color: var(--taupe-90);
-}
-
-@keyframes cursorLabelIn {
-  from {
-    opacity: 0;
-    scale: 0.8;
-  }
-  to {
-    opacity: 1;
-    scale: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cursorLabel {
-    animation: none;
-  }
 }
 
 /* ---------- Meta (year + client) ----------------------------------- */

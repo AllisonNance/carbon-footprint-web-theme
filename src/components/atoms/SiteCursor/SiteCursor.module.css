@@ -1,0 +1,61 @@
+/* SiteCursor — global square cursor replacement.
+ *
+ * .hideNativeCursor is toggled on <html> once a desktop mouse is
+ * confirmed; !important beats the UA stylesheet's `cursor: pointer`
+ * on links/buttons regardless of selector specificity.
+ */
+
+.hideNativeCursor,
+.hideNativeCursor * {
+  cursor: none !important;
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-03);
+  pointer-events: none;
+}
+
+.dot {
+  flex: 0 0 auto;
+  background-color: var(--taupe-90);
+  transition:
+    width var(--motion-duration-fast, 120ms) ease-out,
+    height var(--motion-duration-fast, 120ms) ease-out;
+}
+
+.label {
+  white-space: nowrap;
+  padding: var(--spacing-02) var(--spacing-04);
+  background-color: var(--white);
+  border: 1px solid var(--taupe-90);
+  border-radius: 999px;
+  color: var(--taupe-90);
+  animation: labelIn var(--motion-duration-fast, 120ms) ease-out;
+}
+
+@keyframes labelIn {
+  from {
+    opacity: 0;
+    scale: 0.8;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    transition: none;
+  }
+
+  .label {
+    animation: none;
+  }
+}
