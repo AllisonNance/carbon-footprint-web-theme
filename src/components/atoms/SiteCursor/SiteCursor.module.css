@@ -29,6 +29,22 @@
     height var(--motion-duration-fast, 120ms) ease-out;
 }
 
+/* Faint, fading snapshots of recent cursor positions — only present
+ * while the cursor is actively moving (see SiteCursor.tsx). */
+.trailDot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  background-color: var(--taupe-90);
+  pointer-events: none;
+  transition:
+    opacity var(--motion-duration-slow, 320ms) ease-out,
+    width var(--motion-duration-slow, 320ms) ease-out,
+    height var(--motion-duration-slow, 320ms) ease-out,
+    transform var(--motion-duration-slow, 320ms) ease-out;
+}
+
 .label {
   white-space: nowrap;
   padding: var(--spacing-02) var(--spacing-04);
@@ -57,5 +73,9 @@
 
   .label {
     animation: none;
+  }
+
+  .trailDot {
+    display: none;
   }
 }
