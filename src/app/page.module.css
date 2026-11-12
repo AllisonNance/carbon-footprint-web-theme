@@ -1,4 +1,4 @@
-/* Hero: title block, then the update notice stacked below it */
+/* Hero: title block */
 .heroRow {
   box-sizing: border-box;
   display: flex;
@@ -7,10 +7,6 @@
   max-width: 75rem; /* 1200px */
   margin-inline: auto;
   width: 100%;
-}
-
-.heroNotice {
-  max-width: 50rem;
 }
 
 .ctaPreFooter {

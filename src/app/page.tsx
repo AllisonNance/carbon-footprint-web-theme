@@ -4,8 +4,6 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { siteSettingsQuery } from "@/sanity/lib/queries";
 import { PortfolioItemCard, PortfolioItemGrid } from "@components/molecules/PortfolioItemCard";
-import { NoticeCard } from "@components/molecules/NoticeCard";
-import { SparklesIcon } from "@components/atoms/SparklesIcon";
 import { PageTitleBlock } from "@components/organisms/PageTitleBlock";
 import { getSiteChrome } from "@/lib/getSiteChrome";
 import { PageLayout } from "@components/templates/PageLayout";
@@ -125,13 +123,6 @@ export default async function HomePage() {
               />
             ) : undefined
           }
-        />
-
-        <NoticeCard
-          className={styles.heroNotice}
-          icon={<SparklesIcon size={28} />}
-          heading="My portfolio is getting an update!"
-          description="I'm currently refreshing my case studies to better reflect the way I think, design, collaborate, and build. Until they're ready, here's a snapshot of my work and contributions."
         />
       </div>
 
