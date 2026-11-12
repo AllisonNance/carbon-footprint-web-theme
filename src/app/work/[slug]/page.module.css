@@ -1,24 +1,30 @@
-/* Portfolio item page — hero, sidebar TOC, and sections share one grid. */
+/* Portfolio item page — hero, sidebar TOC, and sections share one grid.
+   Top spacing comes from PageLayout's main padding, matching the home page. */
 
 .sectionLayout {
   display: flex;
   flex-direction: column;
   row-gap: var(--spacing-09);
-  margin-block-start: var(--spacing-09);
 }
 
+/* Desktop: hero (text + featured image) spans the full 1200px row;
+   section content sits in a ~600px centered column with the TOC to its right. */
 @media (min-width: 42rem) {
   .sectionLayout {
     display: grid;
-    grid-template-columns: minmax(0, 800px) 14rem;
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 37.5rem) /* 600px */
+      minmax(12rem, 1fr);
     grid-template-areas:
-      "hero nav"
-      "content nav";
-    column-gap: var(--spacing-09);
+      "crumb crumb crumb"
+      "hero hero hero"
+      ". content nav";
+    column-gap: var(--spacing-07);
     row-gap: var(--spacing-09);
     align-items: start;
     inline-size: 100%;
-    max-inline-size: calc(800px + var(--spacing-09) + 14rem);
+    max-inline-size: 75rem; /* 1200px */
     margin-inline: auto;
   }
 }
@@ -26,6 +32,16 @@
 .heroSlot {
   grid-area: hero;
   min-inline-size: 0;
+}
+
+/* Breadcrumb: sits just above the title, lined up with its column. */
+.crumbSlot {
+  grid-area: crumb;
+  inline-size: 100%;
+  max-inline-size: 37.5rem; /* line up with the title column */
+  margin-inline: auto;
+  min-inline-size: 0;
+  margin-block-end: calc(var(--spacing-06) - var(--spacing-09));
 }
 
 /* Mobile: flatten so the sticky strip's containing block is the whole layout. */
@@ -41,14 +57,13 @@
   }
 }
 
-.heroOnly {
-  margin-block-start: var(--spacing-09);
-}
-
 .sections {
   grid-area: content;
   display: flex;
   flex-direction: column;
+  inline-size: 100%;
+  max-inline-size: 37.5rem; /* 600px */
+  margin-inline: auto;
   min-inline-size: 0;
 }
 
@@ -61,10 +76,7 @@
 }
 
 .sectionLabel {
-  /* Match .prose's 65ch in pixels — "ch" is font-relative, and this
-     label uses a different (mono) font than the prose body text. */
-  max-inline-size: 738px;
-  margin: 0 auto var(--spacing-03);
+  margin: 0 0 var(--spacing-03);
   font-family: var(--font-family-mono);
   font-size: 1.125rem;
   color: var(--taupe-90);

@@ -42,9 +42,26 @@ const components: PortableTextComponents = {
   types: {
     image: ({ value }) => {
       if (!value?.asset) return null;
-      const src = urlFor(value).width(1200).quality(80).auto("format").url();
+      const maxWidth =
+        typeof value.maxWidth === "number" && value.maxWidth > 0
+          ? value.maxWidth
+          : undefined;
+      // Request 2x the display width for sharp images on high-DPI screens.
+      const requestWidth = maxWidth ? Math.min(maxWidth * 2, 2400) : 1200;
+      const src = urlFor(value)
+        .width(requestWidth)
+        .quality(80)
+        .auto("format")
+        .url();
       return (
-        <figure className={styles.figure}>
+        <figure
+          className={styles.figure}
+          style={
+            maxWidth
+              ? { maxInlineSize: `${maxWidth}px`, marginInline: "auto" }
+              : undefined
+          }
+        >
           <img
             src={src}
             alt={value.alt || ""}

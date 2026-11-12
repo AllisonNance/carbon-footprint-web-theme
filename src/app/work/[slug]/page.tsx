@@ -8,6 +8,7 @@ import {
 } from "@/sanity/lib/queries";
 import { ProseBlock } from "@components/atoms/ProseBlock";
 import { PortableText } from "@components/atoms/PortableText";
+import { Breadcrumb } from "@components/molecules/Breadcrumb";
 import { PortfolioItemHero } from "@components/organisms/PortfolioItemHero/PortfolioItemHero";
 import { getSiteChrome } from "@/lib/getSiteChrome";
 import { PageLayout } from "@components/templates/PageLayout";
@@ -81,7 +82,7 @@ export default async function PortfolioItemPage({
   if (!item) notFound();
 
   const heroImage = item.featuredImage
-    ? urlFor(item.featuredImage).width(1200).quality(80).auto("format").url()
+    ? urlFor(item.featuredImage).width(2400).quality(80).auto("format").url()
     : undefined;
 
   const tiles = [
@@ -105,6 +106,14 @@ export default async function PortfolioItemPage({
     body: s.body,
   }));
 
+  const breadcrumb = (
+    <Breadcrumb
+      parentLabel="Work"
+      parentHref="/"
+      current={item.client || item.title}
+    />
+  );
+
   const hero = (
     <PortfolioItemHero
       heading={item.title}
@@ -121,25 +130,27 @@ export default async function PortfolioItemPage({
   return (
     <PageLayout
       hideDefaultHeader
-      flush
       header={header}
       footer={footer}
     >
       {sections.length > 0 ? (
-        <WorkSections hero={hero} sections={sections}>
+        <WorkSections breadcrumb={breadcrumb} hero={hero} sections={sections}>
           {sections.map((section) => (
             <section key={section.key} id={section.target}>
               {section.navLabel && (
                 <p className={styles.sectionLabel}>{section.navLabel}</p>
               )}
-              <ProseBlock>
+              <ProseBlock maxWidth="none">
                 {section.body && <PortableText value={section.body} />}
               </ProseBlock>
             </section>
           ))}
         </WorkSections>
       ) : (
-        <div className={styles.heroOnly}>{hero}</div>
+        <div className={styles.sectionLayout}>
+          <div className={styles.crumbSlot}>{breadcrumb}</div>
+          <div className={styles.heroSlot}>{hero}</div>
+        </div>
       )}
     </PageLayout>
   );

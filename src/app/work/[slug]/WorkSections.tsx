@@ -18,12 +18,13 @@ interface SectionItem {
 }
 
 interface WorkSectionsProps {
+  breadcrumb?: ReactNode;
   hero: ReactNode;
   sections: SectionItem[];
   children: ReactNode;
 }
 
-export function WorkSections({ hero, sections, children }: WorkSectionsProps) {
+export function WorkSections({ breadcrumb, hero, sections, children }: WorkSectionsProps) {
   const navItems = sections.map((s) => ({
     label: s.navLabel,
     target: s.target,
@@ -69,6 +70,7 @@ export function WorkSections({ hero, sections, children }: WorkSectionsProps) {
 
   return (
     <div className={styles.sectionLayout}>
+      {breadcrumb && <div className={styles.crumbSlot}>{breadcrumb}</div>}
       <div className={styles.heroSlot}>{hero}</div>
 
       <div className={styles.navSlot}>

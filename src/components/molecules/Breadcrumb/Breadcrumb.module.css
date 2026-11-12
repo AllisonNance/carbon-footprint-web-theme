@@ -1,0 +1,59 @@
+/* Breadcrumb — "← Parent / Current" trail for detail pages. */
+
+.root {
+  font-family: var(--font-family-sans);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center; /* keep the arrow, "Work", slash and label on one line box */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  min-inline-size: 0;
+}
+
+.parent {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-02);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--motion-duration-base, 110ms) ease;
+}
+
+.parent:hover {
+  color: var(--text-primary);
+}
+
+.parent:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.arrow {
+  flex-shrink: 0;
+  transition: transform var(--motion-duration-base, 110ms) ease;
+}
+
+.parent:hover .arrow {
+  transform: translateX(-2px);
+}
+
+.separator {
+  margin-inline: var(--spacing-03);
+  color: var(--text-secondary);
+}
+
+.current {
+  color: var(--text-primary);
+}

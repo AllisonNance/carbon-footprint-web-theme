@@ -13,7 +13,7 @@ export interface PortfolioItemHeroProps extends HTMLAttributes<HTMLElement> {
   heading: string;
   /** Description paragraph below the heading. */
   description?: string;
-  /** Static tile metadata cards shown below the description. */
+  /** Static tile metadata cards shown below the hero media. */
   tiles?: PortfolioItemHeroTile[];
   /** Hero media — typically an `<img>`. Rendered in the right column
    *  with `object-fit: cover` filling the full height. */
@@ -40,31 +40,31 @@ export const PortfolioItemHero = forwardRef<HTMLElement, PortfolioItemHeroProps>
                 {description}
               </p>
             )}
-
-            {tiles && tiles.length > 0 && (
-              <div className={styles.tiles}>
-                {tiles.map((tile, i) => (
-                  <Tile key={`${tile.label}-${i}`} transparent className={styles.tile}>
-                    {tile.icon && (
-                      <div className={styles.tileIcon} aria-hidden>
-                        {tile.icon}
-                      </div>
-                    )}
-                    <p className={`${styles.tileLabel} type-heading-compact-01`}>
-                      {tile.label}
-                    </p>
-                    <p className={`${styles.tileValue} type-body-01`}>
-                      {tile.value}
-                    </p>
-                  </Tile>
-                ))}
-              </div>
-            )}
           </div>
 
           <div className={styles.media}>
             {media}
           </div>
+
+          {tiles && tiles.length > 0 && (
+            <div className={styles.tiles}>
+              {tiles.map((tile, i) => (
+                <Tile key={`${tile.label}-${i}`} transparent className={styles.tile}>
+                  {tile.icon && (
+                    <div className={styles.tileIcon} aria-hidden>
+                      {tile.icon}
+                    </div>
+                  )}
+                  <p className={`${styles.tileLabel} type-heading-compact-01`}>
+                    {tile.label}
+                  </p>
+                  <p className={`${styles.tileValue} type-body-01`}>
+                    {tile.value}
+                  </p>
+                </Tile>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     );

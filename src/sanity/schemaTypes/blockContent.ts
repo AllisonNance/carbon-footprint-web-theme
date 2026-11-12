@@ -82,6 +82,14 @@ export const blockContent = defineType({
           title: "Caption",
           description: "Optional visible caption below the image.",
         },
+        {
+          name: "maxWidth",
+          type: "number",
+          title: "Max width (px)",
+          description:
+            "Optional. Caps how wide the image displays; smaller images are centered. Leave empty to fill the content column.",
+          validation: (rule) => rule.integer().min(50).max(2400),
+        },
       ],
     }),
     defineArrayMember({

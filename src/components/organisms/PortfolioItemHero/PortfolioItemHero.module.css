@@ -10,7 +10,7 @@
   grid-template-columns: 1fr;
   row-gap: var(--spacing-08);
   min-block-size: 0;
-  max-inline-size: 65ch;
+  max-inline-size: 75rem; /* 1200px — featured image width */
   margin-inline: auto;
 }
 
@@ -19,6 +19,9 @@
   flex-direction: column;
   justify-content: center;
   gap: var(--spacing-05);
+  inline-size: 100%;
+  max-inline-size: 37.5rem; /* 600px — matches post content column */
+  margin-inline: auto;
   min-inline-size: 0;
 }
 
@@ -38,7 +41,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-block-start: var(--spacing-07);
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-inline-size: 37.5rem; /* 600px — matches the text column above */
+  margin-inline: auto;
   border-block: 1px solid var(--border-subtle-01);
   padding-block: var(--spacing-05);
 }
