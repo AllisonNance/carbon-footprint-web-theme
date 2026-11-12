@@ -112,6 +112,16 @@ export const portfolioItem = defineType({
       initialValue: false,
     }),
     defineField({
+      name: "isPasswordProtected",
+      title: "Password protected",
+      type: "boolean",
+      description:
+        "Require the portfolio password (set in Site Settings) to view " +
+        "this case study. The title stays visible; the image, project " +
+        "info and content are hidden until unlocked.",
+      initialValue: false,
+    }),
+    defineField({
       name: "contributionTags",
       title: "Contribution tags",
       type: "array",

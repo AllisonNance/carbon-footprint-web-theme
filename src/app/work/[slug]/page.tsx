@@ -2,17 +2,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
-import {
-  portfolioItemBySlugQuery,
-  portfolioItemSlugsQuery,
-} from "@/sanity/lib/queries";
+import { portfolioItemBySlugQuery } from "@/sanity/lib/queries";
 import { ProseBlock } from "@components/atoms/ProseBlock";
 import { PortableText } from "@components/atoms/PortableText";
 import { Breadcrumb } from "@components/molecules/Breadcrumb";
 import { PortfolioItemHero } from "@components/organisms/PortfolioItemHero/PortfolioItemHero";
 import { getSiteChrome } from "@/lib/getSiteChrome";
+import { hasPortfolioAccess } from "@/lib/portfolioAccess";
 import { PageLayout } from "@components/templates/PageLayout";
 import { WorkSections } from "./WorkSections";
+import { PasswordGate } from "./PasswordGate";
 import styles from "./page.module.css";
 
 interface PortfolioItemData {
@@ -23,6 +22,7 @@ interface PortfolioItemData {
   role?: string;
   client?: string;
   year?: string;
+  isPasswordProtected?: boolean;
   featuredImage?: {
     asset: { _ref: string; url: string };
     alt: string;
@@ -36,7 +36,11 @@ interface PortfolioItemData {
   }[];
 }
 
-export const revalidate = 60;
+/**
+ * Render per request: protected items depend on the visitor's access
+ * cookie, so these pages must never be served from a shared static cache.
+ */
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -53,16 +57,11 @@ export async function generateMetadata({
 
   return {
     title: `${item.title} — Allison Nance`,
-    description: item.excerpt || undefined,
+    // Don't leak a protected case study's summary into page metadata.
+    description: item.isPasswordProtected
+      ? undefined
+      : item.excerpt || undefined,
   };
-}
-
-/** Pre-generate pages for all portfolio items. */
-export async function generateStaticParams() {
-  const slugs: { slug: string }[] = await client.fetch(
-    portfolioItemSlugsQuery,
-  );
-  return slugs.map((s) => ({ slug: s.slug }));
 }
 
 export default async function PortfolioItemPage({
@@ -80,6 +79,9 @@ export default async function PortfolioItemPage({
   ]);
 
   if (!item) notFound();
+
+  const locked =
+    Boolean(item.isPasswordProtected) && !(await hasPortfolioAccess());
 
   const heroImage = item.featuredImage
     ? urlFor(item.featuredImage).width(2400).quality(80).auto("format").url()
@@ -126,6 +128,22 @@ export default async function PortfolioItemPage({
       }
     />
   );
+
+  if (locked) {
+    // Only the title and breadcrumb render; the image, project info and
+    // sections never reach the page until the password is entered.
+    return (
+      <PageLayout hideDefaultHeader header={header} footer={footer}>
+        <div className={styles.sectionLayout}>
+          <div className={styles.crumbSlot}>{breadcrumb}</div>
+          <div className={styles.heroSlot}>
+            <PortfolioItemHero heading={item.title} />
+            <PasswordGate slug={item.slug} />
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
 
   return (
     <PageLayout

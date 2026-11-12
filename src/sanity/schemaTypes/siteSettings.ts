@@ -208,6 +208,15 @@ export const siteSettings = defineType({
       type: "string",
       description: "Footer info item (e.g. Eastern or Central working hours).",
     }),
+    defineField({
+      name: "portfolioPassword",
+      title: "Portfolio password",
+      type: "string",
+      description:
+        "One password that unlocks every portfolio item marked " +
+        "\"Password protected\". Changing it signs out everyone who " +
+        "entered the old one. Protected items stay locked while this is empty.",
+    }),
   ],
   preview: {
     prepare() {

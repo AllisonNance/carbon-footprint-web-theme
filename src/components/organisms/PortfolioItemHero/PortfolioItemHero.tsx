@@ -42,9 +42,7 @@ export const PortfolioItemHero = forwardRef<HTMLElement, PortfolioItemHeroProps>
             )}
           </div>
 
-          <div className={styles.media}>
-            {media}
-          </div>
+          {media && <div className={styles.media}>{media}</div>}
 
           {tiles && tiles.length > 0 && (
             <div className={styles.tiles}>

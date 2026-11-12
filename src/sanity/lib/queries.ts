@@ -34,6 +34,7 @@ export const portfolioItemBySlugQuery = groq`
     role,
     client,
     year,
+    isPasswordProtected,
     featuredImage {
       asset->,
       alt
@@ -232,4 +233,9 @@ export const siteSettingsQuery = groq`
       href
     }
   }
+`;
+
+/** Shared portfolio password (Site Settings). Server-only — never pass to the client. */
+export const portfolioPasswordQuery = groq`
+  *[_type == "siteSettings" && _id == "siteSettings"][0].portfolioPassword
 `;
