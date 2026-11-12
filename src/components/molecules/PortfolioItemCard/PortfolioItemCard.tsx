@@ -69,11 +69,7 @@ export const PortfolioItemCard = forwardRef<
   },
   ref,
 ) {
-  const classes = [
-    styles.card,
-    href ? styles.cardLinked : styles.cardUnlinked,
-    className,
-  ]
+  const classes = [styles.card, href ? styles.cardLinked : "", className]
     .filter(Boolean)
     .join(" ");
 
