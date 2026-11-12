@@ -6,6 +6,14 @@ import {
 import { urlFor } from "@/sanity/lib/image";
 import styles from "./PortableText.module.css";
 
+/** Background choices for image callouts (see blockContent schema). */
+const CALLOUT_BACKGROUNDS: Record<string, string> = {
+  "gray-10": "var(--gray-10)",
+  white: "var(--white)",
+  "taupe-10": "var(--taupe-10)",
+  "taupe-20": "var(--taupe-20)",
+};
+
 const components: PortableTextComponents = {
   block: {
     h2: ({ children }) => <h2>{children}</h2>,
@@ -70,6 +78,34 @@ const components: PortableTextComponents = {
           />
           {value.caption && (
             <figcaption className={styles.caption}>{value.caption}</figcaption>
+          )}
+        </figure>
+      );
+    },
+    imageCallout: ({ value }) => {
+      if (!value?.image?.asset) return null;
+      const src = urlFor(value.image)
+        .width(1200)
+        .quality(80)
+        .auto("format")
+        .url();
+      const background =
+        CALLOUT_BACKGROUNDS[value.background] ?? CALLOUT_BACKGROUNDS["gray-10"];
+      return (
+        <figure className={styles.callout} style={{ backgroundColor: background }}>
+          {value.title && (
+            <p className={styles.calloutTitle}>{value.title}</p>
+          )}
+          <img
+            src={src}
+            alt={value.image.alt || ""}
+            loading="lazy"
+            className={styles.calloutImage}
+          />
+          {value.caption && (
+            <figcaption className={styles.calloutCaption}>
+              {value.caption}
+            </figcaption>
           )}
         </figure>
       );

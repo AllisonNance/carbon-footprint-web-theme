@@ -30,3 +30,48 @@
   block-size: 100%;
   border: 0;
 }
+
+/* ---------- Image callout ------------------------------------------
+ * Titled box with a selectable background, an image and a caption.
+ * Selectors use two classes so they win over ProseBlock's generic
+ * `.prose figure / img / figcaption` rules.
+ */
+
+.callout.callout {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-07);
+  margin-block: var(--spacing-07);
+  margin-inline: 0;
+  padding: var(--spacing-07); /* 32px */
+  border: 1px solid var(--gray-20);
+}
+
+.callout .calloutTitle {
+  margin: 0;
+  font-family: var(--font-family-mono);
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: var(--font-weight-regular, 400);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gray-70);
+}
+
+.callout .calloutImage {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  margin: 0;
+  border-radius: 0;
+}
+
+.callout .calloutCaption {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem;
+  letter-spacing: 0;
+  color: var(--text-secondary);
+}

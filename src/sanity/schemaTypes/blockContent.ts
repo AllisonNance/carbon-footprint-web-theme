@@ -1,5 +1,5 @@
 import { defineType, defineArrayMember } from "sanity";
-import { PlayIcon } from "@sanity/icons";
+import { PlayIcon, ImagesIcon } from "@sanity/icons";
 
 /**
  * Rich text (Portable Text) schema used by Bytes descriptions and
@@ -11,7 +11,18 @@ import { PlayIcon } from "@sanity/icons";
  * - Lists (bullet + numbered)
  * - Inline images with alt text and optional caption
  * - Embedded video (URL-based: YouTube, Vimeo, etc.)
+ * - Image callouts (titled box with a background color, image and caption)
  */
+
+/** Background choices for image callouts. Values map to CSS color tokens
+ *  in src/components/atoms/PortableText/PortableText.tsx. */
+export const IMAGE_CALLOUT_BACKGROUNDS = [
+  { title: "Light gray", value: "gray-10" },
+  { title: "White", value: "white" },
+  { title: "Light taupe", value: "taupe-10" },
+  { title: "Taupe", value: "taupe-20" },
+];
+
 export const blockContent = defineType({
   title: "Block Content",
   name: "blockContent",
@@ -91,6 +102,60 @@ export const blockContent = defineType({
           validation: (rule) => rule.integer().min(50).max(2400),
         },
       ],
+    }),
+    defineArrayMember({
+      name: "imageCallout",
+      type: "object",
+      title: "Image callout",
+      icon: ImagesIcon,
+      fields: [
+        {
+          name: "title",
+          type: "string",
+          title: "Title",
+          description: "Shown in all caps in the top-left corner (e.g. Hidden tools).",
+        },
+        {
+          name: "image",
+          type: "image",
+          title: "Image",
+          options: { hotspot: true },
+          validation: (rule) => rule.required(),
+          fields: [
+            {
+              name: "alt",
+              type: "string",
+              title: "Alt text",
+              description: "Describe the image for screen readers.",
+              validation: (rule) => rule.required(),
+            },
+          ],
+        },
+        {
+          name: "caption",
+          type: "text",
+          rows: 2,
+          title: "Caption",
+          description: "Optional. Shown below the image in small text.",
+        },
+        {
+          name: "background",
+          type: "string",
+          title: "Background color",
+          options: { list: IMAGE_CALLOUT_BACKGROUNDS, layout: "radio", direction: "horizontal" },
+          initialValue: "gray-10",
+        },
+      ],
+      preview: {
+        select: { title: "title", caption: "caption", media: "image" },
+        prepare({ title, caption, media }) {
+          return {
+            title: title ? title.toUpperCase() : "Image callout",
+            subtitle: caption || "Image callout",
+            media,
+          };
+        },
+      },
     }),
     defineArrayMember({
       name: "video",
