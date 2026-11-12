@@ -6,13 +6,24 @@ import {
 import { urlFor } from "@/sanity/lib/image";
 import styles from "./PortableText.module.css";
 
-/** Background choices for image callouts (see blockContent schema). */
-const CALLOUT_BACKGROUNDS: Record<string, string> = {
+const HEX_COLOR = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
+const DEFAULT_CALLOUT_BACKGROUND = "var(--gray-10)";
+
+/** Older callouts stored a named swatch instead of a hex code. */
+const LEGACY_CALLOUT_BACKGROUNDS: Record<string, string> = {
   "gray-10": "var(--gray-10)",
   white: "var(--white)",
   "taupe-10": "var(--taupe-10)",
   "taupe-20": "var(--taupe-20)",
 };
+
+/** Hex code from Sanity → CSS color; anything invalid falls back to light gray. */
+function calloutBackground(value: unknown): string {
+  if (typeof value !== "string") return DEFAULT_CALLOUT_BACKGROUND;
+  const v = value.trim();
+  if (HEX_COLOR.test(v)) return v;
+  return LEGACY_CALLOUT_BACKGROUNDS[v] ?? DEFAULT_CALLOUT_BACKGROUND;
+}
 
 const components: PortableTextComponents = {
   block: {
@@ -89,8 +100,7 @@ const components: PortableTextComponents = {
         .quality(80)
         .auto("format")
         .url();
-      const background =
-        CALLOUT_BACKGROUNDS[value.background] ?? CALLOUT_BACKGROUNDS["gray-10"];
+      const background = calloutBackground(value.background);
       return (
         <figure className={styles.callout} style={{ backgroundColor: background }}>
           {value.title && (

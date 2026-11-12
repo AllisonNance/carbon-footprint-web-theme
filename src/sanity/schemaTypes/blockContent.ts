@@ -14,14 +14,8 @@ import { PlayIcon, ImagesIcon } from "@sanity/icons";
  * - Image callouts (titled box with a background color, image and caption)
  */
 
-/** Background choices for image callouts. Values map to CSS color tokens
- *  in src/components/atoms/PortableText/PortableText.tsx. */
-export const IMAGE_CALLOUT_BACKGROUNDS = [
-  { title: "Light gray", value: "gray-10" },
-  { title: "White", value: "white" },
-  { title: "Light taupe", value: "taupe-10" },
-  { title: "Taupe", value: "taupe-20" },
-];
+/** Matches a hex color like #F4F4F4 or #FFF. */
+export const HEX_COLOR_PATTERN = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
 
 export const blockContent = defineType({
   title: "Block Content",
@@ -142,8 +136,16 @@ export const blockContent = defineType({
           name: "background",
           type: "string",
           title: "Background color",
-          options: { list: IMAGE_CALLOUT_BACKGROUNDS, layout: "radio", direction: "horizontal" },
-          initialValue: "gray-10",
+          description:
+            "Hex code, e.g. #F4F4F4 (light gray) or #FFFFFF (white). Leave empty for light gray.",
+          placeholder: "#F4F4F4",
+          initialValue: "#F4F4F4",
+          validation: (rule) =>
+            rule.custom((value?: string) =>
+              !value || HEX_COLOR_PATTERN.test(value.trim())
+                ? true
+                : "Enter a hex code like #F4F4F4 or #FFF.",
+            ),
         },
       ],
       preview: {

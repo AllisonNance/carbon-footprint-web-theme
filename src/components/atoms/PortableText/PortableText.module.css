@@ -51,8 +51,8 @@
 .callout .calloutTitle {
   margin: 0;
   font-family: var(--font-family-mono);
-  font-size: 1.5rem;
-  line-height: 2rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   font-weight: var(--font-weight-regular, 400);
   letter-spacing: 0.04em;
   text-transform: uppercase;
