@@ -1,4 +1,7 @@
-/* SiteCursor — global square cursor replacement.
+/* SiteCursor — global arrow cursor replacement.
+ *
+ * The arrow's tip is its top-left corner, so it sits exactly on the
+ * pointer position (no centering offset).
  *
  * .hideNativeCursor is toggled on <html> once a desktop mouse is
  * confirmed; !important beats the UA stylesheet's `cursor: pointer`
@@ -16,14 +19,49 @@
   left: 0;
   z-index: 9999;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--spacing-03);
   pointer-events: none;
+}
+
+/* Over labeled elements (portfolio cards) the arrow becomes a circle,
+ * centered vertically with the label pill. */
+.cursorLabeled {
+  align-items: center;
+}
+
+.circle {
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background-color: var(--taupe-90);
+}
+
+/* 1px white outline around the arrow so it stays visible on dark or
+ * busy backgrounds. A border can't follow a clip-path, so the outline
+ * is drawn by drop-shadows on this wrapper, which trace the clipped
+ * shape of the arrow inside it. */
+.dotOutline {
+  display: flex;
+  flex: 0 0 auto;
+  filter:
+    drop-shadow(1px 0 0 var(--white, #fff))
+    drop-shadow(-1px 0 0 var(--white, #fff))
+    drop-shadow(0 1px 0 var(--white, #fff))
+    drop-shadow(0 -1px 0 var(--white, #fff));
 }
 
 .dot {
   flex: 0 0 auto;
   background-color: var(--taupe-90);
+  /* Arrow traced from the design: tip at top-left, notched tail. */
+  clip-path: polygon(
+    0% 0%,
+    100% 60.85%,
+    68% 74.07%,
+    42% 62.17%,
+    43.33% 84.13%,
+    5% 100%
+  );
   transition:
     width var(--motion-duration-fast, 120ms) ease-out,
     height var(--motion-duration-fast, 120ms) ease-out;
@@ -37,12 +75,20 @@
   left: 0;
   z-index: 9998;
   background-color: var(--taupe-90);
+  /* Arrow traced from the design: tip at top-left, notched tail. */
+  clip-path: polygon(
+    0% 0%,
+    100% 60.85%,
+    68% 74.07%,
+    42% 62.17%,
+    43.33% 84.13%,
+    5% 100%
+  );
   pointer-events: none;
   transition:
     opacity var(--motion-duration-slow, 320ms) ease-out,
     width var(--motion-duration-slow, 320ms) ease-out,
-    height var(--motion-duration-slow, 320ms) ease-out,
-    transform var(--motion-duration-slow, 320ms) ease-out;
+    height var(--motion-duration-slow, 320ms) ease-out;
 }
 
 .label {
@@ -67,7 +113,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dot {
+  .dot,
+  .circle {
     transition: none;
   }
 

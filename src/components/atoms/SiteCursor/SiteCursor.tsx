@@ -10,8 +10,12 @@ import styles from "./SiteCursor.module.css";
 const INTERACTIVE_SELECTOR =
   'a, button, [role="button"], input, textarea, select, summary, label';
 
-const DEFAULT_SIZE = 11;
-const SHRINK_SIZE = 7;
+/** Arrow height in px; width follows the shape's 300:378 aspect ratio. */
+const DEFAULT_SIZE = 18;
+const SHRINK_SIZE = 12;
+const ARROW_ASPECT = 300 / 378;
+/** Circle diameter (px) shown beside the label over portfolio cards. */
+const CIRCLE_SIZE = 10;
 
 /** Motion-trail tuning: how far (px) the cursor must travel before a
  *  new ghost snapshot is recorded, how many snapshots to keep, how
@@ -29,7 +33,7 @@ interface Point {
 }
 
 /**
- * SiteCursor — replaces the system cursor with a small square that
+ * SiteCursor — replaces the system cursor with a small arrow that
  * shrinks over interactive elements, expands into a labeled pill over
  * elements with a `data-cursor-label` attribute (e.g. portfolio
  * cards), and leaves a faint, fading trail while moving. Desktop-mouse
@@ -72,7 +76,7 @@ export function SiteCursor() {
       setPos(point);
       setVisible(true);
 
-      const target = event.target as HTMLElement | null;
+      const target = event.target instanceof Element ? event.target : null;
       const labelTarget = target?.closest<HTMLElement>("[data-cursor-label]");
       setLabel(labelTarget?.dataset.cursorLabel ?? null);
       setShrink(Boolean(labelTarget || target?.closest(INTERACTIVE_SELECTOR)));
@@ -133,10 +137,9 @@ export function SiteCursor() {
             style={{
               left: point.x,
               top: point.y,
-              width: trailSize,
+              width: trailSize * ARROW_ASPECT,
               height: trailSize,
               opacity: TRAIL_OPACITIES[i] ?? 0,
-              transform: `translate(-${trailSize / 2}px, -${trailSize / 2}px)`,
             }}
             aria-hidden
           />
@@ -144,15 +147,34 @@ export function SiteCursor() {
       })}
 
       <div
-        className={styles.cursor}
+        className={[styles.cursor, label ? styles.cursorLabeled : ""]
+          .filter(Boolean)
+          .join(" ")}
         style={{
           left: pos.x,
           top: pos.y,
-          transform: `translate(-${size / 2}px, -${size / 2}px)`,
+          // Arrow: tip sits on the pointer. Circle: centered on the pointer.
+          // The row is vertically centered, so -50% puts the circle's
+          // center (and the pill's midline) on the pointer.
+          transform: label
+            ? `translate(-${CIRCLE_SIZE / 2}px, -50%)`
+            : undefined,
         }}
         aria-hidden
       >
-        <span className={styles.dot} style={{ width: size, height: size }} />
+        <span className={styles.dotOutline}>
+          {label ? (
+            <span
+              className={styles.circle}
+              style={{ width: CIRCLE_SIZE, height: CIRCLE_SIZE }}
+            />
+          ) : (
+            <span
+              className={styles.dot}
+              style={{ width: size * ARROW_ASPECT, height: size }}
+            />
+          )}
+        </span>
         {label && (
           <span className={`${styles.label} type-label-01`}>{label}</span>
         )}
