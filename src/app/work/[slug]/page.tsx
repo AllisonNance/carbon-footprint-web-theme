@@ -42,6 +42,14 @@ interface PortfolioItemData {
  */
 export const dynamic = "force-dynamic";
 
+/** Every portfolio item stays out of search results — current and future,
+ *  protected or not, and including the "Not Found" case. */
+const NO_INDEX: Metadata["robots"] = {
+  index: false,
+  follow: false,
+  googleBot: { index: false, follow: false },
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -53,7 +61,7 @@ export async function generateMetadata({
     { slug },
   );
 
-  if (!item) return { title: "Not Found" };
+  if (!item) return { title: "Not Found", robots: NO_INDEX };
 
   return {
     title: `${item.title} — Allison Nance`,
@@ -61,6 +69,7 @@ export async function generateMetadata({
     description: item.isPasswordProtected
       ? undefined
       : item.excerpt || undefined,
+    robots: NO_INDEX,
   };
 }
 
