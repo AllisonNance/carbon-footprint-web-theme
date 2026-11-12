@@ -67,7 +67,7 @@ h3 {
 
 /* ---------- Gradient underline utility ----------------------------- */
 /*
- * Taupe gradient underline — apply `.gradient-underline` plus one of
+ * Link underline (solid dark taupe) — apply `.gradient-underline` plus one of
  * the modifier classes to get the standard link hover treatment.
  *
  *   .gradient-underline              — base (hidden by default)
@@ -77,12 +77,8 @@ h3 {
  */
 
 .gradient-underline {
-  background-image: linear-gradient(
-    to right,
-    var(--taupe-100),
-    var(--taupe-50),
-    var(--taupe-10)
-  );
+  /* Solid dark taupe line (formerly a taupe gradient). */
+  background-image: linear-gradient(var(--taupe-100), var(--taupe-100));
   background-position: 0 100%;
   background-repeat: no-repeat;
   background-size: 0 1px;

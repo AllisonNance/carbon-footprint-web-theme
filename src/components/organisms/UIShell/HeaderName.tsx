@@ -28,7 +28,7 @@ export const HeaderName = forwardRef<HTMLAnchorElement, HeaderNameProps>(
     { children, className, logo, prefix = "IBM", href = "/", ...rest },
     ref,
   ) {
-    const classes = [styles.name, "gradient-underline", "gradient-underline-hover", className].filter(Boolean).join(" ");
+    const classes = [styles.name, className].filter(Boolean).join(" ");
     return (
       <a ref={ref} href={href} className={classes} {...rest}>
         {logo ? (

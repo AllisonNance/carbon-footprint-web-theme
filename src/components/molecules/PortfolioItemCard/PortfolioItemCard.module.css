@@ -87,6 +87,32 @@
   }
 }
 
+/* Cards without a link: a subtle translucent overlay on the image
+ * while hovering it, instead of the zoom. */
+.cardUnlinked .media {
+  position: relative;
+}
+
+.cardUnlinked .media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--taupe-100);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-duration-slow, 320ms) ease-out;
+}
+
+.cardUnlinked .media:hover::after {
+  opacity: 0.2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardUnlinked .media::after {
+    transition: none;
+  }
+}
+
 /* ---------- Mobile media override ----------------------------------- */
 
 .mediaDesktop,
@@ -141,7 +167,7 @@
 .titleLink {
   color: inherit;
   text-decoration: none;
-  background-image: linear-gradient(to right, var(--taupe-100), var(--taupe-50), var(--taupe-10));
+  background-image: linear-gradient(var(--taupe-100), var(--taupe-100));
   background-size: 0 1px;
   background-position: 0 100%;
   background-repeat: no-repeat;

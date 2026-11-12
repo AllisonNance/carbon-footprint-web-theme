@@ -80,7 +80,7 @@
   line-height: 1.125rem;
   font-weight: var(--font-weight-regular);
   color: var(--text-primary);
-  background-image: linear-gradient(to right, var(--taupe-100), var(--taupe-50), var(--taupe-10));
+  background-image: linear-gradient(var(--taupe-100), var(--taupe-100));
   background-size: 0 1px;
   background-position: 0 100%;
   background-repeat: no-repeat;
