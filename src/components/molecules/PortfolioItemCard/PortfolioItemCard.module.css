@@ -59,6 +59,34 @@
   object-fit: cover;
 }
 
+/* Linked cards: a slight zoom on the image while hovering or focused.
+ * .media's overflow: hidden keeps the image inside its frame. */
+.cardLinked .media img,
+.cardLinked .media video {
+  transition: transform var(--motion-duration-slow, 320ms) ease-out;
+}
+
+.cardLinked:hover .media img,
+.cardLinked:hover .media video,
+.cardLinked:focus-visible .media img,
+.cardLinked:focus-visible .media video {
+  transform: scale(1.03);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardLinked .media img,
+  .cardLinked .media video {
+    transition: none;
+  }
+
+  .cardLinked:hover .media img,
+  .cardLinked:hover .media video,
+  .cardLinked:focus-visible .media img,
+  .cardLinked:focus-visible .media video {
+    transform: none;
+  }
+}
+
 /* ---------- Mobile media override ----------------------------------- */
 
 .mediaDesktop,

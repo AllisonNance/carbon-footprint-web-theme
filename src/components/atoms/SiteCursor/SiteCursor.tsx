@@ -14,8 +14,6 @@ const INTERACTIVE_SELECTOR =
 const DEFAULT_SIZE = 18;
 const SHRINK_SIZE = 12;
 const ARROW_ASPECT = 300 / 378;
-/** Circle diameter (px) shown beside the label over portfolio cards. */
-const CIRCLE_SIZE = 10;
 
 /** Motion-trail tuning: how far (px) the cursor must travel before a
  *  new ghost snapshot is recorded, how many snapshots to keep, how
@@ -147,33 +145,18 @@ export function SiteCursor() {
       })}
 
       <div
-        className={[styles.cursor, label ? styles.cursorLabeled : ""]
-          .filter(Boolean)
-          .join(" ")}
+        className={styles.cursor}
         style={{
           left: pos.x,
           top: pos.y,
-          // Arrow: tip sits on the pointer. Circle: centered on the pointer.
-          // The row is vertically centered, so -50% puts the circle's
-          // center (and the pill's midline) on the pointer.
-          transform: label
-            ? `translate(-${CIRCLE_SIZE / 2}px, -50%)`
-            : undefined,
         }}
         aria-hidden
       >
         <span className={styles.dotOutline}>
-          {label ? (
-            <span
-              className={styles.circle}
-              style={{ width: CIRCLE_SIZE, height: CIRCLE_SIZE }}
-            />
-          ) : (
-            <span
-              className={styles.dot}
-              style={{ width: size * ARROW_ASPECT, height: size }}
-            />
-          )}
+          <span
+            className={styles.dot}
+            style={{ width: size * ARROW_ASPECT, height: size }}
+          />
         </span>
         {label && (
           <span className={`${styles.label} type-label-01`}>{label}</span>

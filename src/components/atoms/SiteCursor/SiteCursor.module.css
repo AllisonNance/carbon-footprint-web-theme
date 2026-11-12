@@ -18,22 +18,8 @@
   top: 0;
   left: 0;
   z-index: 9999;
-  display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-03);
+  display: block;
   pointer-events: none;
-}
-
-/* Over labeled elements (portfolio cards) the arrow becomes a circle,
- * centered vertically with the label pill. */
-.cursorLabeled {
-  align-items: center;
-}
-
-.circle {
-  flex: 0 0 auto;
-  border-radius: 50%;
-  background-color: var(--taupe-90);
 }
 
 /* 1px white outline around the arrow so it stays visible on dark or
@@ -92,6 +78,12 @@
 }
 
 .label {
+  /* Sits to the right of the arrow, vertically centered on it, so the
+   * arrow's tip stays exactly on the pointer. */
+  position: absolute;
+  inset-inline-start: calc(100% + var(--spacing-03));
+  inset-block-start: 50%;
+  translate: 0 -50%;
   white-space: nowrap;
   padding: var(--spacing-02) var(--spacing-04);
   background-color: var(--white);
@@ -113,8 +105,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dot,
-  .circle {
+  .dot {
     transition: none;
   }
 

@@ -15,7 +15,8 @@ export interface PortfolioItemCardProps extends HTMLAttributes<HTMLElement> {
   portfolioItemTypeIcon?: ReactNode;
   /** Portfolio item title. */
   title: string;
-  /** Optional href — when set, the whole card becomes a link. */
+  /** Optional href — when set, the whole card (image and title)
+   *  becomes a link and the image zooms slightly on hover. */
   href?: string;
   /** Featured media — required. Typically an `<img>` but any element
    *  works (illustration block, video frame, etc.). The component
@@ -68,7 +69,9 @@ export const PortfolioItemCard = forwardRef<
   },
   ref,
 ) {
-  const classes = [styles.card, className].filter(Boolean).join(" ");
+  const classes = [styles.card, href ? styles.cardLinked : "", className]
+    .filter(Boolean)
+    .join(" ");
 
   const content = (
     <>
