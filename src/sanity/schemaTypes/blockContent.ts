@@ -126,6 +126,14 @@ export const blockContent = defineType({
           ],
         },
         {
+          name: "imageMaxWidth",
+          type: "number",
+          title: "Image max width (px)",
+          description:
+            "Optional. Caps how wide the image displays inside the box; smaller images are centered. Leave empty to fill the box.",
+          validation: (rule) => rule.integer().min(50).max(2400),
+        },
+        {
           name: "caption",
           type: "text",
           rows: 2,

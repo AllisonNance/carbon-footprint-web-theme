@@ -95,8 +95,13 @@ const components: PortableTextComponents = {
     },
     imageCallout: ({ value }) => {
       if (!value?.image?.asset) return null;
+      const imageMaxWidth =
+        typeof value.imageMaxWidth === "number" && value.imageMaxWidth > 0
+          ? value.imageMaxWidth
+          : undefined;
+      // Request 2x the display width for sharp images on high-DPI screens.
       const src = urlFor(value.image)
-        .width(1200)
+        .width(imageMaxWidth ? Math.min(imageMaxWidth * 2, 2400) : 1200)
         .quality(80)
         .auto("format")
         .url();
@@ -111,6 +116,11 @@ const components: PortableTextComponents = {
             alt={value.image.alt || ""}
             loading="lazy"
             className={styles.calloutImage}
+            style={
+              imageMaxWidth
+                ? { maxInlineSize: `${imageMaxWidth}px`, marginInline: "auto" }
+                : undefined
+            }
           />
           {value.caption && (
             <figcaption className={styles.calloutCaption}>
