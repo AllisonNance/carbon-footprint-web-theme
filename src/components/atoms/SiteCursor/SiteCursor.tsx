@@ -50,6 +50,7 @@ export function SiteCursor() {
   const [trail, setTrail] = useState<Point[]>([]);
 
   const lastTrailPointRef = useRef<Point | null>(null);
+  const lastPointerRef = useRef<Point | null>(null);
   const idleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -69,17 +70,25 @@ export function SiteCursor() {
       if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
     };
 
+    /** Update the label/shrink state for whatever is under the pointer.
+     *  Returns true when that's a labeled element (e.g. a portfolio card). */
+    const updateForTarget = (target: Element | null) => {
+      const labelTarget = target?.closest<HTMLElement>("[data-cursor-label]");
+      setLabel(labelTarget?.dataset.cursorLabel ?? null);
+      setShrink(Boolean(labelTarget || target?.closest(INTERACTIVE_SELECTOR)));
+      return Boolean(labelTarget);
+    };
+
     const handleMove = (event: MouseEvent) => {
       const point = { x: event.clientX, y: event.clientY };
+      lastPointerRef.current = point;
       setPos(point);
       setVisible(true);
 
       const target = event.target instanceof Element ? event.target : null;
-      const labelTarget = target?.closest<HTMLElement>("[data-cursor-label]");
-      setLabel(labelTarget?.dataset.cursorLabel ?? null);
-      setShrink(Boolean(labelTarget || target?.closest(INTERACTIVE_SELECTOR)));
+      const overLabel = updateForTarget(target);
 
-      if (labelTarget) {
+      if (overLabel) {
         // No trail over portfolio cards — it clutters the label pill.
         lastTrailPointRef.current = null;
         setTrail([]);
@@ -103,18 +112,34 @@ export function SiteCursor() {
       }, TRAIL_IDLE_MS);
     };
 
+    // Scrolling moves the page under a still mouse without firing
+    // mousemove, so re-check what's under the pointer after each scroll
+    // event — otherwise a card's label would follow the cursor down the
+    // page. (Browsers already fire scroll at most once per frame.)
+    const handleScroll = () => {
+      const point = lastPointerRef.current;
+      if (!point) return;
+      updateForTarget(document.elementFromPoint(point.x, point.y));
+    };
+
     const handleLeave = () => {
       setVisible(false);
+      lastPointerRef.current = null;
       lastTrailPointRef.current = null;
       setTrail([]);
     };
 
     window.addEventListener("mousemove", handleMove);
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+      capture: true, // also catch scrolling inside scrollable elements
+    });
     document.addEventListener("mouseleave", handleLeave);
 
     return () => {
       root.classList.remove(styles.hideNativeCursor);
       window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("scroll", handleScroll, { capture: true });
       document.removeEventListener("mouseleave", handleLeave);
       clearIdleTimeout();
     };
