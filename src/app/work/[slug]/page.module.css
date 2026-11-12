@@ -79,5 +79,6 @@
   margin: 0 0 var(--spacing-03);
   font-family: var(--font-family-mono);
   font-size: 1.125rem;
+  text-transform: uppercase;
   color: var(--taupe-90);
 }
