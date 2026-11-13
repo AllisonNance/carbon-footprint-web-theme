@@ -112,7 +112,7 @@
   border: 0;
   background: none;
   text-align: start;
-  vertical-align: middle;
+  vertical-align: top;
   white-space: pre-line; /* keep line breaks typed in Sanity */
 }
 
