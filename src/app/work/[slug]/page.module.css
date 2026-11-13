@@ -41,7 +41,9 @@
   max-inline-size: 37.5rem; /* line up with the title column */
   margin-inline: auto;
   min-inline-size: 0;
-  margin-block-end: calc(var(--spacing-06) - var(--spacing-09));
+  /* 56px below the breadcrumb: 24px + 32px, adjusted for the layout's
+     48px row gap. */
+  margin-block-end: calc(var(--spacing-06) + var(--spacing-07) - var(--spacing-09));
 }
 
 /* Mobile: flatten so the sticky strip's containing block is the whole layout. */
