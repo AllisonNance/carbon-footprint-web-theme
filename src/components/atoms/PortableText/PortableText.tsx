@@ -25,6 +25,24 @@ function calloutBackground(value: unknown): string {
   return LEGACY_CALLOUT_BACKGROUNDS[v] ?? DEFAULT_CALLOUT_BACKGROUND;
 }
 
+/** Check mark for image callout checklists (decorative). */
+function CheckIcon() {
+  return (
+    <svg
+      className={styles.checkIcon}
+      viewBox="0 0 22 20"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M20.625 0.375C21.1406 0.703125 21.2344 1.40625 20.9062 1.92188L8.53125 19.1719C8.29688 19.4531 8.01562 19.5938 7.6875 19.6406C7.35938 19.6406 7.03125 19.5469 6.79688 19.3125L0.421875 12.9375C0 12.5156 0 11.7656 0.421875 11.3438C0.84375 10.9219 1.59375 10.9219 2.01562 11.3438L7.45312 16.7812L19.0781 0.609375C19.4062 0.09375 20.1094 0 20.625 0.375Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 const components: PortableTextComponents = {
   block: {
     h2: ({ children }) => <h2>{children}</h2>,
@@ -106,6 +124,12 @@ const components: PortableTextComponents = {
         .auto("format")
         .url();
       const background = calloutBackground(value.background);
+      const checklist: string[] = Array.isArray(value.checklist)
+        ? value.checklist.filter(
+            (item: unknown): item is string =>
+              typeof item === "string" && item.trim() !== "",
+          )
+        : [];
       return (
         <figure className={styles.callout} style={{ backgroundColor: background }}>
           {value.title && (
@@ -126,6 +150,16 @@ const components: PortableTextComponents = {
             <figcaption className={styles.calloutCaption}>
               {value.caption}
             </figcaption>
+          )}
+          {checklist.length > 0 && (
+            <ul className={styles.checklist}>
+              {checklist.map((item, i) => (
+                <li key={i} className={styles.checklistItem}>
+                  <CheckIcon />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           )}
         </figure>
       );

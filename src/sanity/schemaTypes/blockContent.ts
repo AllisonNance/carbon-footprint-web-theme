@@ -142,6 +142,13 @@ export const blockContent = defineType({
           description: "Optional. Shown below the image in small text.",
         },
         {
+          name: "checklist",
+          type: "array",
+          title: "Checklist",
+          description: "Optional. Each item gets a check mark and sits below the caption.",
+          of: [{ type: "string" }],
+        },
+        {
           name: "background",
           type: "string",
           title: "Background color",
