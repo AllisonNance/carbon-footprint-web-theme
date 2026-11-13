@@ -130,6 +130,40 @@ const components: PortableTextComponents = {
         </figure>
       );
     },
+    tableCallout: ({ value }) => {
+      const rows: { _key?: string; label?: string; value?: string }[] =
+        Array.isArray(value?.rows) ? value.rows : [];
+      if (rows.length === 0) return null;
+      const hasHeaders = Boolean(value.column1Header || value.column2Header);
+      return (
+        <div
+          className={styles.tableCallout}
+          style={{ backgroundColor: calloutBackground(value.background) }}
+        >
+          <table className={styles.table}>
+            {value.caption && (
+              <caption className={styles.tableCaption}>{value.caption}</caption>
+            )}
+            {hasHeaders && (
+              <thead>
+                <tr>
+                  <th scope="col">{value.column1Header}</th>
+                  <th scope="col">{value.column2Header}</th>
+                </tr>
+              </thead>
+            )}
+            <tbody>
+              {rows.map((row, i) => (
+                <tr key={row._key ?? i}>
+                  <th scope="row">{row.label}</th>
+                  <td>{row.value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    },
     video: ({ value }) => {
       if (!value?.url) return null;
       // Convert YouTube/Vimeo URLs to embed format

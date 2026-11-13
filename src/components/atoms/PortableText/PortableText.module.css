@@ -75,3 +75,98 @@
   letter-spacing: 0;
   color: var(--text-secondary);
 }
+
+/* ---------- Table callout -------------------------------------------
+ * Two-column table (narrow label column, wide value column) in the same
+ * box as the image callout: hex background, 1px border, 32px padding.
+ * Headers match the callout title; the caption sits below in small Inter.
+ */
+
+.tableCallout {
+  box-sizing: border-box;
+  margin-block: var(--spacing-07);
+  padding: var(--spacing-07); /* 32px */
+  border: 1px solid var(--gray-20);
+}
+
+.tableCallout .table {
+  inline-size: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--gray-70);
+}
+
+/* Column split: roughly 1/3 for the labels, 2/3 for the descriptions. */
+.tableCallout .table th:first-child,
+.tableCallout .table td:first-child {
+  inline-size: 34%;
+}
+
+.tableCallout .table th,
+.tableCallout .table td {
+  padding: var(--spacing-05) 0; /* 16px top/bottom */
+  border: 0;
+  background: none;
+  text-align: start;
+  vertical-align: middle;
+  white-space: pre-line; /* keep line breaks typed in Sanity */
+}
+
+.tableCallout .table th:first-child {
+  padding-inline-end: var(--spacing-06);
+}
+
+.tableCallout .table :is(th, td):last-child {
+  padding-inline-start: var(--spacing-06);
+}
+
+/* Column headers: same style as the image callout title. */
+.tableCallout .table thead th {
+  position: relative;
+  padding-block: 0 var(--spacing-05);
+  font-family: var(--font-family-mono);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: var(--font-weight-regular, 400);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gray-70);
+}
+
+/* Short vertical divider between the two headers. */
+.tableCallout .table thead th:last-child::before {
+  content: "";
+  position: absolute;
+  inset-block: 0 var(--spacing-05);
+  inset-inline-start: 0;
+  inline-size: 1px;
+  background: var(--gray-30);
+}
+
+/* Row labels */
+.tableCallout .table tbody th {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Lines between rows (none above the first or below the last). */
+.tableCallout .table tbody tr + tr > * {
+  border-block-start: 1px solid var(--gray-30);
+}
+
+.tableCallout .table tbody tr:last-child > * {
+  padding-block-end: 0;
+}
+
+.tableCallout .tableCaption {
+  caption-side: bottom;
+  padding-block-start: var(--spacing-07);
+  font-family: var(--font-family-sans);
+  font-size: 0.75rem; /* 12px, matches the image callout caption */
+  line-height: 1rem;
+  text-align: start;
+  color: var(--text-secondary);
+}

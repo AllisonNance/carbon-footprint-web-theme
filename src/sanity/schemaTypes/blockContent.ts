@@ -1,5 +1,5 @@
 import { defineType, defineArrayMember } from "sanity";
-import { PlayIcon, ImagesIcon } from "@sanity/icons";
+import { PlayIcon, ImagesIcon, ThListIcon } from "@sanity/icons";
 
 /**
  * Rich text (Portable Text) schema used by Bytes descriptions and
@@ -12,6 +12,7 @@ import { PlayIcon, ImagesIcon } from "@sanity/icons";
  * - Inline images with alt text and optional caption
  * - Embedded video (URL-based: YouTube, Vimeo, etc.)
  * - Image callouts (titled box with a background color, image and caption)
+ * - Tables (two columns with headers, a background color and caption)
  */
 
 /** Matches a hex color like #F4F4F4 or #FFF. */
@@ -163,6 +164,94 @@ export const blockContent = defineType({
             title: title ? title.toUpperCase() : "Image callout",
             subtitle: caption || "Image callout",
             media,
+          };
+        },
+      },
+    }),
+    defineArrayMember({
+      name: "tableCallout",
+      type: "object",
+      title: "Table",
+      icon: ThListIcon,
+      fields: [
+        {
+          name: "column1Header",
+          type: "string",
+          title: "Column 1 header",
+          description: "Narrow left column. Shown in all caps (e.g. Research theme).",
+        },
+        {
+          name: "column2Header",
+          type: "string",
+          title: "Column 2 header",
+          description: "Wide right column. Shown in all caps (e.g. UX direction).",
+        },
+        {
+          name: "rows",
+          type: "array",
+          title: "Rows",
+          validation: (rule) => rule.min(1),
+          of: [
+            {
+              type: "object",
+              name: "tableRow",
+              title: "Row",
+              fields: [
+                {
+                  name: "label",
+                  type: "text",
+                  rows: 2,
+                  title: "Column 1",
+                  description: "Press Enter to force a line break.",
+                },
+                {
+                  name: "value",
+                  type: "text",
+                  rows: 2,
+                  title: "Column 2",
+                },
+              ],
+              preview: {
+                select: { title: "label", subtitle: "value" },
+              },
+            },
+          ],
+        },
+        {
+          name: "caption",
+          type: "text",
+          rows: 2,
+          title: "Caption",
+          description: "Optional. Shown below the table in small text.",
+        },
+        {
+          name: "background",
+          type: "string",
+          title: "Background color",
+          description:
+            "Hex code, e.g. #F4F4F4 (light gray) or #FFFFFF (white). Leave empty for light gray.",
+          placeholder: "#F4F4F4",
+          initialValue: "#F4F4F4",
+          validation: (rule) =>
+            rule.custom((value?: string) =>
+              !value || HEX_COLOR_PATTERN.test(value.trim())
+                ? true
+                : "Enter a hex code like #F4F4F4 or #FFF.",
+            ),
+        },
+      ],
+      preview: {
+        select: {
+          column1: "column1Header",
+          column2: "column2Header",
+          rows: "rows",
+        },
+        prepare({ column1, column2, rows }) {
+          const headers = [column1, column2].filter(Boolean).join(" | ");
+          const count = Array.isArray(rows) ? rows.length : 0;
+          return {
+            title: headers ? headers.toUpperCase() : "Table",
+            subtitle: `Table · ${count} row${count === 1 ? "" : "s"}`,
           };
         },
       },
