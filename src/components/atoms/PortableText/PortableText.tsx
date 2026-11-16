@@ -164,6 +164,45 @@ const components: PortableTextComponents = {
         </figure>
       );
     },
+    iconCallout: ({ value }) => {
+      const items: { _key?: string; label?: string; icon?: { asset?: unknown } }[] =
+        Array.isArray(value?.items)
+          ? value.items.filter((item: any) => item?.icon?.asset || item?.label)
+          : [];
+      if (items.length === 0) return null;
+      return (
+        <figure
+          className={styles.callout}
+          style={{ backgroundColor: calloutBackground(value.background) }}
+        >
+          {value.title && (
+            <p className={styles.calloutTitle}>{value.title}</p>
+          )}
+          <ul className={styles.iconGrid}>
+            {items.map((item, i) => (
+              <li key={item._key ?? i} className={styles.iconBox}>
+                {item.icon?.asset ? (
+                  // SVGs are served as-is (no resizing), so keep their own colors.
+                  <img
+                    src={urlFor(item.icon).url()}
+                    alt=""
+                    className={styles.iconImage}
+                  />
+                ) : null}
+                {item.label && (
+                  <span className={styles.iconLabel}>{item.label}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+          {value.caption && (
+            <figcaption className={styles.calloutCaption}>
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    },
     tableCallout: ({ value }) => {
       const rows: { _key?: string; label?: string; value?: string }[] =
         Array.isArray(value?.rows) ? value.rows : [];

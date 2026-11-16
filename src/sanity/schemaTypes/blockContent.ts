@@ -1,5 +1,5 @@
 import { defineType, defineArrayMember } from "sanity";
-import { PlayIcon, ImagesIcon, ThListIcon } from "@sanity/icons";
+import { PlayIcon, ImagesIcon, ThListIcon, ThLargeIcon } from "@sanity/icons";
 
 /**
  * Rich text (Portable Text) schema used by Bytes descriptions and
@@ -13,6 +13,7 @@ import { PlayIcon, ImagesIcon, ThListIcon } from "@sanity/icons";
  * - Embedded video (URL-based: YouTube, Vimeo, etc.)
  * - Image callouts (titled box with a background color, image and caption)
  * - Tables (two columns with headers, a background color and caption)
+ * - Icon grids (titled box of labeled SVG icons, a background color and caption)
  */
 
 /** Matches a hex color like #F4F4F4 or #FFF. */
@@ -171,6 +172,85 @@ export const blockContent = defineType({
             title: title ? title.toUpperCase() : "Image callout",
             subtitle: caption || "Image callout",
             media,
+          };
+        },
+      },
+    }),
+    defineArrayMember({
+      name: "iconCallout",
+      type: "object",
+      title: "Icon grid",
+      icon: ThLargeIcon,
+      fields: [
+        {
+          name: "title",
+          type: "string",
+          title: "Title",
+          description: "Shown in all caps in the top-left corner (e.g. Stakeholder goals).",
+        },
+        {
+          name: "items",
+          type: "array",
+          title: "Icon boxes",
+          description: "Shown 4 across on desktop and 2 across on mobile.",
+          validation: (rule) => rule.min(1),
+          of: [
+            {
+              type: "object",
+              name: "iconItem",
+              title: "Icon box",
+              fields: [
+                {
+                  name: "icon",
+                  type: "image",
+                  title: "Icon (SVG)",
+                  description: "Upload an SVG. It displays at 24px tall in its own colors.",
+                  options: { accept: "image/svg+xml" },
+                  validation: (rule) => rule.required(),
+                },
+                {
+                  name: "label",
+                  type: "string",
+                  title: "Label",
+                  validation: (rule) => rule.required(),
+                },
+              ],
+              preview: {
+                select: { title: "label", media: "icon" },
+              },
+            },
+          ],
+        },
+        {
+          name: "caption",
+          type: "text",
+          rows: 2,
+          title: "Caption",
+          description: "Optional. Shown below the icon boxes in small text.",
+        },
+        {
+          name: "background",
+          type: "string",
+          title: "Background color",
+          description:
+            "Hex code, e.g. #F4F4F4 (light gray) or #FFFFFF (white). Leave empty for light gray.",
+          placeholder: "#F4F4F4",
+          initialValue: "#F4F4F4",
+          validation: (rule) =>
+            rule.custom((value?: string) =>
+              !value || HEX_COLOR_PATTERN.test(value.trim())
+                ? true
+                : "Enter a hex code like #F4F4F4 or #FFF.",
+            ),
+        },
+      ],
+      preview: {
+        select: { title: "title", items: "items" },
+        prepare({ title, items }) {
+          const count = Array.isArray(items) ? items.length : 0;
+          return {
+            title: title ? title.toUpperCase() : "Icon grid",
+            subtitle: `Icon grid · ${count} box${count === 1 ? "" : "es"}`,
           };
         },
       },
