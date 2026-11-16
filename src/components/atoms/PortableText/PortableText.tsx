@@ -124,9 +124,16 @@ const components: PortableTextComponents = {
         typeof value.imageMaxWidth === "number" && value.imageMaxWidth > 0
           ? value.imageMaxWidth
           : undefined;
+      const large = value.large === true;
       // Request 2x the display width for sharp images on high-DPI screens.
       const src = urlFor(value.image)
-        .width(imageMaxWidth ? Math.min(imageMaxWidth * 2, 2400) : 1200)
+        .width(
+          imageMaxWidth
+            ? Math.min(imageMaxWidth * 2, 2400)
+            : large
+              ? 1600
+              : 1200,
+        )
         .quality(80)
         .auto("format")
         .url();
@@ -138,7 +145,12 @@ const components: PortableTextComponents = {
           )
         : [];
       return (
-        <figure className={styles.callout} style={{ backgroundColor: background }}>
+        <figure
+          className={styles.callout}
+          style={{ backgroundColor: background }}
+          // Layouts that allow it (the portfolio page) widen these to 800px.
+          data-callout-size={large ? "large" : undefined}
+        >
           {value.title && (
             <p className={styles.calloutTitle}>{value.title}</p>
           )}

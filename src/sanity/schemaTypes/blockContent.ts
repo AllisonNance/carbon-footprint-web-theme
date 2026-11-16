@@ -137,6 +137,14 @@ export const blockContent = defineType({
           validation: (rule) => rule.integer().min(50).max(2400),
         },
         {
+          name: "large",
+          type: "boolean",
+          title: "Large (800px)",
+          description:
+            "Widens the box to 800px on portfolio pages, past the 600px body column, on screens wide enough to fit it. Narrower screens keep the normal width.",
+          initialValue: false,
+        },
+        {
           name: "caption",
           type: "text",
           rows: 2,

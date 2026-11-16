@@ -84,3 +84,27 @@
   text-transform: uppercase;
   color: var(--taupe-90);
 }
+
+/* ---------- Large image callouts -------------------------------------
+ * An image callout marked "Large" breaks out of the 600px column to
+ * 800px (100px past each side), still centered on the body. It only
+ * happens from 82rem (1312px) up, where the grid widens enough that
+ * the TOC can move right to clear it; below that it keeps the column
+ * width.
+ */
+@media (min-width: 82rem) {
+  .sections figure[data-callout-size="large"] {
+    margin-inline: calc((100% - 50rem) / 2); /* negative: 800px wide */
+  }
+
+  /* Pages with a large callout: give the side columns more room and
+     push the TOC past the callout's overhang (100px) so they never
+     overlap. The 600px body stays centered. */
+  .sectionLayout:has(figure[data-callout-size="large"]) {
+    max-inline-size: 85rem; /* 1360px; the hero keeps its own 1200px cap */
+  }
+
+  .sectionLayout:has(figure[data-callout-size="large"]) .navSlot {
+    padding-inline-start: 6.25rem; /* 100px overhang */
+  }
+}
