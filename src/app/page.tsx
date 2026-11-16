@@ -158,7 +158,7 @@ export default async function HomePage() {
                 mobileMedia={mobileMediaElement}
                 year={item.year}
                 client={item.client}
-                description={item.isPlaceholder ? item.excerpt : undefined}
+                description={item.excerpt}
                 hoverLabel={item.hoverLabel}
               />
             );
