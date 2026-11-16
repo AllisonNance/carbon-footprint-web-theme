@@ -113,12 +113,13 @@
 
 /* ---------- Icon grid ------------------------------------------------
  * Uses the image callout box (.callout). Labeled icon boxes sit
- * 2 across on mobile and 4 across from 42rem up.
+ * 2 across on mobile and 4 across from 42rem up; with fewer boxes
+ * the column count drops so they fill the row (set inline from the TSX).
  */
 
 .callout .iconGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--grid-cols-sm, 2), minmax(0, 1fr));
   gap: var(--spacing-05); /* 16px */
   margin: 0;
   padding: 0;
@@ -127,7 +128,7 @@
 
 @media (min-width: 42rem) {
   .callout .iconGrid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--grid-cols, 4), minmax(0, 1fr));
   }
 }
 

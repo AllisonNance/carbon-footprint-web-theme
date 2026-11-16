@@ -43,6 +43,13 @@ function CheckIcon() {
   );
 }
 
+// Icon and stat grids: fewer than 4 boxes stretch to fill the row.
+const gridColumns = (count: number) =>
+  ({
+    "--grid-cols": Math.min(count, 4),
+    "--grid-cols-sm": Math.min(count, 2),
+  }) as React.CSSProperties;
+
 const components: PortableTextComponents = {
   block: {
     h2: ({ children }) => <h2>{children}</h2>,
@@ -178,7 +185,10 @@ const components: PortableTextComponents = {
           {value.title && (
             <p className={styles.calloutTitle}>{value.title}</p>
           )}
-          <ul className={styles.iconGrid}>
+          <ul
+            className={styles.iconGrid}
+            style={gridColumns(items.length)}
+          >
             {items.map((item, i) => (
               <li key={item._key ?? i} className={styles.iconBox}>
                 {item.icon?.asset ? (
@@ -221,7 +231,10 @@ const components: PortableTextComponents = {
           {value.title && (
             <p className={styles.calloutTitle}>{value.title}</p>
           )}
-          <ul className={styles.iconGrid}>
+          <ul
+            className={styles.iconGrid}
+            style={gridColumns(items.length)}
+          >
             {items.map((item, i) => (
               <li key={item._key ?? i} className={styles.iconBox}>
                 {item.stat && (
