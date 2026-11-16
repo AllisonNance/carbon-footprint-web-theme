@@ -166,6 +166,25 @@
   color: var(--gray-70);
 }
 
+/* ---------- Stat grid ------------------------------------------------
+ * Same boxes as the icon grid, with a large mono number in place of
+ * the icon and an optional smaller suffix (e.g. %).
+ */
+
+.callout .statValue {
+  font-family: var(--font-family-mono);
+  font-size: 1.75rem; /* 28px, fits 5 characters in a 4-across box */
+  line-height: 2.25rem;
+  font-weight: var(--font-weight-regular, 400);
+  color: var(--gray-90);
+  white-space: nowrap;
+}
+
+.callout .statSuffix {
+  font-family: var(--font-family-sans);
+  font-size: 1.25rem;
+}
+
 /* ---------- Table callout -------------------------------------------
  * Two-column table (narrow label column, wide value column) in the same
  * box as the image callout: hex background, 1px border, 32px padding.

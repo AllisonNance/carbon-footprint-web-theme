@@ -203,6 +203,49 @@ const components: PortableTextComponents = {
         </figure>
       );
     },
+    statCallout: ({ value }) => {
+      const items: {
+        _key?: string;
+        stat?: string;
+        suffix?: string;
+        label?: string;
+      }[] = Array.isArray(value?.items)
+        ? value.items.filter((item: any) => item?.stat || item?.label)
+        : [];
+      if (items.length === 0) return null;
+      return (
+        <figure
+          className={styles.callout}
+          style={{ backgroundColor: calloutBackground(value.background) }}
+        >
+          {value.title && (
+            <p className={styles.calloutTitle}>{value.title}</p>
+          )}
+          <ul className={styles.iconGrid}>
+            {items.map((item, i) => (
+              <li key={item._key ?? i} className={styles.iconBox}>
+                {item.stat && (
+                  <span className={styles.statValue}>
+                    {item.stat}
+                    {item.suffix && (
+                      <span className={styles.statSuffix}>{item.suffix}</span>
+                    )}
+                  </span>
+                )}
+                {item.label && (
+                  <span className={styles.iconLabel}>{item.label}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+          {value.caption && (
+            <figcaption className={styles.calloutCaption}>
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    },
     tableCallout: ({ value }) => {
       const rows: { _key?: string; label?: string; value?: string }[] =
         Array.isArray(value?.rows) ? value.rows : [];
