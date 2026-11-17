@@ -167,6 +167,90 @@
   color: var(--gray-70);
 }
 
+/* ---------- Icon list ------------------------------------------------
+ * Horizontal version of the icon grid in the same callout box: an
+ * optional intro under the title, then full-width rows with the icon
+ * in a tile on the left and a label + description on the right.
+ */
+
+/* Title and intro sit closer together than the box's 32px gap. */
+.callout .calloutHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-03); /* 8px */
+}
+
+.callout .calloutIntro {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--gray-70);
+}
+
+.callout .iconList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--gray-30);
+  /* Slightly darker than whatever the callout background is. */
+  background-color: rgb(0 0 0 / 0.03);
+}
+
+.callout .iconRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-05); /* 16px */
+  margin: 0;
+  padding: var(--spacing-06); /* 24px */
+}
+
+.callout .iconRow + .iconRow {
+  border-block-start: 1px solid var(--gray-30);
+}
+
+.callout .iconRow::before,
+.callout .iconRow::marker {
+  content: none;
+}
+
+.callout .iconTile {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.5rem; /* 40px */
+  block-size: 2.5rem;
+  border: 1px solid var(--gray-30);
+  background-color: rgb(0 0 0 / 0.03);
+}
+
+.callout .iconRowText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-02); /* 4px */
+  min-inline-size: 0;
+  /* Centre a one-line label on the 40px tile. */
+  padding-block-start: var(--spacing-03);
+}
+
+.callout .iconRowLabel {
+  font-family: var(--font-family-sans);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--gray-90);
+}
+
+.callout .iconRowDescription {
+  font-family: var(--font-family-sans);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--gray-70);
+}
+
 /* ---------- Stat grid ------------------------------------------------
  * Same boxes as the icon grid, with a large mono number in place of
  * the icon and an optional smaller suffix (e.g. %).

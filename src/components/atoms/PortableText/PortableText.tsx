@@ -225,6 +225,65 @@ const components: PortableTextComponents = {
         </figure>
       );
     },
+    iconListCallout: ({ value }) => {
+      const items: {
+        _key?: string;
+        label?: string;
+        description?: string;
+        icon?: { asset?: unknown };
+      }[] = Array.isArray(value?.items)
+        ? value.items.filter((item: any) => item?.icon?.asset || item?.label)
+        : [];
+      if (items.length === 0) return null;
+      return (
+        <figure
+          className={styles.callout}
+          style={{ backgroundColor: calloutBackground(value.background) }}
+        >
+          {(value.title || value.intro) && (
+            <div className={styles.calloutHeader}>
+              {value.title && (
+                <p className={styles.calloutTitle}>{value.title}</p>
+              )}
+              {value.intro && (
+                <p className={styles.calloutIntro}>{value.intro}</p>
+              )}
+            </div>
+          )}
+          <ul className={styles.iconList}>
+            {items.map((item, i) => (
+              <li key={item._key ?? i} className={styles.iconRow}>
+                <span className={styles.iconTile}>
+                  {item.icon?.asset ? (
+                    // SVGs are served as-is (no resizing), so keep their own colors.
+                    <img
+                      src={urlFor(item.icon).url()}
+                      alt=""
+                      className={styles.iconImage}
+                    />
+                  ) : null}
+                </span>
+                <span className={styles.iconRowText}>
+                  {item.label && (
+                    <span className={styles.iconRowLabel}>{item.label}</span>
+                  )}
+                  {item.description && (
+                    <span className={styles.iconRowDescription}>
+                      {item.description}
+                    </span>
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+          {value.caption && (
+            <figcaption className={styles.calloutCaption}>
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    },
     statCallout: ({ value }) => {
       const items: {
         _key?: string;
