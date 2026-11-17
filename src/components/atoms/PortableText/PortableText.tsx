@@ -43,10 +43,10 @@ function CheckIcon() {
   );
 }
 
-// Icon and stat grids: fewer than 4 boxes stretch to fill the row.
-const gridColumns = (count: number) =>
+// Icon, stat and image grids: fewer boxes than the max stretch to fill the row.
+const gridColumns = (count: number, max = 4) =>
   ({
-    "--grid-cols": Math.min(count, 4),
+    "--grid-cols": Math.min(count, max),
     "--grid-cols-sm": Math.min(count, 2),
   }) as React.CSSProperties;
 
@@ -211,6 +211,57 @@ const components: PortableTextComponents = {
                     className={styles.iconImage}
                   />
                 ) : null}
+                {item.label && (
+                  <span className={styles.iconLabel}>{item.label}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+          {value.caption && (
+            <figcaption className={styles.calloutCaption}>
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    },
+    imageGridCallout: ({ value }) => {
+      const items: {
+        _key?: string;
+        label?: string;
+        image?: { asset?: unknown; alt?: string };
+      }[] = Array.isArray(value?.items)
+        ? value.items.filter((item: any) => item?.image?.asset)
+        : [];
+      if (items.length === 0) return null;
+      return (
+        <figure
+          className={styles.callout}
+          style={{ backgroundColor: calloutBackground(value.background) }}
+        >
+          {value.title && (
+            <p className={styles.calloutTitle}>{value.title}</p>
+          )}
+          <ul
+            className={styles.iconGrid}
+            style={gridColumns(items.length, 3)}
+          >
+            {items.map((item, i) => (
+              <li
+                key={item._key ?? i}
+                className={`${styles.iconBox} ${styles.imageBox}`}
+              >
+                <img
+                  // 2x the widest box (a single image fills ~536px).
+                  src={urlFor(item.image!)
+                    .width(1200)
+                    .quality(80)
+                    .auto("format")
+                    .url()}
+                  alt={item.image?.alt || ""}
+                  loading="lazy"
+                  className={styles.gridImage}
+                />
                 {item.label && (
                   <span className={styles.iconLabel}>{item.label}</span>
                 )}

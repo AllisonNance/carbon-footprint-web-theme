@@ -167,6 +167,23 @@
   color: var(--gray-70);
 }
 
+/* ---------- Image grid -----------------------------------------------
+ * Same boxes as the icon grid with an image in place of the icon,
+ * 3 across at most (column count set inline from the TSX).
+ */
+
+.callout .imageBox {
+  padding: var(--spacing-04); /* 12px; images run nearly edge to edge */
+}
+
+.callout .gridImage {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  margin: 0;
+  border-radius: 0;
+}
+
 /* ---------- Icon list ------------------------------------------------
  * Horizontal version of the icon grid in the same callout box: an
  * optional intro under the title, then full-width rows with the icon

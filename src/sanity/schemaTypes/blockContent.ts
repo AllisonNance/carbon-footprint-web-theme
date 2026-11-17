@@ -6,6 +6,7 @@ import {
   ThLargeIcon,
   DashboardIcon,
   UlistIcon,
+  ImageIcon,
 } from "@sanity/icons";
 
 /**
@@ -21,6 +22,7 @@ import {
  * - Image callouts (titled box with a background color, image and caption)
  * - Tables (two columns with headers, a background color and caption)
  * - Icon grids (titled box of labeled SVG icons, a background color and caption)
+ * - Image grids (titled box of labeled images, 3 across, a background color and caption)
  * - Icon lists (icon rows with a label and description, intro text and caption)
  * - Stat grids (titled box of labeled stats, a background color and caption)
  */
@@ -268,6 +270,97 @@ export const blockContent = defineType({
           return {
             title: title ? title.toUpperCase() : "Icon grid",
             subtitle: `Icon grid · ${count} box${count === 1 ? "" : "es"}`,
+          };
+        },
+      },
+    }),
+    defineArrayMember({
+      name: "imageGridCallout",
+      type: "object",
+      title: "Image grid",
+      icon: ImageIcon,
+      fields: [
+        {
+          name: "title",
+          type: "string",
+          title: "Title",
+          description: "Shown in all caps in the top-left corner.",
+        },
+        {
+          name: "items",
+          type: "array",
+          title: "Image boxes",
+          description:
+            "Shown up to 3 across on desktop and 2 across on mobile. Fewer boxes stretch to fill the row.",
+          validation: (rule) => rule.min(1),
+          of: [
+            {
+              type: "object",
+              name: "imageGridItem",
+              title: "Image box",
+              fields: [
+                {
+                  name: "image",
+                  type: "image",
+                  title: "Image",
+                  options: { hotspot: true },
+                  validation: (rule) => rule.required(),
+                  fields: [
+                    {
+                      name: "alt",
+                      type: "string",
+                      title: "Alt text",
+                      description: "Describe the image for screen readers.",
+                      validation: (rule) => rule.required(),
+                    },
+                  ],
+                },
+                {
+                  name: "label",
+                  type: "string",
+                  title: "Label",
+                  description: "Optional. Shown below the image.",
+                },
+              ],
+              preview: {
+                select: { title: "label", subtitle: "image.alt", media: "image" },
+                prepare({ title, subtitle, media }) {
+                  return { title: title || subtitle || "Image box", media };
+                },
+              },
+            },
+          ],
+        },
+        {
+          name: "caption",
+          type: "text",
+          rows: 2,
+          title: "Caption",
+          description: "Optional. Shown below the image boxes in small text.",
+        },
+        {
+          name: "background",
+          type: "string",
+          title: "Background color",
+          description:
+            "Hex code, e.g. #F4F4F4 (light gray) or #FFFFFF (white). Leave empty for light gray.",
+          placeholder: "#F4F4F4",
+          initialValue: "#F4F4F4",
+          validation: (rule) =>
+            rule.custom((value?: string) =>
+              !value || HEX_COLOR_PATTERN.test(value.trim())
+                ? true
+                : "Enter a hex code like #F4F4F4 or #FFF.",
+            ),
+        },
+      ],
+      preview: {
+        select: { title: "title", items: "items" },
+        prepare({ title, items }) {
+          const count = Array.isArray(items) ? items.length : 0;
+          return {
+            title: title ? title.toUpperCase() : "Image grid",
+            subtitle: `Image grid · ${count} box${count === 1 ? "" : "es"}`,
           };
         },
       },
