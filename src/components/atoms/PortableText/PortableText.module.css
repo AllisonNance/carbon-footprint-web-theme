@@ -187,6 +187,7 @@
 /* ---------- Image list -----------------------------------------------
  * Same rows as the icon list with an image in place of the icon tile:
  * image on top on mobile, a 200px thumbnail on the left from 42rem up.
+ * An optional max width (--list-image-max, set inline) overrides both.
  */
 
 .callout .imageRow {
@@ -196,6 +197,7 @@
 .callout .listImage {
   display: block;
   inline-size: 100%;
+  max-inline-size: var(--list-image-max, 100%);
   block-size: auto;
   margin: 0;
   border-radius: 0;
@@ -215,7 +217,8 @@
 
   .callout .listImage {
     flex: none;
-    inline-size: 12.5rem; /* 200px */
+    inline-size: var(--list-image-max, 12.5rem); /* 200px by default */
+    max-inline-size: 50%; /* leave room for the text */
   }
 }
 

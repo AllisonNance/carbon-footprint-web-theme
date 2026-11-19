@@ -286,10 +286,19 @@ const components: PortableTextComponents = {
         ? value.items.filter((item: any) => item?.image?.asset)
         : [];
       if (items.length === 0) return null;
+      const maxWidth =
+        typeof value.imageMaxWidth === "number" && value.imageMaxWidth > 0
+          ? value.imageMaxWidth
+          : undefined;
       return (
         <figure
           className={styles.callout}
-          style={{ backgroundColor: calloutBackground(value.background) }}
+          style={
+            {
+              backgroundColor: calloutBackground(value.background),
+              ...(maxWidth && { "--list-image-max": `${maxWidth}px` }),
+            } as React.CSSProperties
+          }
         >
           {(value.title || value.intro) && (
             <div className={styles.calloutHeader}>
@@ -308,9 +317,9 @@ const components: PortableTextComponents = {
                 className={`${styles.iconRow} ${styles.imageRow}`}
               >
                 <img
-                  // 2x the full-width mobile thumbnail.
+                  // 2x the displayed width (full-width mobile thumbnail by default).
                   src={urlFor(item.image!)
-                    .width(1000)
+                    .width(maxWidth ? Math.min(maxWidth * 2, 1600) : 1000)
                     .quality(80)
                     .auto("format")
                     .url()}
