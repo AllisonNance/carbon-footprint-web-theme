@@ -184,6 +184,41 @@
   border-radius: 0;
 }
 
+/* ---------- Image list -----------------------------------------------
+ * Same rows as the icon list with an image in place of the icon tile:
+ * image on top on mobile, a 200px thumbnail on the left from 42rem up.
+ */
+
+.callout .imageRow {
+  flex-direction: column;
+}
+
+.callout .listImage {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  margin: 0;
+  border-radius: 0;
+}
+
+.callout .imageRowText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-02); /* 4px */
+  min-inline-size: 0;
+}
+
+@media (min-width: 42rem) {
+  .callout .imageRow {
+    flex-direction: row;
+  }
+
+  .callout .listImage {
+    flex: none;
+    inline-size: 12.5rem; /* 200px */
+  }
+}
+
 /* ---------- Icon list ------------------------------------------------
  * Horizontal version of the icon grid in the same callout box: an
  * optional intro under the title, then full-width rows with the icon

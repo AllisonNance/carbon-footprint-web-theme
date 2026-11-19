@@ -276,6 +276,69 @@ const components: PortableTextComponents = {
         </figure>
       );
     },
+    imageListCallout: ({ value }) => {
+      const items: {
+        _key?: string;
+        label?: string;
+        description?: string;
+        image?: { asset?: unknown; alt?: string };
+      }[] = Array.isArray(value?.items)
+        ? value.items.filter((item: any) => item?.image?.asset)
+        : [];
+      if (items.length === 0) return null;
+      return (
+        <figure
+          className={styles.callout}
+          style={{ backgroundColor: calloutBackground(value.background) }}
+        >
+          {(value.title || value.intro) && (
+            <div className={styles.calloutHeader}>
+              {value.title && (
+                <p className={styles.calloutTitle}>{value.title}</p>
+              )}
+              {value.intro && (
+                <p className={styles.calloutIntro}>{value.intro}</p>
+              )}
+            </div>
+          )}
+          <ul className={styles.iconList}>
+            {items.map((item, i) => (
+              <li
+                key={item._key ?? i}
+                className={`${styles.iconRow} ${styles.imageRow}`}
+              >
+                <img
+                  // 2x the full-width mobile thumbnail.
+                  src={urlFor(item.image!)
+                    .width(1000)
+                    .quality(80)
+                    .auto("format")
+                    .url()}
+                  alt={item.image?.alt || ""}
+                  loading="lazy"
+                  className={styles.listImage}
+                />
+                <span className={styles.imageRowText}>
+                  {item.label && (
+                    <span className={styles.iconRowLabel}>{item.label}</span>
+                  )}
+                  {item.description && (
+                    <span className={styles.iconRowDescription}>
+                      {item.description}
+                    </span>
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+          {value.caption && (
+            <figcaption className={styles.calloutCaption}>
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    },
     iconListCallout: ({ value }) => {
       const items: {
         _key?: string;
