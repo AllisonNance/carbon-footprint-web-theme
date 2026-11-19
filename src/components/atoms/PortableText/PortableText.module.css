@@ -111,6 +111,25 @@
   color: #616161;
 }
 
+/* ---------- Text callout -----------------------------------------------
+ * Title and description (shared .calloutHeader / .calloutIntro from the
+ * icon list), then formatted text: paragraphs, bold, italic and lists.
+ */
+
+.callout .calloutBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-04); /* 12px between paragraphs and lists */
+  font-family: var(--font-family-sans);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--gray-90);
+}
+
+.callout .calloutBody > * {
+  margin-block: 0;
+}
+
 /* ---------- Icon grid ------------------------------------------------
  * Uses the image callout box (.callout). Labeled icon boxes sit
  * 2 across on mobile and 4 across from 42rem up; with fewer boxes

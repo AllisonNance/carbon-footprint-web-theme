@@ -8,6 +8,7 @@ import {
   UlistIcon,
   ImageIcon,
   ListIcon,
+  DocumentTextIcon,
 } from "@sanity/icons";
 
 /**
@@ -20,6 +21,7 @@ import {
  * - Lists (bullet + numbered)
  * - Inline images with alt text and optional caption
  * - Embedded video (URL-based: YouTube, Vimeo, etc.)
+ * - Text callouts (titled box with a description and formatted text: bold, italic, lists)
  * - Image callouts (titled box with a background color, image and caption)
  * - Tables (two columns with headers, a background color and caption)
  * - Icon grids (titled box of labeled SVG icons, a background color and caption)
@@ -111,6 +113,75 @@ export const blockContent = defineType({
           validation: (rule) => rule.integer().min(50).max(2400),
         },
       ],
+    }),
+    defineArrayMember({
+      name: "textCallout",
+      type: "object",
+      title: "Text callout",
+      icon: DocumentTextIcon,
+      fields: [
+        {
+          name: "title",
+          type: "string",
+          title: "Title",
+          description: "Shown in all caps in the top-left corner.",
+        },
+        {
+          name: "description",
+          type: "text",
+          rows: 2,
+          title: "Description",
+          description: "Optional. Shown under the title, above the text.",
+        },
+        {
+          name: "body",
+          type: "array",
+          title: "Text",
+          description: "Supports bold, italic, bulleted and numbered lists.",
+          validation: (rule) => rule.min(1),
+          of: [
+            {
+              type: "block",
+              styles: [{ title: "Normal", value: "normal" }],
+              lists: [
+                { title: "Bullet", value: "bullet" },
+                { title: "Numbered", value: "number" },
+              ],
+              marks: {
+                decorators: [
+                  { title: "Bold", value: "strong" },
+                  { title: "Italic", value: "em" },
+                ],
+                annotations: [],
+              },
+            },
+          ],
+        },
+        {
+          name: "background",
+          type: "string",
+          title: "Background color",
+          description:
+            "Hex code, e.g. #F4F4F4 (light gray) or #FFFFFF (white). Leave empty for light gray.",
+          placeholder: "#F4F4F4",
+          initialValue: "#F4F4F4",
+          validation: (rule) =>
+            rule.custom((value?: string) =>
+              !value || HEX_COLOR_PATTERN.test(value.trim())
+                ? true
+                : "Enter a hex code like #F4F4F4 or #FFF.",
+            ),
+        },
+      ],
+      preview: {
+        select: { title: "title", description: "description" },
+        prepare({ title, description }) {
+          return {
+            title: title ? title.toUpperCase() : "Text callout",
+            subtitle: description ? `Text callout · ${description}` : "Text callout",
+          };
+        },
+      },
     }),
     defineArrayMember({
       name: "imageCallout",

@@ -118,6 +118,36 @@ const components: PortableTextComponents = {
         </figure>
       );
     },
+    textCallout: ({ value }) => {
+      const body: PortableTextBlock[] = Array.isArray(value?.body)
+        ? value.body
+        : [];
+      if (!value?.title && !value?.description && body.length === 0) {
+        return null;
+      }
+      return (
+        <figure
+          className={styles.callout}
+          style={{ backgroundColor: calloutBackground(value.background) }}
+        >
+          {(value.title || value.description) && (
+            <div className={styles.calloutHeader}>
+              {value.title && (
+                <p className={styles.calloutTitle}>{value.title}</p>
+              )}
+              {value.description && (
+                <p className={styles.calloutIntro}>{value.description}</p>
+              )}
+            </div>
+          )}
+          {body.length > 0 && (
+            <div className={styles.calloutBody}>
+              <PortableTextReact value={body} components={components} />
+            </div>
+          )}
+        </figure>
+      );
+    },
     imageCallout: ({ value }) => {
       if (!value?.image?.asset) return null;
       const imageMaxWidth =
