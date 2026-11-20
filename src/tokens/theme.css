@@ -10,7 +10,11 @@
 
 :root {
   /* Background */
-  --background: #ffffff;
+  /* Solid quarter-strength taupe-10 (taupe-05 is semi-transparent, which
+   * would stack on nested or sticky surfaces). */
+  --background: #fbfbfa;
+  /* Header and side nav keep white while the page is taupe. */
+  --background-chrome: #ffffff;
   --background-hover: #8d8d8d1f;
   --background-active: #8d8d8d80;
   --background-selected: #8d8d8d33;
@@ -68,6 +72,7 @@
 [data-theme="g100"] {
   /* Background */
   --background: #161616;
+  --background-chrome: #161616;
   --background-hover: #8d8d8d1f;
   --background-active: #8d8d8d80;
   --background-selected: #8d8d8d33;
