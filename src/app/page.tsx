@@ -109,13 +109,12 @@ export default async function HomePage() {
             </>
           }
           tags={["Systems", "Strategy", "Scale"]}
-          description="I connect strategy, interface design, and product structure to clarify workflows and create scalable experiences."
           image={
             settings?.profileImage?.asset ? (
               <img
+                // 2x the 75px display width; height follows the image.
                 src={urlFor(settings.profileImage)
-                  .width(128)
-                  .height(128)
+                  .width(150)
                   .quality(80)
                   .auto("format")
                   .url()}

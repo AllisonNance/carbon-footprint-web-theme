@@ -152,7 +152,7 @@ export const siteSettings = defineType({
       title: "Profile image",
       type: "image",
       options: { hotspot: true },
-      description: "Circular photo shown in the page title block.",
+      description: "Shown 75px wide at its natural height (uncropped) in the page title block. GIFs animate.",
       fields: [
         {
           name: "alt",
