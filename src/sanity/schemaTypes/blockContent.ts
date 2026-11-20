@@ -490,7 +490,7 @@ export const blockContent = defineType({
                   name: "label",
                   type: "string",
                   title: "Label",
-                  validation: (rule) => rule.required(),
+                  description: "Optional. Shown in bold beside the image.",
                 },
                 {
                   name: "description",
@@ -502,6 +502,11 @@ export const blockContent = defineType({
               ],
               preview: {
                 select: { title: "label", subtitle: "description", media: "image" },
+                prepare({ title, subtitle, media }) {
+                  return title
+                    ? { title, subtitle, media }
+                    : { title: subtitle || "Row", media };
+                },
               },
             },
           ],
@@ -591,7 +596,7 @@ export const blockContent = defineType({
                   name: "label",
                   type: "string",
                   title: "Label",
-                  validation: (rule) => rule.required(),
+                  description: "Optional. Shown in bold beside the icon.",
                 },
                 {
                   name: "description",
@@ -603,6 +608,11 @@ export const blockContent = defineType({
               ],
               preview: {
                 select: { title: "label", subtitle: "description", media: "icon" },
+                prepare({ title, subtitle, media }) {
+                  return title
+                    ? { title, subtitle, media }
+                    : { title: subtitle || "Row", media };
+                },
               },
             },
           ],
