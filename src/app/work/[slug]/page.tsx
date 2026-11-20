@@ -27,6 +27,10 @@ interface PortfolioItemData {
     asset: { _ref: string; url: string };
     alt: string;
   };
+  heroGif?: {
+    asset?: { _ref?: string; url: string };
+    alt?: string;
+  };
   categories?: string[];
   excerpt?: string;
   sections?: {
@@ -127,9 +131,21 @@ export default async function PortfolioItemPage({
 
   const hero = (
     <PortfolioItemHero
+      wide
       heading={item.title}
       description={item.excerpt}
       tiles={tiles}
+      accent={
+        item.heroGif?.asset ? (
+          // 2x the 72px slot; animated GIFs stay animated.
+          <img
+            src={urlFor(item.heroGif).width(144).auto("format").url()}
+            alt={item.heroGif.alt || ""}
+            width={72}
+            height={72}
+          />
+        ) : undefined
+      }
       media={
         heroImage ? (
           <img src={heroImage} alt={item.featuredImage?.alt || ""} />
@@ -144,7 +160,9 @@ export default async function PortfolioItemPage({
     return (
       <PageLayout hideDefaultHeader header={header} footer={footer}>
         <div className={styles.sectionLayout}>
-          <div className={styles.crumbSlot}>{breadcrumb}</div>
+          <div className={`${styles.crumbSlot} ${styles.crumbSlotNarrow}`}>
+            {breadcrumb}
+          </div>
           <div className={styles.heroSlot}>
             <PortfolioItemHero heading={item.title} />
             <PasswordGate slug={item.slug} />

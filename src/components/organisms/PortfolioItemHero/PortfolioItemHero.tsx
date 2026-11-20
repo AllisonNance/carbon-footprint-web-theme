@@ -18,28 +18,49 @@ export interface PortfolioItemHeroProps extends HTMLAttributes<HTMLElement> {
   /** Hero media — typically an `<img>`. Rendered in the right column
    *  with `object-fit: cover` filling the full height. */
   media?: ReactNode;
+  /** Small 72×72 element (e.g. a GIF) in the bottom-right corner of the
+   *  title area. Only shown with `wide`. */
+  accent?: ReactNode;
+  /** Title area spans the full hero width (left edge of the media) instead
+   *  of the centered 600px column. */
+  wide?: boolean;
 }
 
 export const PortfolioItemHero = forwardRef<HTMLElement, PortfolioItemHeroProps>(
   function PortfolioItemHero(
-    { heading, description, tiles, media, className, ...rest },
+    {
+      heading,
+      description,
+      tiles,
+      media,
+      accent,
+      wide = false,
+      className,
+      ...rest
+    },
     ref,
   ) {
-    const classes = [styles.root, className].filter(Boolean).join(" ");
+    const classes = [styles.root, wide && styles.wide, className]
+      .filter(Boolean)
+      .join(" ");
 
     return (
       <section ref={ref} className={classes} {...rest}>
         <div className={styles.inner}>
-          <div className={styles.content}>
-            <h1 className={`${styles.heading} type-fluid-heading-05`}>
-              {heading}
-            </h1>
+          <div className={styles.top}>
+            <div className={styles.content}>
+              <h1 className={`${styles.heading} type-fluid-heading-05`}>
+                {heading}
+              </h1>
 
-            {description && (
-              <p className={`${styles.description} type-body-01`}>
-                {description}
-              </p>
-            )}
+              {description && (
+                <p className={`${styles.description} type-body-01`}>
+                  {description}
+                </p>
+              )}
+            </div>
+
+            {wide && accent && <div className={styles.accent}>{accent}</div>}
           </div>
 
           {media && <div className={styles.media}>{media}</div>}

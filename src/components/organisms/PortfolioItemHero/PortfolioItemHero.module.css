@@ -25,6 +25,47 @@
   min-inline-size: 0;
 }
 
+/* ---------- Wide title area ----------------------------------------
+ * Text starts at the featured image's left edge (still max 600px wide)
+ * and an optional 72x72 accent sits in the bottom-right corner, lined
+ * up with the image's right edge. On phones the accent drops below the
+ * text, right-aligned.
+ */
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-05);
+  min-inline-size: 0;
+}
+
+.wide .content {
+  margin-inline: 0;
+}
+
+.accent {
+  flex: none;
+  align-self: flex-end;
+  inline-size: 4.5rem; /* 72px */
+  block-size: 4.5rem;
+}
+
+.accent > img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+}
+
+@media (min-width: 42rem) {
+  .wide .top {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--spacing-07);
+  }
+}
+
 .heading {
   margin: 0;
   color: var(--gray-80);

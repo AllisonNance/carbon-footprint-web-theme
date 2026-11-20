@@ -34,16 +34,23 @@
   min-inline-size: 0;
 }
 
-/* Breadcrumb: sits just above the title, lined up with its column. */
+/* Breadcrumb: sits just above the title, lined up with its left edge
+   (the featured image's left edge). */
 .crumbSlot {
   grid-area: crumb;
   inline-size: 100%;
-  max-inline-size: 37.5rem; /* line up with the title column */
+  max-inline-size: 75rem; /* hero width */
   margin-inline: auto;
   min-inline-size: 0;
   /* 56px below the breadcrumb: 24px + 32px, adjusted for the layout's
      48px row gap. */
   margin-block-end: calc(var(--spacing-06) + var(--spacing-07) - var(--spacing-09));
+}
+
+/* Password page: no featured image, so the breadcrumb stays on the
+   centered 600px title column. */
+.crumbSlotNarrow {
+  max-inline-size: 37.5rem;
 }
 
 /* Mobile: flatten so the sticky strip's containing block is the whole layout. */

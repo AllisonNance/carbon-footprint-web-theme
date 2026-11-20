@@ -39,6 +39,10 @@ export const portfolioItemBySlugQuery = groq`
       asset->,
       alt
     },
+    heroGif {
+      asset->,
+      alt
+    },
     "categories": categories[]->title,
     excerpt,
     sections[] {

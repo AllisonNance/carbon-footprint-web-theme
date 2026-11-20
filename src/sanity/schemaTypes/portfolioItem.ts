@@ -160,6 +160,22 @@ export const portfolioItem = defineType({
       ],
     }),
     defineField({
+      name: "heroGif",
+      title: "Hero GIF (detail page)",
+      type: "image",
+      options: { accept: "image/gif,image/png,image/webp" },
+      description:
+        "Optional. Small animation shown at 72×72px in the bottom-right corner of the title area, above the featured image. Square works best; other shapes are fitted inside without cropping.",
+      fields: [
+        {
+          name: "alt",
+          type: "string",
+          title: "Alt text",
+          description: "Optional. Leave empty if the GIF is decorative.",
+        },
+      ],
+    }),
+    defineField({
       name: "cardMedia",
       title: "Card media (home page)",
       type: "array",
