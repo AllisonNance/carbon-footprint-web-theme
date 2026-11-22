@@ -86,18 +86,11 @@
   translate: 0 -50%;
   white-space: nowrap;
   padding: var(--spacing-02) var(--spacing-04);
-  /* Same hot pink as the footer <3 (green for cards without a link, see
-   * .labelGreen); near-black text is 6.4:1 on pink, 10:1 on green. */
-  background-color: var(--accent-pink);
-  border: 1px solid var(--text-on-accent);
+  background-color: var(--white);
+  border: 1px solid var(--taupe-90);
   border-radius: 999px;
-  color: var(--text-on-accent);
+  color: var(--taupe-90);
   animation: labelIn var(--motion-duration-fast, 120ms) ease-out;
-}
-
-/* Cards without a link yet (e.g. "Coming Soon"). */
-.labelGreen {
-  background-color: var(--accent-green);
 }
 
 @keyframes labelIn {

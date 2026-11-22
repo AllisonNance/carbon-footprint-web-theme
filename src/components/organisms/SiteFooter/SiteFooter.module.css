@@ -84,7 +84,7 @@
 
 .heart {
   font-weight: var(--font-weight-semibold);
-  color: var(--accent-pink); /* hot pink, readable on the dark footer */
+  color: #ff5cb8; /* hot pink, readable on the dark footer */
 }
 
 /* Retro 88x31 web badge, left of the Privacy link. */
@@ -130,7 +130,6 @@
 }
 
 .link:hover {
-  background-image: linear-gradient(var(--link-underline-hover), var(--link-underline-hover));
   background-size: 0 1px;
   animation: reunderline var(--motion-duration-base, 110ms) ease forwards;
   animation-delay: var(--motion-duration-base, 110ms);

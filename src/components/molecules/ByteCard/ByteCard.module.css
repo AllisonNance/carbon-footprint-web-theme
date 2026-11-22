@@ -76,7 +76,6 @@
 
 .category:hover,
 .category:focus-visible {
-  background-image: linear-gradient(var(--link-underline-hover), var(--link-underline-hover));
   color: var(--black);
   background-size: 0 1px;
   animation: reunderline-category var(--motion-duration-base, 110ms) ease forwards;
@@ -166,10 +165,6 @@
   text-decoration: underline;
 }
 
-.richBody a:hover {
-  text-decoration-color: var(--link-underline-hover);
-}
-
 .richBody ul,
 .richBody ol {
   margin: var(--spacing-04) 0;
@@ -233,7 +228,6 @@
 }
 
 .toggleInline:hover > span {
-  background-image: linear-gradient(var(--link-underline-hover), var(--link-underline-hover));
   background-size: 100% 1px;
 }
 
@@ -268,7 +262,6 @@
 }
 
 .toggleBlock:hover > span {
-  background-image: linear-gradient(var(--link-underline-hover), var(--link-underline-hover));
   background-size: 100% 1px;
 }
 

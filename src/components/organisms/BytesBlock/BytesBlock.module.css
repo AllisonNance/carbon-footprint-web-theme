@@ -71,7 +71,6 @@
 
 .titleLink:hover,
 .titleLink:focus-visible {
-  background-image: linear-gradient(var(--link-underline-hover), var(--link-underline-hover));
   background-size: 100% 1px;
   outline: none;
 }
@@ -114,7 +113,6 @@
 }
 
 .footerLink:hover {
-  background-image: linear-gradient(var(--link-underline-hover), var(--link-underline-hover));
   text-decoration: none !important;
   background-size: 0 1px;
   animation: reunderline var(--motion-duration-base, 110ms) ease forwards;

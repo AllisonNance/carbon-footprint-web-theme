@@ -49,14 +49,6 @@
   --link-primary: var(--taupe-90);
   --link-primary-hover: var(--taupe-100);
   --link-visited: var(--taupe-80);
-  /* Early-2000s browser link blue for hovered link underlines. */
-  --link-underline-hover: #0000ee;
-
-  /* AIM accents (footer <3, cursor labels). Same in every theme; text on
-     them uses --text-on-accent (#161616: 6.4:1 on pink, 10:1 on green). */
-  --accent-pink: var(--pink-40);
-  --accent-green: var(--green-40);
-  --text-on-accent: #161616;
 
   /* Icon */
   --icon-primary: #161616;
@@ -115,8 +107,6 @@
   --link-primary: var(--taupe-30);
   --link-primary-hover: var(--taupe-20);
   --link-visited: var(--taupe-40);
-  /* Brighter take on the same blue so it reads on dark surfaces. */
-  --link-underline-hover: #4d7cff;
 
   /* Icon */
   --icon-primary: #f4f4f4;

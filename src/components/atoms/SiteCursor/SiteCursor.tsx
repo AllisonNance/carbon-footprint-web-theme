@@ -34,7 +34,7 @@ interface Point {
  * SiteCursor — replaces the system cursor with a small arrow that
  * shrinks over interactive elements, expands into a labeled pill over
  * elements with a `data-cursor-label` attribute (e.g. portfolio
- * cards; pink, or green with `data-cursor-tone="green"`), and leaves a faint, fading trail while moving. Desktop-mouse
+ * cards), and leaves a faint, fading trail while moving. Desktop-mouse
  * only (`hover: hover` + `pointer: fine`); does nothing on touch
  * devices or inside the Sanity Studio.
  */
@@ -47,7 +47,6 @@ export function SiteCursor() {
   const [pos, setPos] = useState<Point>({ x: 0, y: 0 });
   const [shrink, setShrink] = useState(false);
   const [label, setLabel] = useState<string | null>(null);
-  const [labelTone, setLabelTone] = useState<string | null>(null);
   const [trail, setTrail] = useState<Point[]>([]);
 
   const lastTrailPointRef = useRef<Point | null>(null);
@@ -76,7 +75,6 @@ export function SiteCursor() {
     const updateForTarget = (target: Element | null) => {
       const labelTarget = target?.closest<HTMLElement>("[data-cursor-label]");
       setLabel(labelTarget?.dataset.cursorLabel ?? null);
-      setLabelTone(labelTarget?.dataset.cursorTone ?? null);
       setShrink(Boolean(labelTarget || target?.closest(INTERACTIVE_SELECTOR)));
       return Boolean(labelTarget);
     };
@@ -186,17 +184,7 @@ export function SiteCursor() {
           />
         </span>
         {label && (
-          <span
-            className={[
-              styles.label,
-              labelTone === "green" && styles.labelGreen,
-              "type-label-01",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-          >
-            {label}
-          </span>
+          <span className={`${styles.label} type-label-01`}>{label}</span>
         )}
       </div>
     </>
