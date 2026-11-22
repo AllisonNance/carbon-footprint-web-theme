@@ -28,8 +28,8 @@
 /* ---------- Wide title area ----------------------------------------
  * Text starts at the featured image's left edge (still max 600px wide)
  * and an optional 72x72 accent sits in the bottom-right corner, lined
- * up with the image's right edge. On phones the accent drops below the
- * text, right-aligned.
+ * up with the image's right edge. On phones the accent sits above the
+ * title, left-aligned.
  */
 
 .top {
@@ -45,7 +45,8 @@
 
 .accent {
   flex: none;
-  align-self: flex-end;
+  order: -1; /* phones: above the title */
+  align-self: flex-start;
   inline-size: 4.5rem; /* 72px */
   block-size: 4.5rem;
 }
@@ -63,6 +64,11 @@
     align-items: flex-end;
     justify-content: space-between;
     gap: var(--spacing-07);
+  }
+
+  .wide .accent {
+    order: 0;
+    align-self: auto; /* bottom, from .top's align-items */
   }
 }
 

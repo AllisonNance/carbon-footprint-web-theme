@@ -91,6 +91,14 @@
 }
 
 @media (max-width: 41.9375rem) {
+  /* Halve the gap above the hero on phones: 152px (layout's 96px +
+     56px) -> 76px. The layout padding is shared by every page, so pull
+     this block up into it instead of changing it. */
+  .root {
+    padding-block-start: 0;
+    margin-block-start: -1.25rem; /* 96px - 20px = 76px */
+  }
+
   .heading {
     font-size: 2rem;
   }
