@@ -28,6 +28,7 @@
 }
 
 .breadcrumbLink:hover {
+  background-image: linear-gradient(var(--link-underline-hover), var(--link-underline-hover));
   background-size: 100% 1px;
 }
 

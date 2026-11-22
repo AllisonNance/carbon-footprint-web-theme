@@ -73,6 +73,7 @@
 }
 
 .category:hover {
+  background-image: linear-gradient(var(--link-underline-hover), var(--link-underline-hover));
   color: var(--black);
   background-size: 0 1px;
   animation: reunderline-category var(--motion-duration-base, 110ms) ease forwards;
@@ -128,6 +129,10 @@
   text-decoration: underline;
 }
 
+.body a:hover {
+  text-decoration-color: var(--link-underline-hover);
+}
+
 .body ul,
 .body ol {
   margin: var(--spacing-04) 0;
@@ -167,6 +172,7 @@
 }
 
 .viewAllLink:hover {
+  background-image: linear-gradient(var(--link-underline-hover), var(--link-underline-hover));
   text-decoration: none !important;
   background-size: 0 1px;
   animation: reunderline var(--motion-duration-base, 110ms) ease forwards;

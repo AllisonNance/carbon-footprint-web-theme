@@ -68,7 +68,7 @@ h3 {
 
 /* ---------- Gradient underline utility ----------------------------- */
 /*
- * Link underline (solid dark taupe) — apply `.gradient-underline` plus one of
+ * Link underline (solid dark taupe, early-2000s link blue on hover) — apply `.gradient-underline` plus one of
  * the modifier classes to get the standard link hover treatment.
  *
  *   .gradient-underline              — base (hidden by default)
@@ -91,10 +91,12 @@ h3 {
 }
 
 .gradient-underline-hover:hover {
+  background-image: linear-gradient(var(--link-underline-hover), var(--link-underline-hover));
   background-size: 100% 1px;
 }
 
 .gradient-underline-hover-reflow:hover {
+  background-image: linear-gradient(var(--link-underline-hover), var(--link-underline-hover));
   background-size: 0 1px;
   animation: gradient-reunderline var(--motion-duration-base, 110ms) ease forwards;
   animation-delay: var(--motion-duration-base, 110ms);

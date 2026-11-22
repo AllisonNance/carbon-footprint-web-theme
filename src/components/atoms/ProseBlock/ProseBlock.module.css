@@ -78,7 +78,7 @@
 }
 
 .prose a:hover {
-  text-decoration-color: var(--taupe-100);
+  text-decoration-color: var(--link-underline-hover);
 }
 
 /* ------------------------------------------------------------------ */

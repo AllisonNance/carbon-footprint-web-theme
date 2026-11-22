@@ -24,6 +24,7 @@
   text-decoration: underline;
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
+  text-decoration-color: var(--link-underline-hover);
 }
 
 /* Inline links are always underlined so they're distinguishable in paragraphs. */
@@ -35,6 +36,7 @@
 }
 .inline:hover {
   color: var(--link-primary-hover);
+  text-decoration-color: var(--link-underline-hover);
   text-decoration-thickness: 2px;
 }
 

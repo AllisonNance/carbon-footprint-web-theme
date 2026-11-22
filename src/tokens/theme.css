@@ -49,6 +49,8 @@
   --link-primary: var(--taupe-90);
   --link-primary-hover: var(--taupe-100);
   --link-visited: var(--taupe-80);
+  /* Early-2000s browser link blue for hovered link underlines. */
+  --link-underline-hover: #0000ee;
 
   /* Icon */
   --icon-primary: #161616;
@@ -107,6 +109,8 @@
   --link-primary: var(--taupe-30);
   --link-primary-hover: var(--taupe-20);
   --link-visited: var(--taupe-40);
+  /* Brighter take on the same blue so it reads on dark surfaces. */
+  --link-underline-hover: #4d7cff;
 
   /* Icon */
   --icon-primary: #f4f4f4;
