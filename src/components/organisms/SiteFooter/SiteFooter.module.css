@@ -77,10 +77,41 @@
   flex-shrink: 0;
 }
 
+/* AIM away-message style credit: mono, alternating case, pink <3. */
+.credit {
+  font-family: var(--font-family-mono);
+}
+
+.heart {
+  font-weight: var(--font-weight-semibold);
+  color: #ff5cb8; /* hot pink, readable on the dark footer */
+}
+
+/* Retro 88x31 web badge, left of the Privacy link. */
+.links .badge {
+  display: block;
+  flex: none;
+  inline-size: 88px;
+  block-size: 31px;
+}
+
+.srOnly {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---------- Text links (under tagline) ----------------------------- */
 
 .links {
   display: flex;
+  align-items: center; /* centre links on the badge */
   gap: var(--spacing-07);
   margin-block-start: var(--spacing-03);
 }

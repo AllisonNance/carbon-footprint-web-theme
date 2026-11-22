@@ -21,6 +21,8 @@ export interface SiteFooterProps extends Omit<
   tagline: ReactNode;
   /** Two inline text links shown below the tagline. */
   links?: SiteFooterNavItem[];
+  /** Optional badge (e.g. an 88x31 image) shown left of the links. */
+  badge?: ReactNode;
   /** Info items with icons shown on the right (e.g. location, timezone). */
   infoItems?: SiteFooterInfoItem[];
 }
@@ -37,6 +39,7 @@ export const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
     {
       tagline,
       links,
+      badge,
       infoItems,
       className,
       ...rest
@@ -57,9 +60,10 @@ export const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
             <div className={styles.brand}>
               <p className={styles.tagline}>{tagline}</p>
 
-              {links && links.length > 0 && (
+              {(badge || (links && links.length > 0)) && (
                 <div className={styles.links}>
-                  {links.map((link) => (
+                  {badge}
+                  {links?.map((link) => (
                     <a
                       key={link.href}
                       href={link.href}

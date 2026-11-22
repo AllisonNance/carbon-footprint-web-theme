@@ -1,7 +1,19 @@
 "use client";
 
-import { Favorite, Location, Time } from "@carbon/icons-react";
+import { Location, Time } from "@carbon/icons-react";
 import { SiteFooter, type SiteFooterNavItem, type SiteFooterInfoItem } from "./SiteFooter";
+import styles from "./SiteFooter.module.css";
+
+/** "Designed" -> "DeSiGnEd": alternates letter case, skipping non-letters,
+ *  continuing across words like an early-2000s AIM away message. */
+function altCase(text: string, startUpper = true): string {
+  let upper = startUpper;
+  return text.replace(/[a-z]/gi, (ch) => {
+    const out = upper ? ch.toUpperCase() : ch.toLowerCase();
+    upper = !upper;
+    return out;
+  });
+}
 
 export interface SiteFooterDefaultProps {
   /** Footer links from Sanity. Falls back to defaults. */
@@ -39,9 +51,25 @@ export function SiteFooterDefault({
     <SiteFooter
       tagline={
         <>
-          Designed and built with{" "}
-          <Favorite size={20} aria-label="love" role="img" /> by Allison.
+          {/* Screen readers get the plain sentence; the AIM-style
+              version is visual only. */}
+          <span className={styles.srOnly}>
+            Designed and built with love by Allison.
+          </span>
+          <span className={styles.credit} aria-hidden="true">
+            {altCase("Designed and built with")}{" "}
+            <span className={styles.heart}>&lt;3</span> {altCase("by Allison.")}
+          </span>
         </>
+      }
+      badge={
+        <img
+          className={styles.badge}
+          src="/images/badges/best-viewed-on.png"
+          alt="Best viewed on a computer"
+          width={88}
+          height={31}
+        />
       }
       links={footerLinks}
       infoItems={infoItems}
