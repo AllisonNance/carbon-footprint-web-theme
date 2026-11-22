@@ -44,3 +44,19 @@
   gap: var(--spacing-09);
   min-width: 0;
 }
+
+/* ---------- Konami Code theme (see src/styles/konami.css) ---------- */
+
+/* Let the sparkle wallpaper show around a solid, glowing center column. */
+:global(html[data-konami]) .page {
+  background-color: transparent;
+}
+
+:global(html[data-konami]) .main {
+  max-width: 70rem; /* 1120px, so the wallpaper shows on wide screens */
+  background-color: #0b070d;
+  border-inline: 3px dashed #ff2fa0;
+  box-shadow:
+    0 0 0 5px #000,
+    0 0 28px 6px rgb(255 47 160 / 0.55);
+}

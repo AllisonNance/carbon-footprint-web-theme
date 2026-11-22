@@ -1,0 +1,124 @@
+/* ---------- Konami Code theme -------------------------------------
+ * A dark, mid-2000s scene-profile look: near-black center column with
+ * neon pink and violet accents on an animated sparkle wallpaper.
+ *
+ * Switched on by <KonamiCode /> (↑ ↑ ↓ ↓ ← → ← → B A), which sets
+ * `data-konami` on <html>. Layout stays the same; this file swaps the
+ * theme tokens and paints the wallpaper. Text colors meet WCAG AA
+ * (4.5:1, or 3:1 for large text) against the dark surfaces. Component-specific touches
+ * (header, center column, cards, footer, callouts) live next to each
+ * component as `:global(html[data-konami]) .class` rules.
+ */
+
+html[data-konami] {
+  /* Surfaces */
+  --background: #0b070d;
+  --background-chrome: #000000;
+  --background-hover: #ff2fa024;
+  --background-active: #ff2fa04d;
+  --background-selected: #ff2fa033;
+  --layer-01: #1a0f1f;
+  --layer-02: #160b19;
+  --field-01: #1a0f1f;
+  --border-subtle-00: #5a2650;
+  --border-subtle-01: #5a2650;
+
+  /* Text and icons */
+  --text-primary: #ffd6ee;
+  --text-secondary: #d9a7c9;
+  --text-helper: #d9a7c9;
+  --text-placeholder: #9c6f8d;
+  --icon-primary: #ffd6ee;
+  --icon-secondary: #d9a7c9;
+  --link-primary: #ff4fb3;
+  --link-primary-hover: #ff8fd0;
+  --focus: #ff4fb3;
+  --interactive: #ff4fb3;
+  /* Dark text on the light purple/pink fills buttons get here
+     (7.8:1 on #c48cff, 5.6:1 on #ff2fa0 hover). */
+  --text-on-color: #160b19;
+
+  /* Primitives that components use directly (headings, labels). */
+  --gray-50: #9c6f8d;
+  --gray-60: #ff4fb3;
+  --gray-70: #d9a7c9;
+  --gray-80: #c48cff;
+  --gray-90: #ffe6f4;
+  --taupe-90: #c48cff;
+  --taupe-100: #ff2fa0;
+  --tag-background-taupe: #2a1230;
+  --tag-color-taupe: #ff8fd0;
+
+  /* Fonts */
+  --font-family-display: "Trebuchet MS", "Lucida Grande", sans-serif;
+  --font-family-sans: Verdana, Tahoma, Geneva, sans-serif;
+  --font-family-mono: "Courier New", Courier, monospace;
+
+  background-color: #120814;
+}
+
+html[data-konami] body {
+  background: transparent;
+}
+
+/* ---------- Animated sparkle wallpaper ----------------------------
+ * Two fixed layers behind the page: pink/violet stars that drift
+ * diagonally, and sparse white glints that twinkle. Only the sides show,
+ * since the center column is solid (PageLayout.module.css).
+ */
+
+html[data-konami] body::before,
+html[data-konami] body::after {
+  content: "";
+  position: fixed;
+  inset: -144px; /* room to drift by a full tile */
+  z-index: -1;
+  pointer-events: none;
+}
+
+html[data-konami] body::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cpath d='M18 5l2.8 10.2L31 18l-10.2 2.8L18 31l-2.8-10.2L5 18l10.2-2.8z' fill='%23ff2fa0'/%3E%3Cpath d='M53 41l1.8 5.8L61 49l-6.2 1.8L53 57l-1.8-6.2L45 49l6.2-2.2z' fill='%23b36bff'/%3E%3Ccircle cx='14' cy='56' r='1.4' fill='%23ff8fd0'/%3E%3C/svg%3E");
+  animation: konami-drift 9s linear infinite;
+}
+
+html[data-konami] body::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='144' height='144'%3E%3Ccircle cx='56' cy='14' r='1.8' fill='%23ffffff'/%3E%3Ccircle cx='38' cy='34' r='1' fill='%23ffffff'/%3E%3Ccircle cx='120' cy='98' r='1.6' fill='%23ffffff'/%3E%3Cpath d='M100 20l1 3.4L104.4 24l-3.4 1L100 28.4l-1-3.4L95.6 24l3.4-1z' fill='%23ffffff'/%3E%3Cpath d='M30 110l1 3.4L34.4 114l-3.4 1L30 118.4l-1-3.4L25.6 114l3.4-1z' fill='%23ffffff'/%3E%3C/svg%3E");
+  animation:
+    konami-drift-wide 18s linear infinite,
+    konami-twinkle 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes konami-drift {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(72px, 72px); /* one tile, so it loops seamlessly */
+  }
+}
+
+/* Same speed for the 144px glint tile. */
+@keyframes konami-drift-wide {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(144px, 144px);
+  }
+}
+
+@keyframes konami-twinkle {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-konami] body::before,
+  html[data-konami] body::after {
+    animation: none;
+  }
+}

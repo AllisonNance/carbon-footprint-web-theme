@@ -14,6 +14,7 @@
 /* Design tokens & reset */
 @import "../tokens/index.css";
 @import "./reset.css";
+@import "./konami.css";
 
 /* Tiempos Text (licensed) is loaded dynamically from Sanity — see
  * buildBrandFontCss() in src/app/layout.tsx. Not declared here so the

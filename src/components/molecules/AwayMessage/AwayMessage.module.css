@@ -22,7 +22,7 @@
 }
 
 .idle {
-  color: var(--gray-50, #8d8d8d);
+  color: var(--text-helper); /* #6f6f6f, 4.8:1 on the page */
 }
 
 /* ---------- Status dot ------------------------------------------- */
@@ -75,8 +75,10 @@
   font-weight: var(--font-weight-semibold, 600);
 }
 
+/* Deep enough to meet 4.5:1 on the light page; brighter versions for
+   the dark Konami theme are at the bottom of this file. */
 .pink {
-  color: #ff1fa0;
+  color: #d1007a;
 }
 
 .purple {
@@ -84,13 +86,36 @@
 }
 
 .blue {
-  color: #1f6bff;
+  color: #1a5ce6;
 }
 
 .green {
-  color: #22b33a;
+  color: #1b7f2e;
 }
 
 .orange {
+  color: #b85300;
+}
+
+/* ---------- Konami Code theme (see src/styles/konami.css) ---------- */
+
+/* Brighter symbol colors so they still pop (5.6:1+) on the dark page. */
+:global(html[data-konami]) .pink {
+  color: #ff1fa0;
+}
+
+:global(html[data-konami]) .green {
+  color: #22b33a;
+}
+
+:global(html[data-konami]) .orange {
   color: #ff7a00;
+}
+
+:global(html[data-konami]) .purple {
+  color: #b98cff;
+}
+
+:global(html[data-konami]) .blue {
+  color: #7aa2ff;
 }

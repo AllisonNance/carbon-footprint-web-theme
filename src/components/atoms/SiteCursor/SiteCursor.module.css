@@ -117,3 +117,18 @@
     display: none;
   }
 }
+
+/* ---------- Konami Code theme (see src/styles/konami.css) ---------- */
+
+/* Dark pill with light pink text (14.7:1); the white default would put
+   the theme's light purple text at 2.5:1. */
+/* Trail matches the purple arrow (opacity and length set in the TSX). */
+:global(html[data-konami]) .trailDot {
+  background-color: #c48cff;
+}
+
+:global(html[data-konami]) .label {
+  background-color: #160b19;
+  border-color: #ff4fb3;
+  color: #ffd6ee;
+}

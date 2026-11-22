@@ -438,3 +438,22 @@
   text-align: start;
   color: var(--text-secondary);
 }
+
+/* ---------- Konami Code theme (see src/styles/konami.css) ---------- */
+
+/* Callouts store a light background from Sanity inline; go dark so the
+   theme's light text stays readable. */
+:global(html[data-konami]) .callout.callout {
+  background-color: #1a0f1f !important;
+  border-color: #5a2650;
+}
+
+/* Icons are SVGs in their own (dark) colors; draw them light gray so they
+   stay visible (14:1). Check marks go light pink (8.9:1). */
+:global(html[data-konami]) .callout .iconImage {
+  filter: brightness(0) invert(88%);
+}
+
+:global(html[data-konami]) .callout .checkIcon {
+  color: #ff8fd0;
+}

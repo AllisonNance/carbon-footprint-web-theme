@@ -23,6 +23,8 @@ export interface SiteFooterProps extends Omit<
   links?: SiteFooterNavItem[];
   /** Optional badge (e.g. an 88x31 image) shown left of the links. */
   badge?: ReactNode;
+  /** Optional extra item shown right of the links (e.g. a hint). */
+  afterLinks?: ReactNode;
   /** Info items with icons shown on the right (e.g. location, timezone). */
   infoItems?: SiteFooterInfoItem[];
 }
@@ -40,6 +42,7 @@ export const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
       tagline,
       links,
       badge,
+      afterLinks,
       infoItems,
       className,
       ...rest
@@ -60,7 +63,7 @@ export const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
             <div className={styles.brand}>
               <p className={styles.tagline}>{tagline}</p>
 
-              {(badge || (links && links.length > 0)) && (
+              {(badge || afterLinks || (links && links.length > 0)) && (
                 <div className={styles.links}>
                   {badge}
                   {links?.map((link) => (
@@ -72,6 +75,7 @@ export const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
                       {link.label}
                     </a>
                   ))}
+                  {afterLinks}
                 </div>
               )}
             </div>

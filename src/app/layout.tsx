@@ -4,6 +4,7 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { layoutAssetsQuery } from "@/sanity/lib/queries";
 import { SiteCursor } from "@components/atoms/SiteCursor";
+import { KonamiCode, KONAMI_RESTORE_SCRIPT } from "@components/atoms/KonamiCode";
 import "@styles/globals.css";
 
 interface LayoutAssets {
@@ -80,14 +81,18 @@ export default async function RootLayout({
   const brandFontCss = buildBrandFontCss(settings?.brandFont);
 
   return (
-    <html lang="en">
+    // The Konami Code theme sets an attribute on <html> before React
+    // hydrates, so React shouldn't warn about the mismatch.
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: KONAMI_RESTORE_SCRIPT }} />
         {brandFontCss ? (
           <style dangerouslySetInnerHTML={{ __html: brandFontCss }} />
         ) : null}
       </head>
       <body>
         <SiteCursor />
+        <KonamiCode />
         {children}
       </body>
     </html>

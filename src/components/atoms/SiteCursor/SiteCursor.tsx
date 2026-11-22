@@ -20,10 +20,29 @@ const ARROW_ASPECT = 300 / 378;
  *  long (ms) without movement before the trail clears, and how each
  *  snapshot's opacity/size shrink further from the cursor. */
 const TRAIL_MIN_DISTANCE = 8;
-const TRAIL_LENGTH = 2;
 const TRAIL_IDLE_MS = 150;
-const TRAIL_OPACITIES = [0.14, 0.05];
-const TRAIL_SIZE_SCALES = [0.85, 0.6];
+
+interface TrailStyle {
+  opacities: number[];
+  sizeScales: number[];
+  idleMs: number;
+}
+
+/** Normal theme: a barely-there two-step trail. */
+const TRAIL_DEFAULT: TrailStyle = {
+  opacities: [0.14, 0.05],
+  sizeScales: [0.85, 0.6],
+  idleMs: TRAIL_IDLE_MS,
+};
+
+/** Konami Code (dark) theme: a longer, clearly visible purple trail. */
+const TRAIL_KONAMI: TrailStyle = {
+  opacities: [0.85, 0.7, 0.55, 0.42, 0.3, 0.2, 0.12],
+  sizeScales: [0.92, 0.84, 0.76, 0.68, 0.6, 0.52, 0.44],
+  idleMs: 260,
+};
+
+const isKonami = () => document.documentElement.hasAttribute("data-konami");
 
 interface Point {
   x: number;
@@ -48,6 +67,7 @@ export function SiteCursor() {
   const [shrink, setShrink] = useState(false);
   const [label, setLabel] = useState<string | null>(null);
   const [trail, setTrail] = useState<Point[]>([]);
+  const [konami, setKonami] = useState(false);
 
   const lastTrailPointRef = useRef<Point | null>(null);
   const lastPointerRef = useRef<Point | null>(null);
@@ -59,6 +79,18 @@ export function SiteCursor() {
       window.matchMedia("(hover: hover) and (pointer: fine)").matches,
     );
   }, [isStudio]);
+
+  // Follow the Konami Code theme on and off (it's an attribute on <html>).
+  useEffect(() => {
+    if (!enabled || isStudio) return;
+    setKonami(isKonami());
+    const observer = new MutationObserver(() => setKonami(isKonami()));
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-konami"],
+    });
+    return () => observer.disconnect();
+  }, [enabled, isStudio]);
 
   useEffect(() => {
     if (!enabled || isStudio) return;
@@ -100,16 +132,19 @@ export function SiteCursor() {
       const distance = last
         ? Math.hypot(point.x - last.x, point.y - last.y)
         : Infinity;
+      const trailStyle = isKonami() ? TRAIL_KONAMI : TRAIL_DEFAULT;
       if (distance >= TRAIL_MIN_DISTANCE) {
         lastTrailPointRef.current = point;
-        setTrail((prev) => [point, ...prev].slice(0, TRAIL_LENGTH));
+        setTrail((prev) =>
+          [point, ...prev].slice(0, trailStyle.opacities.length),
+        );
       }
 
       clearIdleTimeout();
       idleTimeoutRef.current = setTimeout(() => {
         lastTrailPointRef.current = null;
         setTrail([]);
-      }, TRAIL_IDLE_MS);
+      }, trailStyle.idleMs);
     };
 
     // Scrolling moves the page under a still mouse without firing
@@ -148,11 +183,12 @@ export function SiteCursor() {
   if (!enabled || isStudio || !visible) return null;
 
   const size = shrink ? SHRINK_SIZE : DEFAULT_SIZE;
+  const trailStyle = konami ? TRAIL_KONAMI : TRAIL_DEFAULT;
 
   return (
     <>
       {trail.map((point, i) => {
-        const trailSize = size * (TRAIL_SIZE_SCALES[i] ?? 1);
+        const trailSize = size * (trailStyle.sizeScales[i] ?? 1);
         return (
           <span
             key={`${point.x}-${point.y}`}
@@ -162,7 +198,7 @@ export function SiteCursor() {
               top: point.y,
               width: trailSize * ARROW_ASPECT,
               height: trailSize,
-              opacity: TRAIL_OPACITIES[i] ?? 0,
+              opacity: trailStyle.opacities[i] ?? 0,
             }}
             aria-hidden
           />
