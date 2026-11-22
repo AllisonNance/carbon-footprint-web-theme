@@ -4,6 +4,7 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { siteSettingsQuery } from "@/sanity/lib/queries";
 import { PortfolioItemCard, PortfolioItemGrid } from "@components/molecules/PortfolioItemCard";
+import { AwayMessage } from "@components/molecules/AwayMessage";
 import { PageTitleBlock } from "@components/organisms/PageTitleBlock";
 import { getSiteChrome } from "@/lib/getSiteChrome";
 import { PageLayout } from "@components/templates/PageLayout";
@@ -108,6 +109,7 @@ export default async function HomePage() {
               <em>thinker</em>.
             </>
           }
+          status={<AwayMessage />}
           tags={["Systems", "Strategy", "Scale"]}
           image={
             settings?.profileImage?.asset ? (

@@ -60,6 +60,11 @@
   color: var(--gray-80);
 }
 
+/* Status line: 16px under the heading, 20px (8 + the tags' 12) above the tags. */
+.status {
+  margin-block: var(--spacing-05) var(--spacing-03);
+}
+
 .tags {
   display: flex;
   align-items: baseline;

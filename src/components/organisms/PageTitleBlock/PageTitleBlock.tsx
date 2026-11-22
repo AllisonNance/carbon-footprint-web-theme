@@ -11,6 +11,8 @@ export interface PageTitleBlockProps extends Omit<
   tags?: string[];
   /** Optional description shown below the heading. */
   description?: string;
+  /** Optional status line (e.g. an away message) right below the heading. */
+  status?: ReactNode;
   /** Optional image rendered to the left of the heading area.
    *  Displayed 75px wide at its natural height, uncropped; sits to the
    *  left of all the text (vertically centred) from 42rem up and above it on
@@ -25,7 +27,7 @@ export interface PageTitleBlockProps extends Omit<
  */
 export const PageTitleBlock = forwardRef<HTMLElement, PageTitleBlockProps>(
   function PageTitleBlock(
-    { heading, tags, description, image, className, ...rest },
+    { heading, tags, description, status, image, className, ...rest },
     ref,
   ) {
     const headingId = useId();
@@ -48,6 +50,7 @@ export const PageTitleBlock = forwardRef<HTMLElement, PageTitleBlockProps>(
             <h1 id={headingId} className={styles.heading}>
               {heading}
             </h1>
+          {status && <div className={styles.status}>{status}</div>}
             {description && (
               <p className={`${styles.description} type-body-01`}>
                 {description}
