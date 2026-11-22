@@ -84,7 +84,7 @@
 
 .heart {
   font-weight: var(--font-weight-semibold);
-  color: #ff5cb8; /* hot pink, readable on the dark footer */
+  color: var(--accent-pink); /* hot pink, readable on the dark footer */
 }
 
 /* Retro 88x31 web badge, left of the Privacy link. */

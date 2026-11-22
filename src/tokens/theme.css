@@ -52,6 +52,12 @@
   /* Early-2000s browser link blue for hovered link underlines. */
   --link-underline-hover: #0000ee;
 
+  /* AIM accents (footer <3, cursor labels). Same in every theme; text on
+     them uses --text-on-accent (#161616: 6.4:1 on pink, 10:1 on green). */
+  --accent-pink: var(--pink-40);
+  --accent-green: var(--green-40);
+  --text-on-accent: #161616;
+
   /* Icon */
   --icon-primary: #161616;
   --icon-secondary: #525252;
