@@ -66,7 +66,7 @@ export function SiteFooterDefault({
         <img
           className={styles.badge}
           src="/images/badges/best-viewed-on.png"
-          alt="Best viewed on a computer"
+          alt="Best Viewed on Desktop"
           width={88}
           height={31}
         />
