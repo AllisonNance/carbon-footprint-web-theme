@@ -100,22 +100,22 @@
 /* ---------- Konami Code theme (see src/styles/konami.css) ---------- */
 
 /* Brighter symbol colors so they still pop (5.6:1+) on the dark page. */
-:global(html[data-konami]) .pink {
+:global([data-konami]) .pink {
   color: #ff1fa0;
 }
 
-:global(html[data-konami]) .green {
+:global([data-konami]) .green {
   color: #22b33a;
 }
 
-:global(html[data-konami]) .orange {
+:global([data-konami]) .orange {
   color: #ff7a00;
 }
 
-:global(html[data-konami]) .purple {
+:global([data-konami]) .purple {
   color: #b98cff;
 }
 
-:global(html[data-konami]) .blue {
+:global([data-konami]) .blue {
   color: #7aa2ff;
 }

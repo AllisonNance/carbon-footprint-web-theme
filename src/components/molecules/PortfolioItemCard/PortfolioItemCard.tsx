@@ -142,6 +142,8 @@ export const PortfolioItemCard = forwardRef<
       ref={ref}
       className={classes}
       data-cursor-label={hoverLabel}
+      // No link yet: the cursor label shows light purple instead of pink.
+      data-cursor-tone="purple"
       {...rest}
     >
       {content}

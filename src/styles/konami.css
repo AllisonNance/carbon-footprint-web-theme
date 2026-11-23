@@ -7,10 +7,12 @@
  * theme tokens and paints the wallpaper. Text colors meet WCAG AA
  * (4.5:1, or 3:1 for large text) against the dark surfaces. Component-specific touches
  * (header, center column, cards, footer, callouts) live next to each
- * component as `:global(html[data-konami]) .class` rules.
+ * component as `:global([data-konami]) .class` rules.
  */
 
-html[data-konami] {
+/* Tokens apply wherever `data-konami` is set: on <html> for the whole
+ * site, or on a single element (e.g. the hero's cursor reveal layer). */
+[data-konami] {
   /* Surfaces */
   --background: #0b070d;
   --background-chrome: #000000;
@@ -49,7 +51,14 @@ html[data-konami] {
   --tag-background-taupe: #2a1230;
   --tag-color-taupe: #ff8fd0;
 
-  /* Fonts */
+
+  /* Star tile for the sparkle wallpaper (also used by the hero reveal). */
+  --konami-stars: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cpath d='M18 5l2.8 10.2L31 18l-10.2 2.8L18 31l-2.8-10.2L5 18l10.2-2.8z' fill='%23ff2fa0'/%3E%3Cpath d='M53 41l1.8 5.8L61 49l-6.2 1.8L53 57l-1.8-6.2L45 49l6.2-2.2z' fill='%23b36bff'/%3E%3Ccircle cx='14' cy='56' r='1.4' fill='%23ff8fd0'/%3E%3C/svg%3E");
+}
+
+/* Whole-site theme only: fonts change the layout, so the hero's cursor
+ * reveal (which must line up with the light page) keeps the normal ones. */
+html[data-konami] {
   --font-family-display: "Trebuchet MS", "Lucida Grande", sans-serif;
   --font-family-sans: Verdana, Tahoma, Geneva, sans-serif;
   --font-family-mono: "Courier New", Courier, monospace;
@@ -77,7 +86,7 @@ html[data-konami] body::after {
 }
 
 html[data-konami] body::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cpath d='M18 5l2.8 10.2L31 18l-10.2 2.8L18 31l-2.8-10.2L5 18l10.2-2.8z' fill='%23ff2fa0'/%3E%3Cpath d='M53 41l1.8 5.8L61 49l-6.2 1.8L53 57l-1.8-6.2L45 49l6.2-2.2z' fill='%23b36bff'/%3E%3Ccircle cx='14' cy='56' r='1.4' fill='%23ff8fd0'/%3E%3C/svg%3E");
+  background-image: var(--konami-stars);
   animation: konami-drift 9s linear infinite;
 }
 

@@ -3,8 +3,12 @@ import { TrafficCone } from "@carbon/icons-react";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { siteSettingsQuery } from "@/sanity/lib/queries";
-import { PortfolioItemCard, PortfolioItemGrid } from "@components/molecules/PortfolioItemCard";
+import {
+  PortfolioItemCard,
+  PortfolioItemGrid,
+} from "@components/molecules/PortfolioItemCard";
 import { AwayMessage } from "@components/molecules/AwayMessage";
+import { ThemeReveal } from "@components/molecules/ThemeReveal";
 import { PageTitleBlock } from "@components/organisms/PageTitleBlock";
 import { getSiteChrome } from "@/lib/getSiteChrome";
 import { PageLayout } from "@components/templates/PageLayout";
@@ -87,44 +91,40 @@ export default async function HomePage() {
   const [settings, { header, footer }]: [
     SiteSettings | null,
     Awaited<ReturnType<typeof getSiteChrome>>,
-  ] = await Promise.all([
-    client.fetch(siteSettingsQuery),
-    getSiteChrome(),
-  ]);
+  ] = await Promise.all([client.fetch(siteSettingsQuery), getSiteChrome()]);
 
   const featuredWork = settings?.featuredWork ?? [];
 
   return (
-    <PageLayout
-      hideDefaultHeader
-      header={header}
-      footer={footer}
-    >
+    <PageLayout hideDefaultHeader header={header} footer={footer}>
       <div className={styles.heroRow}>
-        <PageTitleBlock
-          heading={
-            <>
-              I&apos;m Allison,
-              <br /> a <em>product designer</em> and <em>systems</em>{" "}
-              <em>thinker</em>.
-            </>
-          }
-          status={<AwayMessage />}
-          tags={["Systems", "Strategy", "Scale"]}
-          image={
-            settings?.profileImage?.asset ? (
-              <img
-                // 2x the 75px display width; height follows the image.
-                src={urlFor(settings.profileImage)
-                  .width(150)
-                  .quality(80)
-                  .auto("format")
-                  .url()}
-                alt={settings.profileImage.alt || ""}
-              />
-            ) : undefined
-          }
-        />
+        {/* Moving the mouse over the hero reveals the dark theme around it. */}
+        <ThemeReveal>
+          <PageTitleBlock
+            heading={
+              <>
+                I&apos;m Allison,
+                <br /> a <em>product designer</em> and <em>systems</em>{" "}
+                <em>thinker</em>.
+              </>
+            }
+            status={<AwayMessage />}
+            tags={["Systems", "Strategy", "Scale"]}
+            image={
+              settings?.profileImage?.asset ? (
+                <img
+                  // 2x the 75px display width; height follows the image.
+                  src={urlFor(settings.profileImage)
+                    .width(150)
+                    .quality(80)
+                    .auto("format")
+                    .url()}
+                  alt={settings.profileImage.alt || ""}
+                />
+              ) : undefined
+            }
+          />
+        </ThemeReveal>
       </div>
 
       {featuredWork.length > 0 && (

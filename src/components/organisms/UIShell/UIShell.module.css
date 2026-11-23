@@ -415,19 +415,19 @@
 
 /* ---------- Konami Code theme (see src/styles/konami.css) ---------- */
 
-:global(html[data-konami]) .header {
+:global([data-konami]) .header {
   background: linear-gradient(#1c0b1e, #000);
   border-block-end: 2px solid #ff2fa0;
   box-shadow: 0 2px 14px rgb(255 47 160 / 0.6);
 }
 
-:global(html[data-konami]) .name {
+:global([data-konami]) .name {
   font-style: italic;
   color: #ff4fb3;
   text-shadow: 0 0 8px #ff2fa0;
 }
 
-:global(html[data-konami]) .sideNav {
+:global([data-konami]) .sideNav {
   background-color: #0b070d;
   border-inline-end: 2px solid #ff2fa0;
 }

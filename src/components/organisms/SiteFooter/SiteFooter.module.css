@@ -113,7 +113,7 @@
   color: #0fdf4a;
 }
 
-:global(html[data-konami]) .gamepad {
+:global([data-konami]) .gamepad {
   color: #ff4fb3;
 }
 
@@ -213,19 +213,19 @@
 
 /* ---------- Konami Code theme (see src/styles/konami.css) ---------- */
 
-:global(html[data-konami]) .footer {
+:global([data-konami]) .footer {
   --text-primary: #ffd6ee;
   --text-secondary: #d9a7c9;
   --icon-primary: #ffd6ee;
 }
 
-:global(html[data-konami]) .main {
+:global([data-konami]) .main {
   background: linear-gradient(#1c0b1e, #000);
   border-block-start: 2px solid #ff2fa0;
   box-shadow: 0 -2px 14px rgb(255 47 160 / 0.5);
 }
 
-:global(html[data-konami]) .heart {
+:global([data-konami]) .heart {
   color: #ff2fa0;
   text-shadow: 0 0 8px #ff2fa0;
 }

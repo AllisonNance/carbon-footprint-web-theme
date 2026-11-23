@@ -86,11 +86,17 @@
   translate: 0 -50%;
   white-space: nowrap;
   padding: var(--spacing-02) var(--spacing-04);
-  background-color: var(--white);
-  border: 1px solid var(--taupe-90);
+  /* Light pink on linked cards, light purple (.labelPurple) on cards
+   * without a link; taupe-100 text is 5.3:1 / 4.6:1. */
+  background-color: #ffe0f0;
+  border: 1px solid var(--taupe-100);
   border-radius: 999px;
-  color: var(--taupe-90);
+  color: var(--taupe-100);
   animation: labelIn var(--motion-duration-fast, 120ms) ease-out;
+}
+
+.labelPurple {
+  background-color: #e2d4ff; /* clearly lavender next to the pink; 4.6:1 */
 }
 
 @keyframes labelIn {
@@ -123,11 +129,11 @@
 /* Dark pill with light pink text (14.7:1); the white default would put
    the theme's light purple text at 2.5:1. */
 /* Trail matches the purple arrow (opacity and length set in the TSX). */
-:global(html[data-konami]) .trailDot {
+:global([data-konami]) .trailDot {
   background-color: #c48cff;
 }
 
-:global(html[data-konami]) .label {
+:global([data-konami]) .label {
   background-color: #160b19;
   border-color: #ff4fb3;
   color: #ffd6ee;

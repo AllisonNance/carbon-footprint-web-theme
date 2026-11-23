@@ -1,0 +1,148 @@
+/* ThemeReveal — dark-theme spotlight under the cursor (see ThemeReveal.tsx). */
+
+/* Lets the circle's size animate while its position tracks the pointer
+ * instantly. */
+@property --reveal-r {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+.wrap {
+  position: relative;
+  /* Keep children's margins inside, so the copy (in an absolutely
+   * positioned layer, which never collapses margins) lines up exactly. */
+  display: flow-root;
+  /* Reach up through the layout's 96px top padding so the reveal also
+   * covers the space between the site header and the section. */
+  margin-block-start: calc(-1 * var(--spacing-12));
+  padding-block-start: var(--spacing-12);
+}
+
+/* Full-bleed dark layer, shown through a soft-edged circle around the
+ * pointer that also fades out over the last 96px of the section. Both
+ * fades ease out (smoothstep) so they melt into the page instead of
+ * ending in a visible ring. */
+.layer {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: -100vmax;
+  /* Match the wrapper's offsets so the copy lines up with the section. */
+  padding-inline: 100vmax;
+  padding-block-start: var(--spacing-12);
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  background-color: #0b070d;
+  background-image: var(--konami-stars);
+  background-size: 72px 72px;
+  animation: reveal-drift 9s linear infinite;
+  --reveal-spot: radial-gradient(
+    circle var(--reveal-r) at var(--reveal-x, 50%) var(--reveal-y, 50%),
+    rgb(0 0 0 / 1.000) 58.0%,
+    rgb(0 0 0 / 0.972) 62.2%,
+    rgb(0 0 0 / 0.896) 66.4%,
+    rgb(0 0 0 / 0.784) 70.6%,
+    rgb(0 0 0 / 0.648) 74.8%,
+    rgb(0 0 0 / 0.500) 79.0%,
+    rgb(0 0 0 / 0.352) 83.2%,
+    rgb(0 0 0 / 0.216) 87.4%,
+    rgb(0 0 0 / 0.104) 91.6%,
+    rgb(0 0 0 / 0.028) 95.8%,
+    rgb(0 0 0 / 0.000) 100.0%
+  );
+  --reveal-fade: linear-gradient(
+    to bottom,
+    rgb(0 0 0 / 1.000) calc(100% - 96px),
+    rgb(0 0 0 / 0.926) calc(100% - 80px),
+    rgb(0 0 0 / 0.741) calc(100% - 64px),
+    rgb(0 0 0 / 0.500) calc(100% - 48px),
+    rgb(0 0 0 / 0.259) calc(100% - 32px),
+    rgb(0 0 0 / 0.074) calc(100% - 16px),
+    rgb(0 0 0 / 0.000) calc(100% - 0px)
+  );
+  -webkit-mask-image: var(--reveal-spot), var(--reveal-fade);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--reveal-spot), var(--reveal-fade);
+  mask-composite: intersect;
+  transition: --reveal-r 220ms ease-out;
+}
+
+/* The dark theme's center column (see PageLayout.module.css): solid
+ * near-black with dashed pink edges and a glow. It hugs the light
+ * layout's content (12px past it on each side) so the copy lines up with
+ * the page exactly; the animated sparkles show in the gutters beyond. */
+.layer::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline: calc(100vmax - 12px);
+  box-sizing: border-box;
+  background-color: #0b070d;
+  /* Smaller stars drifting behind the hero text. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110'%3E%3Cpath d='M24 14l2.2 7.8L34 24l-7.8 2.2L24 34l-2.2-7.8L14 24l7.8-2.2z' fill='%23ff2fa0'/%3E%3Cpath d='M82 66l1.6 5.4L89 73l-5.4 1.6L82 80l-1.6-5.4L75 73l5.4-1.6z' fill='%23b36bff'/%3E%3Ccircle cx='76' cy='22' r='1.6' fill='%23ff8fd0'/%3E%3Ccircle cx='30' cy='88' r='1.3' fill='%23ffffff'/%3E%3Ccircle cx='100' cy='100' r='1' fill='%23ffffff'/%3E%3C/svg%3E");
+  background-size: 110px 110px;
+  animation: reveal-drift-slow 16s linear infinite;
+  border-inline: 3px dashed #ff2fa0;
+  box-shadow:
+    0 0 0 5px #000,
+    0 0 28px 6px rgb(255 47 160 / 0.55);
+}
+
+/* Twinkling white glints over the column (still behind the text). */
+.layer::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline: calc(100vmax - 12px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='120'%3E%3Cpath d='M50 30l1.4 4.6L56 36l-4.6 1.4L50 42l-1.4-4.6L44 36l4.6-1.4z' fill='%23ffffff'/%3E%3Cpath d='M110 92l1 3.4L114.4 96.4l-3.4 1L110 100.8l-1-3.4L105.6 96.4l3.4-1z' fill='%23ffd6ee'/%3E%3Ccircle cx='14' cy='76' r='1.5' fill='%23ffffff'/%3E%3Ccircle cx='96' cy='14' r='1.3' fill='%23ffffff'/%3E%3C/svg%3E");
+  background-size: 130px 120px;
+  animation: reveal-twinkle 1.4s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Same width, fonts and position as the light section, so only the
+ * colors, background and effects change inside the spotlight. */
+.copy {
+  position: relative; /* above the center column and its sparkles */
+  z-index: 1;
+  display: flow-root;
+}
+
+/* Let the layer's sparkles show behind the copied section. */
+.layer .copy > * {
+  background-color: transparent;
+}
+
+@keyframes reveal-drift {
+  to {
+    background-position: 72px 72px;
+  }
+}
+
+@keyframes reveal-drift-slow {
+  to {
+    background-position: 110px 110px;
+  }
+}
+
+@keyframes reveal-twinkle {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Whole site already dark: nothing to reveal. */
+:global(html[data-konami]) .layer {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer {
+    display: none;
+  }
+}

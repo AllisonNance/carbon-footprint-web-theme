@@ -6,3 +6,4 @@ export * from "./CategoryList";
 export * from "./PortfolioItemCard";
 export * from "./SearchBar";
 export * from "./SectionNav";
+export * from "./ThemeReveal";

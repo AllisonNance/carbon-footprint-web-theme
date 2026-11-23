@@ -111,7 +111,7 @@
 
 /* ---------- Konami Code theme (see src/styles/konami.css) ---------- */
 
-:global(html[data-konami]) .heading {
+:global([data-konami]) .heading {
   color: #ffe6f4;
   text-shadow:
     0 0 6px #ff2fa0,
@@ -119,6 +119,6 @@
     2px 2px 0 #3a0a33;
 }
 
-:global(html[data-konami]) .heading em {
+:global([data-konami]) .heading em {
   color: #ff4fb3;
 }

@@ -183,7 +183,7 @@
 /* ---------- Konami Code theme (see src/styles/konami.css) ---------- */
 
 /* Keep the normal light frame so see-through featured images look the same. */
-:global(html[data-konami]) .media {
+:global([data-konami]) .media {
   background-color: #f4f4f4;
   border: 1px dashed #ff4fb3;
 }
