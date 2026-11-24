@@ -69,7 +69,11 @@ export const PortfolioItemCard = forwardRef<
   },
   ref,
 ) {
-  const classes = [styles.card, href ? styles.cardLinked : "", className]
+  const classes = [
+    styles.card,
+    href ? styles.cardLinked : styles.cardUnlinked,
+    className,
+  ]
     .filter(Boolean)
     .join(" ");
 
@@ -93,33 +97,37 @@ export const PortfolioItemCard = forwardRef<
         )}
       </div>
 
-      <h3 className={`${styles.title} type-heading-03`}>
-        {href ? <span className={styles.titleLink}>{title}</span> : title}
-      </h3>
+      {/* Text column. `display: contents` on linked cards, so it only
+       *  shapes the layout of unlinked cards (image left, text right). */}
+      <div className={styles.body}>
+        <h3 className={`${styles.title} type-heading-03`}>
+          {href ? <span className={styles.titleLink}>{title}</span> : title}
+        </h3>
 
-      {description && (
-        <p className={`${styles.description} type-body-01`}>{description}</p>
-      )}
+        {description && (
+          <p className={`${styles.description} type-body-01`}>{description}</p>
+        )}
 
-      {contributionTags && contributionTags.length > 0 && (
-        <div className={styles.tags}>
-          {contributionTags.map((tag) => (
-            <Tag key={tag}>{tag}</Tag>
-          ))}
-        </div>
-      )}
+        {contributionTags && contributionTags.length > 0 && (
+          <div className={styles.tags}>
+            {contributionTags.map((tag) => (
+              <Tag key={tag}>{tag}</Tag>
+            ))}
+          </div>
+        )}
 
-      {(year || client) && (
-        <div className={styles.meta}>
-          {year && <span className={styles.year}>{year}</span>}
-          {year && client && (
-            <span className={styles.dot} aria-hidden>
-              ·
-            </span>
-          )}
-          {client && <span className={styles.client}>{client}</span>}
-        </div>
-      )}
+        {(year || client) && (
+          <div className={styles.meta}>
+            {year && <span className={styles.year}>{year}</span>}
+            {year && client && (
+              <span className={styles.dot} aria-hidden>
+                ·
+              </span>
+            )}
+            {client && <span className={styles.client}>{client}</span>}
+          </div>
+        )}
+      </div>
     </>
   );
 

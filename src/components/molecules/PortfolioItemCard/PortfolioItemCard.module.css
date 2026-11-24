@@ -20,6 +20,49 @@
   outline-offset: var(--spacing-02);
 }
 
+/* ---------- Unlinked cards: gray box, 50/50 on desktop -------------- */
+
+/* Wraps the title, description, tags and meta. Invisible to layout
+ * unless the unlinked desktop grid below turns it into a column. */
+.body {
+  display: contents;
+}
+
+.cardUnlinked {
+  padding: var(--spacing-07); /* 32px */
+  border: 1px solid var(--border-subtle-00);
+}
+
+@media (min-width: 66rem) {
+  .cardUnlinked {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "media eyebrow"
+      "media body";
+    column-gap: var(--spacing-07);
+    align-items: start;
+  }
+
+  .cardUnlinked .eyebrow {
+    grid-area: eyebrow;
+  }
+
+  .cardUnlinked .media {
+    grid-area: media;
+    margin-block-end: 0;
+  }
+
+  .cardUnlinked .body {
+    grid-area: body;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    min-inline-size: 0;
+  }
+}
+
 /* ---------- Eyebrow ------------------------------------------------ */
 
 .eyebrow {
